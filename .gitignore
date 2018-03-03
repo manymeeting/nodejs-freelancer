@@ -6,6 +6,7 @@
 *.iml
 
 #backend
+react-backend/config
 react-backend/node_modules/
 react-backend/build/
 react-backend/app/vendor/
@@ -21,6 +22,7 @@ react-backend/yarn-debug.log*
 react-backend/yarn-error.log*
 
 #react
+client/config
 client/node_modules/
 client/build/
 client/app/vendor/
