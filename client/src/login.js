@@ -3,9 +3,14 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-
+import {withRouter} from 'react-router';
+import ClientAuthService from './utils/authclient';
 
 class InputForm extends React.Component {
+  constructor(props)
+  {
+    super(props);
+  }
 
   render()
   {
@@ -17,7 +22,7 @@ class InputForm extends React.Component {
             <span>Email</span><input type="text" name="email" id="inputEmail"/><br/>
             <span>Password</span><input type="text" name="password" id="inputPassword"/><br/>
           </form>
-          <button id="loginSubmitBtn">
+          <button id="loginSubmitBtn" onClick={this.onSumbit.bind(this)}>
             Login
           </button>
         </div>
@@ -26,8 +31,16 @@ class InputForm extends React.Component {
   }
 
 
+  onSumbit()
+  {
+    const location = {
+      pathname: '/signup',
+      state: {}
+    };
+    this.props.history.push(location)
+  }
 }
-
+InputForm = withRouter(InputForm);
 
 const Login = () => (
   <div>
@@ -35,4 +48,4 @@ const Login = () => (
     <InputForm />
   </div>
 )
-export default Login
+export default Login;
