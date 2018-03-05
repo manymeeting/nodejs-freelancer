@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import RouterExample from './RouterExample';
+import { Button } from 'react-bootstrap';
+import TopNav from './topnav';
+import Login from './login'
+import {
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <RouterExample />
+      <div>
+        <TopNav />
+        <Switch>
+          <Route exact path='/' component={Login}/>
+          <Route path='/login' component={Login}/>
+          <Route path='/home' component={Login}/>
+        </Switch>
       </div>
     );
   }
