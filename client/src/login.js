@@ -32,6 +32,7 @@ class InputForm extends React.Component {
 const Login = () => (
   <div>
     <p>Login</p>
+    <InputForm />
   </div>
 )
 export default Login
