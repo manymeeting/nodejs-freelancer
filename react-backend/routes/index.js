@@ -9,6 +9,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/api_getuser', api_users.getUser);
+router.get('/api_auth_user', api_users.validateUser);
+
 
 
 module.exports = router;
