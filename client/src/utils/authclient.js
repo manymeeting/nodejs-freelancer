@@ -4,25 +4,10 @@ export default class ClientAuthService {
     constructor(domain) {
         this.domain = domain || 'http://localhost:3000' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
-        this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
     }
 
-    login(username, password) {
-        // Get a token from api server using the fetch api
-        return this.fetch(`${this.domain}/login`, {
-            method: 'POST',
-            body: JSON.stringify({
-                username,
-                password
-            })
-        }).then(res => {
-            this.setToken(res.token) // Setting the token in localStorage
-            return Promise.resolve(res);
-        })
-    }
-
-    loggedIn() {
+    isLoggedIn() {
         // Checks if there is a saved token and it's still valid
         const token = this.getToken() // GEtting token from localstorage
         return !!token && !this.isTokenExpired(token) // handwaiving here
@@ -71,18 +56,20 @@ export default class ClientAuthService {
         }
 
         // add to HTTP Authorization header
-        if (this.loggedIn()) {
-            headers['Authorization'] = 'Bearer ' + this.getToken()
+        if (this.isLoggedIn()) {
+            headers['Authorization'] = 'Bearer ' + this.getToken();
         }
 
         return fetch(url, {
             headers,
             ...options
         })
-            .then(this._checkStatus)
-            .then(response => response.json())
+        .then(this._checkStatus)
+        .then(response => response.json());
     }
 
+
+    // This function is necessary since fetch() by default considers error code like 404, 500 as success.  
     _checkStatus(response) {
         // raises an error in case response status is not a success
         if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
