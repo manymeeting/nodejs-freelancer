@@ -2,15 +2,9 @@ var express = require('express');
 var router = express.Router();
 var api_users = require('../api/api_users');
 
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 router.get('/api_getuser', api_users.getUser);
-router.get('/api_auth_user', api_users.validateUser);
-
+router.post('/api_auth_user', api_users.validateUser);
+router.put('/api_add_user', api_users.addUser);
 
 
 module.exports = router;
