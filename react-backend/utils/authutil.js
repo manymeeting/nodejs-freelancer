@@ -13,7 +13,7 @@ module.exports.verifyToken = function(token)
 	return null;
 }
 
-module.exports.generateToken = function (data, expire) {
+module.exports.generateToken = function (data, expire = config.jwt.expiresIn) {
     var secret = config.jwt.secret;
 	var token = jwt.sign(
 		data,
