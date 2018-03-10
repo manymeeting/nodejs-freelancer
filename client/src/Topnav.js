@@ -1,10 +1,7 @@
 import React from 'react'
 import {
-  Route,
   Link
 } from 'react-router-dom';
-import {Nav, NavItem} from 'react-bootstrap';
-
 import './css/nav.css';
 
 import logo from './images/logo-565.png';
@@ -17,7 +14,7 @@ class TopNav extends React.Component {
   {
     return (
       <nav className="fl-top-nav navbar navbar-expand-lg navbar-light bg-light">
-        <div className="navbar-brand"><img className="fl-top-nav-logo" src={logo} /></div>
+        <div className="navbar-brand"><img alt="logo" className="fl-top-nav-logo" src={logo} /></div>
 
         <div className="fl-top-nav-links collapse navbar-collapse">
           <ul className="navbar-nav mr-auto">
@@ -28,7 +25,7 @@ class TopNav extends React.Component {
         </div>
 
         <div className="fl-top-user-info">
-          <span className="fl-top-user-avatar"><img src={avatar} /></span>
+          <span className="fl-top-user-avatar"><img  alt="avatar" src={avatar} /></span>
           <span className="fl-top-user-name"></span>
         </div>
       </nav>

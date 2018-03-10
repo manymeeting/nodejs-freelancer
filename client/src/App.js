@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import TopNav from './Topnav';
 import Login from './Login'
 import {
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 
 class App extends Component {
