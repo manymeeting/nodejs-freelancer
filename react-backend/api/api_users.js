@@ -1,16 +1,17 @@
 var dbUtil = require('../utils/dbutil');
 var authUtil = require('../utils/authUtil');
 
+
+const TABLE_NAME = ' ' + dbUtil.getDBName() + ".users" + ' ';
+
 module.exports.getUser = function (req, res, next) {
 	var connection = dbUtil.getDBConnection();
 
 	var result = {};
-	connection.query('SELECT * from cmpefreelancer.users where id = ? ',[1] , function(err, rows, fields) {
-	  if (err) {
-	  	connection.end();
-	  	console.log(err);
-	  	throw err;	
-	  }
+	
+	connection.query('SELECT * from ' + TABLE_NAME + ' where id = ? ',[1] , function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+
 	  console.log('The result is: ', rows[0].name);
 	  result.name = rows[0].name;
 	  res.type('json');
@@ -25,9 +26,9 @@ module.exports.validateUser = function (req, res, next) {
 	var password = req.body.password;
 
 	var connection = dbUtil.getDBConnection();
-	console.log(req.body);
-	connection.query('SELECT * FROM cmpefreelancer.users WHERE email = ? and password = ? ',[email, password] , function(err, rows, fields) {
-	  if (err) throw err;
+
+	connection.query('SELECT * FROM  ' + TABLE_NAME + '  WHERE email = ? and password = ? ',[email, password] , function(err, rows, fields) {
+	   dbUtil.handleError(connection, err);
 
 	  if(!rows.length > 0)
 	  {
@@ -63,7 +64,6 @@ module.exports.addUser = function (req, res, next) {
 		email: "",
 		password: "",
 		username: "",
-		skill: "",
 		avatarurl: "",
 		phone: "",
 		about: "",
@@ -74,9 +74,21 @@ module.exports.addUser = function (req, res, next) {
 
 	var connection = dbUtil.getDBConnection();
 	var result = {};
-	
+	connection.query('INSERT INTO ' + TABLE_NAME + '(name, email, password, avatarurl, phone, about, skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
+		[userData.email, userData.password, userData.username, userData.avatarurl, userData.phone, userData.about, userData.skills] , 
+		function(err, rows, fields) {
+		  dbUtil.handleError(connection, err);
+		  
+		  console.log('The result is: ', rows[0]);
+		  result = rows[0];
+		  res.type('json');
+		  res.send(JSON.stringify(result));
+		  connection.end();
+		  return;
+	});
 
 	connection.end();
 }
+
 
 

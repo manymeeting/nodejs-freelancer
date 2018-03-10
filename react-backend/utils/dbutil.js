@@ -18,3 +18,19 @@ module.exports.getDBConnection = function () {
 	
 	return connection;
 }
+
+
+module.exports.handleError = function(conn, err) {
+	if(err)
+	{
+		conn.end();
+	  	console.log(err);
+	  	throw err;
+	}
+}
+
+
+module.exports.getDBName = function()
+{
+	return config.get('dbConfig.user');
+}
