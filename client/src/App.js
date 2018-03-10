@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import TopNav from './topnav';
-import Login from './login'
+import TopNav from './Topnav';
+import Login from './Login'
 import {
   Switch,
   Route,
