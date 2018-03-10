@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TopNav from './Topnav';
-import Login from './Login'
+import Login from './Login';
+import Home from './Home';
 import {
   Switch,
   Route
@@ -14,7 +15,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Login}/>
           <Route path='/login' component={Login}/>
-          <Route path='/home' component={Login}/>
+          <Route path='/home' component={Home}/>
         </Switch>
       </div>
     );

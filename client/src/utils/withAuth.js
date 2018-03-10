@@ -3,9 +3,9 @@ import ClientAuthService from './ClientAuthService';
 import {withRouter} from 'react-router';
 
 export default function withAuth(AuthComponent) {
-    const Auth = new AuthService();
+    const Auth = new ClientAuthService();
 
-    class AuthWrapped extends Component {
+    var AuthWrapped = class AuthWrapped extends Component {
         constructor() {
 		    super();
 		    this.state = {
@@ -42,5 +42,5 @@ export default function withAuth(AuthComponent) {
 		    }
 		}
     }
-    return withRouter(AuthWrapped);;
+    return withRouter(AuthWrapped);
 }

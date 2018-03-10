@@ -5,10 +5,10 @@ import {
 } from 'react-router-dom';
 import {withRouter} from 'react-router';
 import withAuth from './utils/withAuth';
-import ClientAuthService from './utils/authclient';
+import ClientAuthService from './utils/ClientAuthService';
 
 import update from 'react-addons-update';
-const Auth = new AuthService();
+const Auth = new ClientAuthService();
 
 class ProjectListContainer extends React.Component {
 
