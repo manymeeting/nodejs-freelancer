@@ -1,10 +1,18 @@
 import decode from 'jwt-decode';
-export default class ClientAuthService {
+class ClientAuthService {
+
     // Initializing important variables
     constructor(domain) {
+        if(ClientAuthService.instance !== null)
+        {
+            return instance;
+        }   
+
         this.domain = domain || 'http://localhost:3000' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.getProfile = this.getProfile.bind(this)
+
+        ClientAuthService.instance = this;
     }
 
     isLoggedIn() {
@@ -81,3 +89,25 @@ export default class ClientAuthService {
         }
     }
 }
+
+// Define an instance static object of the class
+Object.defineProperty(ClientAuthService, 'instance', {
+    value: null,
+    writable : true,
+    enumerable : true,
+    configurable : false
+});
+
+ClientAuthService.getInstance = function(domain)
+{
+    if(ClientAuthService.instance !== null)
+    {
+        return ClientAuthService.instance;
+    }
+    else
+    {
+        return new ClientAuthService(domain);
+    }
+}
+
+export default ClientAuthService;
