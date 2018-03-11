@@ -51,3 +51,48 @@ module.exports.getProjectDetails = function (req, res, next) {
 	});
 }
 
+module.exports.getAllProjBiddedByUser = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var result = {};
+	var userID = req.query.id;
+
+	var queryStr = 
+		' select * from' + TABLE_PROJCETS + 
+		' left join' + TABLE_BIDS + 'on projects.id = bids.project_id ' +
+		' where bids.bidder_id = ?';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+
+	  result = rows;
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  connection.end();
+	  return;
+	});
+}
+
+module.exports.getAllProjPublishedByUser = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var result = {};
+	var userID = req.query.id;
+
+	var queryStr = 
+		' select * from' + TABLE_PROJCETS + 
+		' where projects.employer_id = ?';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+
+	  result = rows;
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  connection.end();
+	  return;
+	});
+}
+
