@@ -1,11 +1,13 @@
 import decode from 'jwt-decode';
+
+// A singleton class used for fetching data from server
 class ClientAuthService {
 
     // Initializing important variables
     constructor(domain) {
         if(ClientAuthService.instance !== null)
         {
-            return instance;
+            return ClientAuthService.instance;
         }   
 
         this.domain = domain || 'http://localhost:3000' // API server domain
