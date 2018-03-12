@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import TopNav from './Topnav';
-import Login from './Login';
-import Home from './Home';
 import {
   Switch,
   Route
 } from 'react-router-dom';
+
+// views
+import TopNav from './Topnav';
+import Login from './Login';
+import Home from './Home';
 
 class App extends Component {
   render() {

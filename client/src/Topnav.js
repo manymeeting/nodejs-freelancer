@@ -18,7 +18,7 @@ class TopNav extends React.Component {
 
         <div className="fl-top-nav-links collapse navbar-collapse">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item"><Link to='/'>Home</Link></li>
+            <li className="nav-item"><Link to='/home'>Home</Link></li>
             <li className="nav-item"><Link to='/signup'>Sign Up</Link></li>
             <li className="nav-item"><Link to='/dashboard'>Dashboard</Link></li>
           </ul>

@@ -13,9 +13,6 @@ import reducer from './reducers/RootReducer';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
-console.log("initial redux state: ");
-console.log(store.getState());
-
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
