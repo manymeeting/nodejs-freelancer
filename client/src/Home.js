@@ -3,28 +3,17 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import {withRouter} from 'react-router';
 import withAuth from './utils/withAuth';
-import ClientAuthService from './utils/ClientAuthService';
 
-import update from 'react-addons-update';
-const Auth = new ClientAuthService();
-
-class ProjectListContainer extends React.Component {
-
-}
-
-
-class ProjectList extends React.Component {
-
-}
+// views
+import AllOpenProjListContainer from "./AllOpenProjListContainer";
 
 const Home = () => (
   <div>
     <h1>Home</h1>
-    <ProjectListContainer />
+    <AllOpenProjListContainer />
   </div>
 )
 
-
-export default withAuth(Home); // home page is open to registered users only
+// home page is open to registered users only
+export default withAuth(Home);
