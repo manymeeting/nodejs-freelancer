@@ -25,7 +25,7 @@ class AllOpenProjListContainer extends React.Component {
 	render()
 	{
 
-		console.log(this.props.allOpenProjects);		
+		console.log(JSON.stringify(this.props.allOpenProjects, null, 2));		
 		return (
 			<div>
 				<p>Here I am</p>
