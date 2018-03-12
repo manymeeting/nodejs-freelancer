@@ -19,7 +19,7 @@ class AllOpenProjList extends React.Component {
 							<li key={project.id}>
 								<div className="project-info-container">
 									<div>
-										<h3 className="project-title">{project.name}</h3>
+										<h3 className="project-title"><Link to={"/project_details?id=" + project.id} >{project.name}</Link></h3>
 										<p className="project-desc">{project.description}</p>
 										<p className="project-skills">{project.skills}</p>
 									</div>
