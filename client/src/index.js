@@ -5,14 +5,16 @@ import './css/bootstrap.css';
 import {
   BrowserRouter as Router
 } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import reducer from './reducers/RootReducer';
 
 
-const store = createStore(reducer, {});
+const store = createStore(reducer, applyMiddleware(thunk));
 
-console.log(store.getState())
+console.log("initial redux state: ");
+console.log(store.getState());
 
 ReactDOM.render(
 	<Provider store={store}>
