@@ -4,30 +4,13 @@ var authUtil = require('../utils/authUtil');
 
 const TABLE_NAME = ' ' + dbUtil.getDBName() + ".users" + ' ';
 
-module.exports.getUser = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
-	var result = {};
-	
-	connection.query('SELECT * from ' + TABLE_NAME + ' where id = ? ',[1] , function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
-
-	  console.log('The result is: ', rows[0].name);
-	  result.name = rows[0].name;
-	  res.type('json');
-	  res.send(JSON.stringify(result));
-	  connection.end();
-	  return;
-	});
-}
-
 module.exports.validateUser = function (req, res, next) {
 	var email = req.body.email;
 	var password = req.body.password;
 
 	var connection = dbUtil.getDBConnection();
 
-	connection.query('SELECT * FROM  ' + TABLE_NAME + '  WHERE email = ? and password = ? ',[email, password] , function(err, rows, fields) {
+	connection.query('SELECT * FROM  ' + TABLE_NAME + '  WHERE user_email = ? and user_password = ? ',[email, password] , function(err, rows, fields) {
 	   dbUtil.handleError(connection, err);
 
 	  if(!rows.length > 0)
@@ -74,7 +57,7 @@ module.exports.addUser = function (req, res, next) {
 
 	var connection = dbUtil.getDBConnection();
 	var result = {};
-	connection.query('INSERT INTO ' + TABLE_NAME + '(name, email, password, avatarurl, phone, about, skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
+	connection.query('INSERT INTO ' + TABLE_NAME + '(user_name, user_email, user_password, user_avatarurl, user_phone, user_about, user_skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
 		[userData.email, userData.password, userData.username, userData.avatarurl, userData.phone, userData.about, userData.skills] , 
 		function(err, rows, fields) {
 		  dbUtil.handleError(connection, err);

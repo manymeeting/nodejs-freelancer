@@ -16,16 +16,16 @@ class AllOpenProjList extends React.Component {
 				<ul>
 					{
 						allOpenProjects.map((project) =>
-							<li key={project.id}>
+							<li key={project.project_id}>
 								<div className="project-info-container">
 									<div>
-										<h3 className="project-title"><Link to={"/project_details/" + project.id} >{project.name}</Link></h3>
-										<p className="project-desc">{project.description}</p>
-										<p className="project-skills">{project.skills}</p>
+										<h3 className="project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></h3>
+										<p className="project-desc">{project.project_description}</p>
+										<p className="project-skills">{project.project_skills}</p>
 									</div>
 									<div>
 										<p className="project-budget-range">{project.budget_range}</p>
-										<p className="project-employer-name">{project.name}</p>
+										<p className="project-employer-name">{project.user_name}</p>
 									</div>
 
 								</div>

@@ -4,7 +4,6 @@ var api_users = require('../api/api_users');
 var api_projects = require('../api/api_projects');
 var api_bids = require('../api/api_bids');
 
-router.get('/api_getuser', api_users.getUser);
 router.post('/api_auth_user', api_users.validateUser);
 router.put('/api_add_user', api_users.addUser);
 

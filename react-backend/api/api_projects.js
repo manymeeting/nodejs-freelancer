@@ -12,7 +12,7 @@ module.exports.getAllOpenProjects = function (req, res, next) {
 	var result = {};
 	var queryStr = 
 		' select * from' + TABLE_PROJCETS + 
-		' left join' + TABLE_USERS + 'on projects.employer_id = users.id ' +
+		' left join' + TABLE_USERS + 'on projects.employer_id = users.user_id ' +
 		' where projects.status = ?' +
 		' order by projects.published_date desc';
 	
@@ -36,8 +36,8 @@ module.exports.getProjectDetails = function (req, res, next) {
 	console.log("projectID: " + projectID);
 	var queryStr = 
 		' select * from' + TABLE_PROJCETS + 
-		' left join' + TABLE_USERS + 'on projects.employer_id = users.id ' +
-		' where projects.id = ?';
+		' left join' + TABLE_USERS + 'on projects.employer_id = users.user_id ' +
+		' where projects.project_id = ?';
 	
 	console.log(queryStr);
 	connection.query(queryStr,[projectID], function(err, rows, fields) {
@@ -59,7 +59,7 @@ module.exports.getAllProjBiddedByUser = function (req, res, next) {
 
 	var queryStr = 
 		' select * from' + TABLE_PROJCETS + 
-		' left join' + TABLE_BIDS + 'on projects.id = bids.project_id ' +
+		' left join' + TABLE_BIDS + 'on projects.project_id = bids.project_id ' +
 		' where bids.bidder_id = ?';
 	
 	console.log(queryStr);
