@@ -24,12 +24,10 @@ class AllOpenProjListContainer extends React.Component {
 
 	render()
 	{
-
-		console.log(JSON.stringify(this.props.allOpenProjects, null, 2));		
 		return (
 			<div>
 				<p>Here I am</p>
-				<AllOpenProjList allOpenProjects={this.props.allOpenProjects}/>		
+				<AllOpenProjList />		
 			</div>
 		);
 	}
