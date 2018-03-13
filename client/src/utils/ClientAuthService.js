@@ -47,8 +47,12 @@ class ClientAuthService {
         return localStorage.getItem('fl_jwt_token')
     }
 
+    login(idToken) {
+        this.setToken(idToken);
+    }
+
     logout() {
-        // Clear user token and profile data from localStorage
+        
         localStorage.removeItem('fl_jwt_token');
     }
 
