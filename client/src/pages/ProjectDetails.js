@@ -8,7 +8,7 @@ import {withRouter} from 'react-router';
 
 // views
 import ProjBasicInfoContainer from "../components/ProjBasicInfoContainer";
-
+import ProjBidListContainer from "../components/ProjBidListContainer";
 
 class ProjectDetails extends React.Component {
 	constructor(props)
@@ -23,6 +23,7 @@ class ProjectDetails extends React.Component {
 			<div>
 			    <h1>Project Details</h1>
 			    <Route path={`${this.props.match.path}/:id`} component={ProjBasicInfoContainer} />
+			    <Route path={`${this.props.match.path}/:id`} component={ProjBidListContainer} />
 			</div>
 		) 
 	}
