@@ -5,10 +5,10 @@ import {
 } from 'react-router-dom';
 
 // views
-import TopNav from './Topnav';
-import Login from './Login';
-import Home from './Home';
-import ProjectDetails from './ProjectDetails';
+import TopNav from './components/Topnav';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import ProjectDetails from './pages/ProjectDetails';
 
 class App extends Component {
   render() {

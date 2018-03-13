@@ -1,6 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import ClientAuthService from './utils/ClientAuthService';
+import ClientAuthService from '../utils/ClientAuthService';
 import update from 'react-addons-update'; // ES6
 
 class InputForm extends React.Component {

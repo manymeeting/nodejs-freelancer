@@ -3,11 +3,11 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import withAuth from './utils/withAuth';
+import withAuth from '../utils/withAuth';
 import {withRouter} from 'react-router';
 
 // views
-import ProjBasicInfoContainer from "./ProjBasicInfoContainer";
+import ProjBasicInfoContainer from "../components/ProjBasicInfoContainer";
 
 
 class ProjectDetails extends React.Component {

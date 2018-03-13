@@ -3,10 +3,10 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import withAuth from './utils/withAuth';
+import withAuth from '../utils/withAuth';
 
 // views
-import AllOpenProjListContainer from "./AllOpenProjListContainer";
+import AllOpenProjListContainer from "../components/AllOpenProjListContainer";
 
 const Home = () => (
   <div>

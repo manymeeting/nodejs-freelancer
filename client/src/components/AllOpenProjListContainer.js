@@ -6,7 +6,7 @@ import {
 import { connect } from 'react-redux';
 
 // redux-actions
-import { fetchAllOpenProjects } from "./actions/AllOpenProjectActions";
+import { fetchAllOpenProjects } from "../actions/AllOpenProjectActions";
 
 // views
 import AllOpenProjList from "./AllOpenProjList";

@@ -2,10 +2,10 @@ import React from 'react'
 import {
   Link
 } from 'react-router-dom';
-import './css/nav.css';
+import '../css/nav.css';
 
-import logo from './images/logo-565.png';
-import avatar from './images/avatar-128.png';
+import logo from '../images/logo-565.png';
+import avatar from '../images/avatar-128.png';
 
 
 class TopNav extends React.Component {

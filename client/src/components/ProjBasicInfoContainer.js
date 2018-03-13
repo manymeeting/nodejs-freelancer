@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
 
 // redux-actions
-import { fetchProjBasicInfo } from "./actions/ProjectBasicInfoActions";
+import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
 
 // views
 import ProjectBasicInfo from "./ProjectBasicInfo";
