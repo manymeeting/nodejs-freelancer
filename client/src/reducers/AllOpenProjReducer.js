@@ -25,7 +25,7 @@ export default function AllOpenProjReducer(state = initialState, action) {
   	return {
   		...state,
   		loading: false,
-  		items: state.items.concat(action.payload)
+  		items: action.payload
   	};
   case FETCH_ALL_OPEN_PROJECTS_FAILURE:
   	return {
