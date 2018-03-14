@@ -1,10 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
 import update from 'react-addons-update'; // ES6
-
-// redux-actions
-import { validateUser } from "../actions/ValidateUserActions";
+import ClientAuthService from '../utils/ClientAuthService';
 
 class InputForm extends React.Component {
   constructor(props)
@@ -53,19 +50,27 @@ class InputForm extends React.Component {
   {
     var email = this.state.input.email;
     var password = this.state.input.password;
-    
-    this.props.validateUser(email, password, this.props.history);
+    var clientAuthService = new ClientAuthService();
+
+    clientAuthService.fetch('/api_auth_user', {
+        method: 'POST',
+        body: JSON.stringify({
+            email,
+            password
+        })
+    }).then(data => {
+        console.log("Login Success!");
+        // set token into localstorage for client auth services
+        clientAuthService.login(data.token);
+        // redirect to home page
+        this.props.history.push("/home");
+    }).catch(error => {
+        console.log("Login Failed: " + error);
+    });
   }
 
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    validateUser: (email, password, history) => dispatch(validateUser(email, password, history))
-  };
-}
-
-InputForm = connect(null, mapDispatchToProps)(InputForm)
 InputForm = withRouter(InputForm);
 
 const Login = () => (
