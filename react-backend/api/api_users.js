@@ -58,19 +58,15 @@ module.exports.addUser = function (req, res, next) {
 	var connection = dbUtil.getDBConnection();
 	var result = {};
 	connection.query('INSERT INTO ' + TABLE_NAME + '(user_name, user_email, user_password, user_avatarurl, user_phone, user_about, user_skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
-		[userData.email, userData.password, userData.username, userData.avatarurl, userData.phone, userData.about, userData.skills] , 
+		[userData.username, userData.email, userData.password, userData.avatarurl, userData.phone, userData.about, userData.skills] , 
 		function(err, rows, fields) {
 		  dbUtil.handleError(connection, err);
-		  
-		  console.log('The result is: ', rows[0]);
-		  result = rows[0];
 		  res.type('json');
+		  result = {status: "success"};
 		  res.send(JSON.stringify(result));
 		  connection.end();
 		  return;
 	});
-
-	connection.end();
 }
 
 
