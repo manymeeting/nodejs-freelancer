@@ -1,7 +1,9 @@
 import {
   VALIDATE_USER_BEGIN,
   VALIDATE_USER_SUCCESS,
-  VALIDATE_USER_FAILURE
+  VALIDATE_USER_FAILURE,
+  INVALIDATE_USER_SUCCESS
+
 } from '../actions/ValidateUserActions';
 
 
@@ -18,8 +20,8 @@ export default function UserValidationReducer(state = initialState, action) {
   case VALIDATE_USER_BEGIN:
   	return {
   		...state,
-        loading: true,
-        error: null
+      loading: true,
+      error: null
   	}
   case VALIDATE_USER_SUCCESS:
   	return {
@@ -34,6 +36,11 @@ export default function UserValidationReducer(state = initialState, action) {
       error: action.payload,
       isLoggedIn: false
     };
+  case INVALIDATE_USER_SUCCESS:
+    return {
+      ...state,
+      isLoggedIn: false
+    }
   default:
     return state;
   }

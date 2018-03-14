@@ -3,14 +3,15 @@ import ClientAuthService from '../utils/ClientAuthService';
 export const VALIDATE_USER_BEGIN   = 'VALIDATE_USER_BEGIN';
 export const VALIDATE_USER_SUCCESS = 'VALIDATE_USER_SUCCESS';
 export const VALIDATE_USER_FAILURE = 'VALIDATE_USER_FAILURE';
+export const INVALIDATE_USER_SUCCESS = 'INVALIDATE_USER_SUCCESS';
 
 export const validateUserBegin = () => ({
   type: VALIDATE_USER_BEGIN
 });
 
-export const validateUserSuccess = projects => ({
+export const validateUserSuccess = data => ({
   type: VALIDATE_USER_SUCCESS,
-  payload: projects
+  payload: data
 });
 
 export const validateUserError = error => ({
@@ -18,6 +19,21 @@ export const validateUserError = error => ({
   payload: error
 });
 
+export const invalidateUserSuccess = data => ({
+  type: INVALIDATE_USER_SUCCESS,
+  payload: null
+});
+
+export function invalidateUser(history) {
+	var clientAuthService = new ClientAuthService();
+
+	return dispatch => {
+		clientAuthService.logout();
+		// redirect to home page
+		dispatch(invalidateUserSuccess());
+	    history.push("/login");
+	};
+}
 
 export function validateUser(email, password, history) {
 	
