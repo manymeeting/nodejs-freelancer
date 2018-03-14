@@ -9,12 +9,17 @@ import TopNav from './components/Topnav';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import ProjectDetails from './pages/ProjectDetails';
+import ClientAuthService from './utils/ClientAuthService';
 
 class App extends Component {
   render() {
+    var clientAuthService = new ClientAuthService(); 
     return (
       <div>
-        <TopNav />
+        {
+          clientAuthService.isLoggedIn() && 
+          <TopNav />
+        }
         <Switch>
           <Route exact path='/' component={Login}/>
           <Route path='/login' component={Login}/>
