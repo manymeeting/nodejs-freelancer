@@ -51,3 +51,34 @@ module.exports.getAveBidPriceOnProject = function (req, res, next) {
 	});
 }
 
+module.exports.addBidOnProject = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var params = {
+		projectID: "",
+		bidderID: "",
+		employerID: "",
+		bidPeriod: "",
+		bidDate: "",
+		bidPrice: ""
+	};
+
+	var result = {};
+	var projectID = req.query.id;
+	var queryStr = 
+		'insert into ' + TABLE_BIDS +
+		'(project_id, bidder_id, employer_id, bid_period, bid_date, bid_price)' + 
+		'values(?,?,?,?,?,?)';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[params.projectID, params.bidderID, params.employerID, params.bidPeriod, params.bidDate, params.bidPrice], function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+	  
+	  result = {status: "success"};
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  connection.end();
+	  return;
+	});
+}
+
