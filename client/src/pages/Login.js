@@ -46,8 +46,9 @@ class InputForm extends React.Component {
   }
 
 
-  onSumbit()
+  onSumbit(e)
   {
+    e.preventDefault();
     var email = this.state.input.email;
     var password = this.state.input.password;
     var clientAuthService = new ClientAuthService();
