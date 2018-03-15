@@ -54,6 +54,7 @@ module.exports.getAveBidPriceOnProject = function (req, res, next) {
 module.exports.addBidOnProject = function (req, res, next) {
 	var connection = dbUtil.getDBConnection();
 
+	console.log("here");
 	var params = {
 		projectID: "",
 		bidderID: "",
@@ -63,7 +64,6 @@ module.exports.addBidOnProject = function (req, res, next) {
 		bidPrice: ""
 	};
 
-	var result = {};
 	var projectID = req.query.id;
 	var queryStr = 
 		'insert into ' + TABLE_BIDS +
@@ -71,12 +71,11 @@ module.exports.addBidOnProject = function (req, res, next) {
 		'values(?,?,?,?,?,?)';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[params.projectID, params.bidderID, params.employerID, params.bidPeriod, params.bidDate, params.bidPrice], function(err, rows, fields) {
+	connection.query(queryStr,[params.projectID, params.bidderID, params.employerID, params.bidPeriod, params.bidDate, params.bidPrice], function(err, results, fields) {
 	  dbUtil.handleError(connection, err);
 	  
-	  result = {status: "success"};
 	  res.type('json');
-	  res.send(JSON.stringify(result));
+	  res.send(JSON.stringify({insertID: results.insertId}));
 	  connection.end();
 	  return;
 	});
