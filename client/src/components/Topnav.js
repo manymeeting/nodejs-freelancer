@@ -37,6 +37,7 @@ class TopNav extends React.Component {
             <li className="nav-item"><Link to='/home'>Home</Link></li>
             <li className="nav-item"><Link to='/signup'>Sign Up</Link></li>
             <li className="nav-item"><Link to='/dashboard/published'>Dashboard</Link></li>
+            <li className="nav-item"><Link to='/post_project'>Post Project</Link></li>
           </ul>
         </div>
 
