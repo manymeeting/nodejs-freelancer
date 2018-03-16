@@ -2,7 +2,7 @@ var dbUtil = require('../utils/dbutil');
 var authUtil = require('../utils/authUtil');
 
 
-const TABLE_NAME = ' ' + dbUtil.getDBName() + ".users" + ' ';
+const TABLE_USERS = ' ' + dbUtil.getDBName() + ".users" + ' ';
 
 module.exports.validateUser = function (req, res, next) {
 	var email = req.body.email;
@@ -10,7 +10,7 @@ module.exports.validateUser = function (req, res, next) {
 
 	var connection = dbUtil.getDBConnection();
 
-	connection.query('SELECT * FROM  ' + TABLE_NAME + '  WHERE user_email = ? and user_password = ? ',[email, password] , function(err, rows, fields) {
+	connection.query('SELECT * FROM  ' + TABLE_USERS + '  WHERE user_email = ? and user_password = ? ',[email, password] , function(err, rows, fields) {
 	   dbUtil.handleError(connection, err);
 
 	  if(!rows.length > 0)
@@ -42,6 +42,27 @@ module.exports.validateUser = function (req, res, next) {
 	});
 }
 
+module.exports.getUser = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var result = {};
+	var userID = req.query.id;
+
+	var queryStr = 
+		' select * from' + TABLE_USERS + 
+		' where users.user_id = ?';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+
+	  result = rows;
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  connection.end();
+	  return;
+	});
+}
 
 module.exports.addUser = function (req, res, next) {
 	var userData = {
@@ -58,7 +79,7 @@ module.exports.addUser = function (req, res, next) {
 
 	var connection = dbUtil.getDBConnection();
 	var result = {};
-	connection.query('INSERT INTO ' + TABLE_NAME + '(user_name, user_email, user_password, user_avatarurl, user_phone, user_about, user_skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
+	connection.query('INSERT INTO ' + TABLE_USERS + '(user_name, user_email, user_password, user_avatarurl, user_phone, user_about, user_skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
 		[userData.username, userData.email, userData.password, userData.avatarurl, userData.phone, userData.about, userData.skills] , 
 		function(err, rows, fields) {
 		  dbUtil.handleError(connection, err);
