@@ -96,3 +96,32 @@ module.exports.getAllProjPublishedByUser = function (req, res, next) {
 	});
 }
 
+module.exports.postProject = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var params = {
+		projectName: "",
+		employerID: "",
+		projectDescription: "",
+		projectSkills: "",
+		budgeRange: "",
+		publishedDate: "",
+		status: project_codes.PROJECT_STATUS.OPEN
+	};
+
+	params = Object.assign(params, req.body);
+	var queryStr = 
+		'insert into ' + TABLE_PROJCETS +
+		'(project_name, employer_id, project_description, project_skills, budget_range, published_date, status)' + 
+		'values(?,?,?,?,?,?)';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[params.projectName, params.employerID, params.projectDescription, params.projectSkills, params.budgeRange, params.publishedDate, params.status], function(err, results, fields) {
+	  dbUtil.handleError(connection, err);
+	  
+	  res.type('json');
+	  res.send(JSON.stringify({insertID: results.insertId}));
+	  connection.end();
+	  return;
+	});
+}
