@@ -54,7 +54,6 @@ module.exports.getAveBidPriceOnProject = function (req, res, next) {
 module.exports.addBidOnProject = function (req, res, next) {
 	var connection = dbUtil.getDBConnection();
 
-	console.log("here");
 	var params = {
 		projectID: "",
 		bidderID: "",
@@ -64,7 +63,7 @@ module.exports.addBidOnProject = function (req, res, next) {
 		bidPrice: ""
 	};
 
-	var projectID = req.query.id;
+	params = Object.assign(params, req.body);
 	var queryStr = 
 		'insert into ' + TABLE_BIDS +
 		'(project_id, bidder_id, employer_id, bid_period, bid_date, bid_price)' + 
