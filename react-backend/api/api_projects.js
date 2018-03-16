@@ -113,7 +113,7 @@ module.exports.postProject = function (req, res, next) {
 	var queryStr = 
 		'insert into ' + TABLE_PROJCETS +
 		'(project_name, employer_id, project_description, project_skills, budget_range, published_date, status)' + 
-		'values(?,?,?,?,?,?)';
+		'values(?,?,?,?,?,?,?)';
 	
 	console.log(queryStr);
 	connection.query(queryStr,[params.projectName, params.employerID, params.projectDescription, params.projectSkills, params.budgeRange, params.publishedDate, params.status], function(err, results, fields) {
