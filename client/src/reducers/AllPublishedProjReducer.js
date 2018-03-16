@@ -12,7 +12,7 @@ const initialState = {
 };
 
 
-export default function AllOpenProjReducer(state = initialState, action) {
+export default function AllPublishedProjReducer(state = initialState, action) {
   switch (action.type) {
 
   case FETCH_ALL_PUBLISHED_PROJECT_BEGIN:
