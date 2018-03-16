@@ -7,6 +7,7 @@ import withAuth from '../utils/withAuth';
 import {withRouter} from 'react-router';
 
 // views
+import AllPublishedProjListContainer from "../components/AllPublishedProjListContainer";
 
 class Dashboard extends React.Component {
 	constructor(props)
@@ -19,8 +20,8 @@ class Dashboard extends React.Component {
 		return(
 			<div>
 			    <h1>Dashboard</h1>
-			    <Route path={`${this.props.match.path}/published`} component={ProjBasicInfoContainer} />
-			    <Route path={`${this.props.match.path}/bidded`} component={ProjBidListContainer} />
+			    <Route path={`${this.props.match.path}/published`} component={AllPublishedProjListContainer} />
+			    {/*<Route path={`${this.props.match.path}/bidded`} component={ProjBidListContainer} />*/}
 			</div>
 		) 
 	}
