@@ -7,7 +7,7 @@ import ProjectDetailsReducer from './ProjectDetailsReducer';
 import UserInfoReducer from './UserInfoReducer';
 
 export default combineReducers({
-	userInfoReducer: UserInfoReducer,
+	userInfo: UserInfoReducer,
 	publishedProjects: PublishedProjReducer,
 	biddedProjects: BiddedProjReducer,
 	allOpenProjects: AllOpenProjReducer,
