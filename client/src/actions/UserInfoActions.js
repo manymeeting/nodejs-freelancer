@@ -31,6 +31,9 @@ export function fetchUserInfo(id) {
 		        dispatch(fetchUserInfoSuccess(data));
 		        return true;
       		})
-      		.catch(error => dispatch(fetchUserInfoError(error)));
+      		.catch(error => {
+      			dispatch(fetchUserInfoError(error));
+      			throw error;	
+      		});
 	}
 }

@@ -30,6 +30,9 @@ export function fetchAllOpenProjects() {
 		        dispatch(fetchAllOpenProjSuccess(data));
 		        return true;
       		})
-      		.catch(error => dispatch(fetchAllOpenProjError(error)));
+      		.catch(error => {
+      			dispatch(fetchAllOpenProjError(error));
+      			throw error;
+      		});
 	}
 }

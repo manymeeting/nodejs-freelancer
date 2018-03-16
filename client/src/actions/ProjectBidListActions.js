@@ -30,6 +30,9 @@ export function fetchProjBidList(id) {
 		        dispatch(fetchProjBidListSuccess(data));
 		        return true;
       		})
-      		.catch(error => dispatch(fetchProjBidListError(error)));
+      		.catch(error => {
+      			dispatch(fetchProjBidListError(error));
+      			throw error;
+      		});
 	}
 }

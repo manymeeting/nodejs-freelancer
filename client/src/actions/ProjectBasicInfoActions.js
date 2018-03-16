@@ -30,6 +30,9 @@ export function fetchProjBasicInfo(id) {
 		        dispatch(fetchProjBasicInfoSuccess(data));
 		        return true;
       		})
-      		.catch(error => dispatch(fetchProjBasicInfoError(error)));
+      		.catch(error => {	
+      			dispatch(fetchProjBasicInfoError(error));
+      			throw error;
+      		});
 	}
 }

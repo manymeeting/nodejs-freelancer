@@ -29,6 +29,9 @@ export function fetchAllPublishedProject(id) {
 		        dispatch(fetchAllPublishedProjectSuccess(data));
 		        return true;
       		})
-      		.catch(error => dispatch(fetchAllPublishedProjectError(error)));
+      		.catch(error => {
+      			dispatch(fetchAllPublishedProjectError(error));
+      			throw error;	
+      		});
 	}
 }

@@ -43,6 +43,9 @@ export function addBidOnProject(params) {
 		        }));
 		        return true;
       		})
-      		.catch(error => dispatch(addBidOnProjectError(error)));
+      		.catch(error => {
+      			dispatch(addBidOnProjectError(error));
+      			throw error;
+      		});
 	}
 }
