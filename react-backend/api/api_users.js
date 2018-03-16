@@ -19,16 +19,17 @@ module.exports.validateUser = function (req, res, next) {
 	  	connection.end();
 	  	return;
 	  }
-	  console.log('The validated user is: ', rows[0].name);
+
+	  console.log('The validated user is: ', rows[0].user_name);
 
 	  var result = {};
-	  result.name = rows[0].name;
-	  result.id = rows[0].id;
+	  result.user_name = rows[0].user_name;
+	  result.user_id = rows[0].user_id;
 
 	  // validation passed, send jwt back to client
 	  var token = authUtil.generateToken({
 	  	user: {
-	  		id: result.id
+	  		user_id: result.user_id
 	  	}
 	  });
 
