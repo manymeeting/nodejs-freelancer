@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import ClientAuthService from './ClientAuthService';
 import {withRouter} from 'react-router';
+import { connect } from 'react-redux';
+// redux-actions
+import { fetchUserInfo } from "../actions/UserInfoActions";
 
 export default function withAuth(AuthComponent) {
     const Auth = new ClientAuthService();
 
     var AuthWrapped = class AuthWrapped extends Component {
-        constructor() {
-		    super();
-		    this.state = {
-		        user: null
-		    }
+        constructor(props) {
+		    super(props);   
 		}
 
 		componentWillMount() {
@@ -20,9 +20,11 @@ export default function withAuth(AuthComponent) {
 		    else {
 		        try {
 		            const profile = Auth.getProfile()
-		            this.setState({
-		                user: profile
-		            })
+		            // check if user info disappeared (in case of forced page refresh)
+		            if(!this.props.userInfo.user_id)
+		            {
+		            	this.props.fetchUserInfo(profile.user.user_id);
+		            }
 		        }
 		        catch(err){
 		            Auth.logout()
@@ -32,7 +34,7 @@ export default function withAuth(AuthComponent) {
 		}
 
 		render() {
-		    if (this.state.user) {
+		    if (this.props.userInfo.user_id) {
 		        return (
 		            <AuthComponent />
 		        );
@@ -42,5 +44,19 @@ export default function withAuth(AuthComponent) {
 		    }
 		}
     }
+
+
+	const mapDispatchToProps = (dispatch) => {
+	  return {
+	    fetchUserInfo: (id) => dispatch(fetchUserInfo(id))
+	  };
+	}
+
+	const mapStateToProps = state => ({
+		userInfo: state.userInfo
+	});
+
+	AuthWrapped = connect(mapStateToProps, mapDispatchToProps)(AuthWrapped)
+
     return withRouter(AuthWrapped);
-}
+};
