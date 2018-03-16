@@ -20,7 +20,6 @@ export const fetchAllPublishedProjectError = error => ({
 
 
 export function fetchAllPublishedProject(id) {
-	
 	var clientAuthService = new ClientAuthService();
 
 	return dispatch => {

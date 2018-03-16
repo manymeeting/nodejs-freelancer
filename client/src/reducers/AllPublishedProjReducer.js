@@ -2,7 +2,7 @@ import {
   FETCH_ALL_PUBLISHED_PROJECT_BEGIN,
   FETCH_ALL_PUBLISHED_PROJECT_SUCCESS,
   FETCH_ALL_PUBLISHED_PROJECT_FAILURE
-} from '../actions/AllPublishedProjectAction';
+} from '../actions/AllPublishedProjectActions';
 
 
 const initialState = {
@@ -18,8 +18,8 @@ export default function AllOpenProjReducer(state = initialState, action) {
   case FETCH_ALL_PUBLISHED_PROJECT_BEGIN:
   	return {
   		...state,
-        loading: true,
-        error: null
+      loading: true,
+      error: null
   	}
   case FETCH_ALL_PUBLISHED_PROJECT_SUCCESS:
   	return {
@@ -29,10 +29,10 @@ export default function AllOpenProjReducer(state = initialState, action) {
   	};
   case FETCH_ALL_PUBLISHED_PROJECT_FAILURE:
   	return {
-        ...state,
-        loading: false,
-        error: action.payload,
-        items: []
+      ...state,
+      loading: false,
+      error: action.payload,
+      items: []
     };
   default:
     return state;
