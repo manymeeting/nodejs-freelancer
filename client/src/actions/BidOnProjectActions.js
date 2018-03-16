@@ -39,7 +39,7 @@ export function addBidOnProject(params) {
 			.then(data => {
 		        dispatch(addBidOnProjectSuccess({
 		        	project_id: params.projectID,
-		        	bid_id: data.insertId
+		        	bid_id: data.insertID
 		        }));
 		        return true;
       		})
