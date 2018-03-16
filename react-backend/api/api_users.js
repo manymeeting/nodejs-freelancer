@@ -56,7 +56,7 @@ module.exports.getUser = function (req, res, next) {
 	connection.query(queryStr,[userID], function(err, rows, fields) {
 	  dbUtil.handleError(connection, err);
 
-	  result = rows;
+	  result = rows[0];
 	  res.type('json');
 	  res.send(JSON.stringify(result));
 	  connection.end();
