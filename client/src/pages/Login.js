@@ -2,6 +2,11 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import update from 'react-addons-update'; // ES6
 import ClientAuthService from '../utils/ClientAuthService';
+import { connect } from 'react-redux';
+
+// redux-actions
+import { fetchUserInfo } from "../actions/UserInfoActions";
+
 
 class InputForm extends React.Component {
   constructor(props)
@@ -60,9 +65,16 @@ class InputForm extends React.Component {
             password
         })
     }).then(data => {
-        console.log("Login Success!");
+        console.log("Validation Passed!");
         // set token into localstorage for client auth services
         clientAuthService.login(data.token);
+        console.log(clientAuthService.getProfile());
+        return clientAuthService.getProfile();
+    }).then((decodedData) => {
+        // fetch user info
+        var userID = decodedData.user.user_id;
+        this.props.fetchUserInfo(userID);
+    }).then(() => {
         // redirect to home page
         this.props.history.push("/home");
     }).catch(error => {
@@ -72,6 +84,13 @@ class InputForm extends React.Component {
 
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUserInfo: (id) => dispatch(fetchUserInfo(id))
+  };
+}
+
+InputForm = connect(null, mapDispatchToProps)(InputForm)
 InputForm = withRouter(InputForm);
 
 const Login = () => (
