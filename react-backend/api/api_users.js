@@ -113,5 +113,33 @@ module.exports.addUser = function (req, res, next) {
 	});
 }
 
+module.exports.updateUser = function (req, res, next) {
+	var userData = {
+		userID: "",
+		userName: "",
+		userEmail: "",
+		userPhone: "",
+		userAbout: "",
+		userSkills: ""
+	};
+
+	userData = Object.assign(userData, req.body);
+
+	var connection = dbUtil.getDBConnection();
+	var result = {};
+	var queryStr = 
+		' update' + TABLE_USERS + 'set user_name = ?, user_email = ?, user_phone = ?, user_about = ?, user_skills = ?' +
+		' where users.user_id = ?';
+
+	connection.query(queryStr ,[userData.userName, userData.userEmail, userData.userPhone, userData.userAbout, userData.userSkills, userData.userID] , 
+		function(err, rows, fields) {
+		  dbUtil.handleError(connection, err);
+		  res.type('json');
+		  result = {status: "success"};
+		  res.send(JSON.stringify(result));
+		  connection.end();
+		  return;
+	});
+}
 
 
