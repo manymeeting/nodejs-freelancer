@@ -64,6 +64,28 @@ module.exports.getUser = function (req, res, next) {
 	});
 }
 
+module.exports.getProfile = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var result = {};
+	var userID = req.query.id;
+
+	var queryStr = 
+		' select users.user_name, users.user_email, users.user_avatarurl, users.user_phone, users.user_about, users.user_skills from' + TABLE_USERS + 
+		' where users.user_id = ?';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+
+	  result = rows[0];
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  connection.end();
+	  return;
+	});
+}
+
 module.exports.addUser = function (req, res, next) {
 	var userData = {
 		email: "",
