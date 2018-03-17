@@ -11,7 +11,7 @@ module.exports.getAllBidsOnProject = function (req, res, next) {
 	var result = {};
 	var projectID = req.query.id;
 	var queryStr = 
-		' select bids.bid_id, bids.bidder_id, bids.bid_period, bids.bid_date, bids.bid_price, users.user_name, users.user_avatarurl from' + TABLE_BIDS + 
+		' select bids.bid_id, bids.bidder_id, bids.employer_id, bids.bid_period, bids.bid_date, bids.bid_price, users.user_name, users.user_avatarurl from' + TABLE_BIDS + 
 		' left join' + TABLE_USERS + 'on bids.bidder_id = users.user_id ' + 
 		' where bids.project_id = ?';
 	
