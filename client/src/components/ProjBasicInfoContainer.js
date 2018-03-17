@@ -20,7 +20,6 @@ class ProjBasicInfoContainer extends React.Component {
 
 	componentDidMount()
 	{
-		console.log(JSON.stringify(this.props.match, null, 2));
 		this.props.fetchProjBasicInfo(this.props.match.params.id);
 	}
 
