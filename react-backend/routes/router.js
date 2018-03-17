@@ -13,6 +13,7 @@ router.get('/api_get_project_details', api_projects.getProjectDetails);
 router.get('/api_get_all_proj_bidded_by_user', api_projects.getAllProjBiddedByUser);
 router.get('/api_get_all_proj_published_by_user', api_projects.getAllProjPublishedByUser);
 router.put('/api_add_project', api_projects.postProject);
+router.post('/api_hire_bid', api_projects.hireBid);
 
 router.get('/api_get_all_bids_on_proj', api_bids.getAllBidsOnProject);
 router.get('/api_get_ave_bid_price_on_proj', api_bids.getAveBidPriceOnProject);

@@ -125,3 +125,30 @@ module.exports.postProject = function (req, res, next) {
 	  return;
 	});
 }
+
+module.exports.hireBid = function (req, res, next) {
+	var connection = dbUtil.getDBConnection();
+
+	var result = {};
+	var params = {
+		projectID: "",
+		bidID: ""
+	}
+	params = Object.assign(params, req.body);
+
+	var queryStr = 
+		' update' + TABLE_PROJCETS + 
+		' set hired_bid_id = ?, status = ?' +
+		' where projects.project_id = ?';
+	
+	console.log(queryStr);
+	connection.query(queryStr,[params.bidID, project_codes.PROJECT_STATUS.STARTED, params.projectID], function(err, rows, fields) {
+	  dbUtil.handleError(connection, err);
+
+	  result = rows;
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  connection.end();
+	  return;
+	});
+}
