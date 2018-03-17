@@ -2,7 +2,9 @@ import React from 'react'
 import {
   Link
 } from 'react-router-dom';
-import {withRouter} from 'react-router';
+import withAuth from '../utils/withAuth';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 // resources
 import '../css/nav.css';
 import logo from '../images/logo-565.png';
@@ -43,7 +45,7 @@ class TopNav extends React.Component {
 
         <div className="fl-top-user-info">
           <span className="fl-top-user-avatar"><img  alt="avatar" src={avatar} /></span>
-          <span className="fl-top-user-name"></span>
+          <span className="fl-top-user-name"><Link to={`/user_profile/${this.props.userInfo.user_id}`}>{this.props.userInfo.user_name}</Link></span>
           <button id="signOutBtn" onClick={this.onSignOut}>Log out</button>
         </div>
       </nav>
@@ -53,4 +55,9 @@ class TopNav extends React.Component {
 
 }
 
-export default withRouter(TopNav);
+const mapStateToProps = state => ({
+  userInfo: state.userInfo
+});
+TopNav = connect(mapStateToProps)(TopNav);
+
+export default withAuth(withRouter(TopNav));
