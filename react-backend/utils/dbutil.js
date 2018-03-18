@@ -1,30 +1,36 @@
 var config = require('config');
+var mysql = require('mysql');
+var pool = mysql.createPool({
+  connectionLimit : config.get('dbConfig.connectionLimit'),
+  host            : config.get('dbConfig.host'),
+  user            : config.get('dbConfig.user'),
+  password        : config.get('dbConfig.password'),
+  database        : config.get('dbConfig.user')
+});
 
-module.exports.getDBConnection = function () {
-    var mysql      = require('mysql');
+module.exports.query = function(sql, options, callback){  
+    pool.getConnection(function(err, conn){  
+        if(err){  
+            callback(err, null, null);  
+        }else{  
+            conn.query(sql, options, function(err, results, fields){
+                // release connection
+                conn.release(); 
+                callback(err, results, fields); 
+            });  
+        }  
+    });  
+};
 
-    dbConfig = {};
-    dbConfig.host = config.get('dbConfig.host');
-    dbConfig.user = config.get('dbConfig.user');
-    dbConfig.password = config.get('dbConfig.password');
-
-	var connection = mysql.createConnection(dbConfig);
-
-	connection.on('error', function(err) {
-	 	console.log("[mysql error]",err);
-	});
-
-	connection.connect();
-	
-	return connection;
+module.exports.getDBPool = function () {
+    return pool;
 }
 
 
-module.exports.handleError = function(conn, err) {
+module.exports.handleError = function(err) {
 	if(err)
 	{
-		conn.end();
-	  	console.log(err);
+	 	console.log(err);
 	  	throw err;
 	}
 }

@@ -6,7 +6,6 @@ const TABLE_USERS = ' ' + dbUtil.getDBName() + ".users" + ' ';
 const TABLE_BIDS = ' ' + dbUtil.getDBName() + ".bids" + ' ';
 
 module.exports.getAllBidsOnProject = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
 
 	var result = {};
 	var projectID = req.query.id;
@@ -16,21 +15,20 @@ module.exports.getAllBidsOnProject = function (req, res, next) {
 		' where bids.project_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[projectID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[projectID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows;
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 
 module.exports.getAveBidPriceOnProject = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
+	
 	var result = {};
 	var projectID = req.query.id;
 	var queryStr = 
@@ -40,20 +38,19 @@ module.exports.getAveBidPriceOnProject = function (req, res, next) {
 		' where projects.id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[projectID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[projectID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows[0];
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.addBidOnProject = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
+	
 	var params = {
 		projectID: "",
 		bidderID: "",
@@ -70,12 +67,12 @@ module.exports.addBidOnProject = function (req, res, next) {
 		'values(?,?,?,?,?,?)';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[params.projectID, params.bidderID, params.employerID, params.bidPeriod, params.bidDate, params.bidPrice], function(err, results, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[params.projectID, params.bidderID, params.employerID, params.bidPeriod, params.bidDate, params.bidPrice], function(err, results, fields) {
+	  dbUtil.handleError(err);
 	  
 	  res.type('json');
 	  res.send(JSON.stringify({insertID: results.insertId}));
-	  connection.end();
+	  
 	  return;
 	});
 }

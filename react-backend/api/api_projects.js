@@ -7,7 +7,6 @@ const TABLE_USERS = ' ' + dbUtil.getDBName() + ".users" + ' ';
 const TABLE_BIDS = ' ' + dbUtil.getDBName() + ".bids" + ' ';
 
 module.exports.getAllOpenProjects = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
 
 	var result = {};
 	var queryStr = 
@@ -17,20 +16,18 @@ module.exports.getAllOpenProjects = function (req, res, next) {
 		' order by projects.published_date desc';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[project_codes.PROJECT_STATUS.OPEN], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
-
+	dbUtil.query(queryStr,[project_codes.PROJECT_STATUS.OPEN], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 	  result = rows;
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.getProjectDetails = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
+	
 	var result = {};
 	var projectID = req.query.id;
 	console.log("projectID: " + projectID);
@@ -40,19 +37,19 @@ module.exports.getProjectDetails = function (req, res, next) {
 		' where projects.project_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[projectID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[projectID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows[0];
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.getAllProjBiddedByUser = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
+	
 
 	var result = {};
 	var userID = req.query.id;
@@ -63,20 +60,19 @@ module.exports.getAllProjBiddedByUser = function (req, res, next) {
 		' where bids.bidder_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[userID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows;
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.getAllProjPublishedByUser = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
+	
 	var result = {};
 	var userID = req.query.id;
 
@@ -85,20 +81,19 @@ module.exports.getAllProjPublishedByUser = function (req, res, next) {
 		' where projects.employer_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[userID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows;
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.postProject = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
+	
 	var params = {
 		projectName: "",
 		employerID: "",
@@ -116,19 +111,18 @@ module.exports.postProject = function (req, res, next) {
 		'values(?,?,?,?,?,?,?)';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[params.projectName, params.employerID, params.projectDescription, params.projectSkills, params.budgeRange, params.publishedDate, params.status], function(err, results, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[params.projectName, params.employerID, params.projectDescription, params.projectSkills, params.budgeRange, params.publishedDate, params.status], function(err, results, fields) {
+	  dbUtil.handleError(err);
 	  
 	  res.type('json');
 	  res.send(JSON.stringify({insertID: results.insertId}));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.hireBid = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
+	
 	var result = {};
 	var params = {
 		projectID: "",
@@ -142,13 +136,12 @@ module.exports.hireBid = function (req, res, next) {
 		' where projects.project_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[params.bidID, project_codes.PROJECT_STATUS.STARTED, params.projectID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
-
+	dbUtil.query(queryStr,[params.bidID, project_codes.PROJECT_STATUS.STARTED, params.projectID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 	  result = rows;
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }

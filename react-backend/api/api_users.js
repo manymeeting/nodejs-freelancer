@@ -8,15 +8,12 @@ module.exports.validateUser = function (req, res, next) {
 	var email = req.body.email;
 	var password = req.body.password;
 
-	var connection = dbUtil.getDBConnection();
-
-	connection.query('SELECT * FROM  ' + TABLE_USERS + '  WHERE user_email = ?', [email], function(err, rows, fields) {
-	   dbUtil.handleError(connection, err);
-
+	dbUtil.query('SELECT * FROM  ' + TABLE_USERS + '  WHERE user_email = ?', [email], function(err, rows, fields) {
+	   dbUtil.handleError(err);
 	  if(!rows.length > 0)
 	  {
 	  	res.status(404).send("Invalid User");
-	  	connection.end();
+	  	
 	  	return;
 	  }
 
@@ -24,7 +21,7 @@ module.exports.validateUser = function (req, res, next) {
 	  if(!bcrypt.compareSync(password, rows[0].user_password))
 	  {
 	  	res.status(404).send("Password doesn't match");
-	  	connection.end();
+
 	  	return;
 	  }
 
@@ -45,13 +42,12 @@ module.exports.validateUser = function (req, res, next) {
 
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.getUser = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
 
 	var result = {};
 	var userID = req.query.id;
@@ -61,20 +57,18 @@ module.exports.getUser = function (req, res, next) {
 		' where users.user_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[userID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows[0];
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
 
 module.exports.getProfile = function (req, res, next) {
-	var connection = dbUtil.getDBConnection();
-
 	var result = {};
 	var userID = req.query.id;
 
@@ -83,13 +77,13 @@ module.exports.getProfile = function (req, res, next) {
 		' where users.user_id = ?';
 	
 	console.log(queryStr);
-	connection.query(queryStr,[userID], function(err, rows, fields) {
-	  dbUtil.handleError(connection, err);
+	dbUtil.query(queryStr,[userID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
 
 	  result = rows[0];
 	  res.type('json');
 	  res.send(JSON.stringify(result));
-	  connection.end();
+	  
 	  return;
 	});
 }
@@ -110,16 +104,15 @@ module.exports.addUser = function (req, res, next) {
 	var salt = bcrypt.genSaltSync(10);
 	userData.password = bcrypt.hashSync(userData.password, salt);
 
-	var connection = dbUtil.getDBConnection();
 	var result = {};
-	connection.query('INSERT INTO ' + TABLE_USERS + '(user_name, user_email, user_password, user_avatarurl, user_phone, user_about, user_skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
+	dbUtil.query('INSERT INTO ' + TABLE_USERS + '(user_name, user_email, user_password, user_avatarurl, user_phone, user_about, user_skills) VALUES(?, ?, ?, ?, ?, ?, ?) ',
 		[userData.username, userData.email, userData.password, userData.avatarurl, userData.phone, userData.about, userData.skills] , 
 		function(err, rows, fields) {
-		  dbUtil.handleError(connection, err);
+		  dbUtil.handleError(err);
 		  res.type('json');
 		  result = {status: "success"};
 		  res.send(JSON.stringify(result));
-		  connection.end();
+		  
 		  return;
 	});
 }
@@ -136,19 +129,18 @@ module.exports.updateUser = function (req, res, next) {
 
 	userData = Object.assign(userData, req.body);
 
-	var connection = dbUtil.getDBConnection();
 	var result = {};
 	var queryStr = 
 		' update' + TABLE_USERS + 'set user_name = ?, user_email = ?, user_phone = ?, user_about = ?, user_skills = ?' +
 		' where users.user_id = ?';
 
-	connection.query(queryStr ,[userData.userName, userData.userEmail, userData.userPhone, userData.userAbout, userData.userSkills, userData.userID] , 
+	dbUtil.query(queryStr ,[userData.userName, userData.userEmail, userData.userPhone, userData.userAbout, userData.userSkills, userData.userID] , 
 		function(err, rows, fields) {
-		  dbUtil.handleError(connection, err);
+		  dbUtil.handleError(err);
 		  res.type('json');
 		  result = {status: "success"};
 		  res.send(JSON.stringify(result));
-		  connection.end();
+		  
 		  return;
 	});
 }
@@ -163,18 +155,17 @@ module.exports.updateAvatar = function (req, res, next) {
 	if (req.file) {
 		console.dir(req.file);
 		var filePath = "/avatars/" + req.file.filename
-
 	    var queryStr = 
 		' update' + TABLE_USERS + 'set user_avatarurl = ?' +
 		' where users.user_id = ?';
-		var connection = dbUtil.getDBConnection();
-		connection.query(queryStr ,[filePath, req.body.id] , 
+
+		dbUtil.query(queryStr ,[filePath, req.body.id] , 
 			function(err, rows, fields) {
-			  dbUtil.handleError(connection, err);
+			  dbUtil.handleError(err);
 			  res.type('json');
 			  result = {avatarPath: filePath};
 			  res.send(JSON.stringify({result}));
-			  connection.end();
+			  
 			  return;
 		});
 	}
