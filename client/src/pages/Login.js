@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 
 // redux-actions
 import { fetchUserInfo } from "../actions/UserInfoActions";
-
+// resources
+import '../css/login-signup.css';
 
 class InputForm extends React.Component {
   constructor(props)
@@ -34,7 +35,7 @@ class InputForm extends React.Component {
   render()
   {
     return (
-      <div className="container">
+      <div className="container fl-login-container">
         <form>
           <div className="form-group">
             <label>Email address:</label>
@@ -96,7 +97,7 @@ InputForm = withRouter(InputForm);
 
 const Login = () => (
   <div className="container">
-    <h1>Login</h1>
+    <h1 className="fl-login-header">login</h1>
     <InputForm />
   </div>
   

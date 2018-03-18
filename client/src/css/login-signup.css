@@ -1,0 +1,16 @@
+.fl-login-container
+{
+	display: block;
+    position: absolute;
+    top: calc(50% - 100px);
+    margin: auto
+}
+.fl-login-header
+{
+	display: block;
+	font-size: 5rem;
+	text-align: center;
+	position: relative;
+	top: 120px;
+	color: deepskyblue;
+}
