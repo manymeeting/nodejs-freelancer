@@ -6,6 +6,8 @@
 *.iml
 
 #backend
+react-backend/public/avatars/
+
 react-backend/config
 react-backend/node_modules/
 react-backend/build/
