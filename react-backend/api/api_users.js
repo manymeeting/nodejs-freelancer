@@ -1,5 +1,6 @@
 var dbUtil = require('../utils/dbutil');
 var authUtil = require('../utils/authUtil');
+var bcrypt = require('bcryptjs');
 
 const TABLE_USERS = ' ' + dbUtil.getDBName() + ".users" + ' ';
 
@@ -9,12 +10,20 @@ module.exports.validateUser = function (req, res, next) {
 
 	var connection = dbUtil.getDBConnection();
 
-	connection.query('SELECT * FROM  ' + TABLE_USERS + '  WHERE user_email = ? and user_password = ? ',[email, password] , function(err, rows, fields) {
+	connection.query('SELECT * FROM  ' + TABLE_USERS + '  WHERE user_email = ?', [email], function(err, rows, fields) {
 	   dbUtil.handleError(connection, err);
 
 	  if(!rows.length > 0)
 	  {
 	  	res.status(404).send("Invalid User");
+	  	connection.end();
+	  	return;
+	  }
+
+	  // compare hash value
+	  if(!bcrypt.compareSync(password, rows[0].user_password))
+	  {
+	  	res.status(404).send("Password doesn't match");
 	  	connection.end();
 	  	return;
 	  }
@@ -97,6 +106,9 @@ module.exports.addUser = function (req, res, next) {
 	};
 
 	userData = Object.assign(userData, req.body);
+	// encrypt password
+	var salt = bcrypt.genSaltSync(10);
+	userData.password = bcrypt.hashSync(userData.password, salt);
 
 	var connection = dbUtil.getDBConnection();
 	var result = {};
@@ -151,7 +163,7 @@ module.exports.updateAvatar = function (req, res, next) {
 	if (req.file) {
 		console.dir(req.file);
 		var filePath = "/avatars/" + req.file.filename
-		
+
 	    var queryStr = 
 		' update' + TABLE_USERS + 'set user_avatarurl = ?' +
 		' where users.user_id = ?';
