@@ -3,3 +3,30 @@
 	width: 64px;
 	height: 64px;
 }
+
+.fl-top-nav-item
+{
+	text-decoration: none;
+	margin-right: 20px;
+}
+
+.fl-top-nav-item a
+{
+	text-decoration: none;
+	color: teal;
+	text-transform: uppercase;
+}
+.fl-top-user-avatar img
+{
+	width: 60px;
+	height: 60px;
+}
+.fl-top-user-name a
+{
+	color: teal;
+}
+
+.fl-top-user-name
+{
+	padding: 10px;
+}
