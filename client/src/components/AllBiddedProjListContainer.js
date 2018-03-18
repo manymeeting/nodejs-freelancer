@@ -25,10 +25,7 @@ class AllBiddedProjListContainer extends React.Component {
 	render()
 	{
 		return (
-			<div>
-				<p>All Published</p>
-				<AllBiddedProjList />		
-			</div>
+			<AllBiddedProjList />
 		);
 	}
 }

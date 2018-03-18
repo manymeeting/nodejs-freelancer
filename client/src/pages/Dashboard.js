@@ -19,16 +19,16 @@ class Dashboard extends React.Component {
 	render()
 	{
 		return(
-			<div>
-			    <h1>Dashboard</h1>
+			<div className="fl-main-container">
+			    <h1 className="fl-main-header">Dashboard</h1>
 			    <div>
-			    	<ul>
-			            <li className="nav-item"><Link to={`${this.props.match.path}/published`}>Published</Link></li>
-			            <li className="nav-item"><Link to={`${this.props.match.path}/bidded`}>Bidded</Link></li>
+			    	<ul className="fl-nopadding-ul">
+			            <li className="fl-nav-item"><Link to={`${this.props.match.path}/published`}>Published</Link></li>
+			            <li className="fl-nav-item"><Link to={`${this.props.match.path}/bidded`}>Bidded</Link></li>
 			        </ul>
 			    </div>
 			    <Route path={`${this.props.match.path}/published`} component={AllPublishedProjListContainer} />
-			    {<Route path={`${this.props.match.path}/bidded`} component={AllBiddedProjListContainer} />}
+			    <Route path={`${this.props.match.path}/bidded`} component={AllBiddedProjListContainer} />
 			</div>
 		) 
 	}

@@ -6,7 +6,13 @@
 {
 	padding: 0;
 }
+.fl-nav-item
+{
+	display: inline-block;
+	padding-right: 20px;
+	text-transform: uppercase;
 
+}
 .fl-main-container
 {
 	padding: 0 2rem;

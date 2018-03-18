@@ -13,19 +13,28 @@ class AllPublishedProjList extends React.Component {
 		return (
 			// list of projects
 			<div>
-				<ul>
+				<p className="fl-sub-header">All Published Projects</p>
+				<ul className="fl-nopadding-ul">
 					{
 						allPublishedProjects.map((project) =>
 							<li key={project.project_id}>
-								<div className="project-info-container">
-									<div>
-										<h3 className="project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></h3>
-										<p className="project-desc">{project.project_description}</p>
-										<p className="project-skills">{project.project_skills}</p>
+								<div className="fl-project-info-container">
+									<p className="fl-project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></p>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Description: </span>
+										<span className="fl-project-desc">{project.project_description}</span>
 									</div>
-									<div>
-										<p className="project-budget-range">{project.budget_range}</p>
-										<p className="project-employer-name">{project.user_name}</p>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Required Skills: </span>
+										<span className="fl-project-skills">{project.project_skills}</span>
+									</div>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Budget Range: </span>
+										<span className="fl-project-budget-range">{project.budget_range}</span> 
+									</div>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Status: </span>
+										<span className="fl-project-budget-range">{project.status}</span> 
 									</div>
 
 								</div>
