@@ -30,7 +30,7 @@ class SignupForm extends React.Component {
   render()
   {
     return (
-      <div id="loginForm">
+      <div id="signUpForm">
         <h3>Form</h3>
         <div className="container">
           <form>
@@ -39,8 +39,8 @@ class SignupForm extends React.Component {
             <span>Password</span><input type="password" name="password" id="inputPassword" onChange={this.handleInputChange} /><br/>
           </form>
           
-          <button id="loginSubmitBtn" onClick={this.onSumbit}>
-            Login
+          <button id="signUpSubmitBtn" onClick={this.onSumbit}>
+            Sign Up
           </button>
         </div>
       </div>
