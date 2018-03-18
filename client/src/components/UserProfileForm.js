@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import withAuth from '../utils/withAuth';
 import update from 'react-addons-update';
 // redux-actions
-import { fetchUserProfile, updateUserProfile } from "../actions/UserProfileActions";
+import { fetchUserProfile, updateUserProfile, updateUserAvatar } from "../actions/UserProfileActions";
 import { fetchUserInfo } from "../actions/UserInfoActions";
 
 class UserProfileForm extends React.Component {
@@ -23,6 +23,7 @@ class UserProfileForm extends React.Component {
 		    };
 		this.handleInputChange = this.handleInputChange.bind(this);
     	this.onSumbit = this.onSumbit.bind(this);
+    	this.updateAvatar = this.updateAvatar.bind(this);
 
 	}
 
@@ -50,6 +51,20 @@ class UserProfileForm extends React.Component {
 		this.setState(update(this.state, newState));
 	}
 
+	updateAvatar(e)
+	{
+		e.preventDefault();
+		var formData = new FormData(e.target);
+		formData.append('id', this.props.userInfo.user_id);
+		
+		this.props.updateUserAvatar(formData)
+			.then(() => {
+				// update user info
+				this.props.fetchUserInfo(this.props.userInfo.user_id);
+			});
+
+	}
+	
 	onSumbit(e)
 	{
 		e.preventDefault();
@@ -62,7 +77,8 @@ class UserProfileForm extends React.Component {
 			userAbout: this.state.input.userAbout,
 			userSkills: this.state.input.userSkills
 		};
-		
+
+
 		this.props.updateUserProfile(this.props.userInfo.user_id, newProfile)
 			.then(() => {
 				// update user info
@@ -78,7 +94,11 @@ class UserProfileForm extends React.Component {
 			// editable profile
 			return(
 				<div>
-					<form id="UserProfileForm">
+					<form id="userAvatarForm" encType="multipart/form-data" onSubmit={this.updateAvatar}>
+						<input type="file" name="file" ref={(ref) => { this.newAvatar = ref; }}/>
+						<input type="submit" value="Upload"/>
+					</form>
+					<form id="userProfileForm">
 						<span>Name</span><input type="text" name="userName" value={this.state.input.userName} onChange={this.handleInputChange} required="required"/><br/>
 						<span>Email</span><input type="email" name="userEmail" value={this.state.input.userEmail} onChange={this.handleInputChange} required="required"/><br/>
 						<span>Phone</span><input type="text" name="userPhone" value={this.state.input.userPhone} onChange={this.handleInputChange} /><br/>
@@ -87,6 +107,7 @@ class UserProfileForm extends React.Component {
 						
 				        <button onClick={this.onSumbit}>Update Profile</button>
 					</form>
+
 				</div>
 				
 			)
@@ -114,7 +135,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchUserProfile: (id) => dispatch(fetchUserProfile(id)),
     fetchUserInfo: (id) => dispatch(fetchUserInfo(id)),
-    updateUserProfile: (id, params) => dispatch(updateUserProfile(id, params))
+    updateUserProfile: (id, params) => dispatch(updateUserProfile(id, params)),
+    updateUserAvatar: (formData) => dispatch(updateUserAvatar(formData))
   };
 }
 
