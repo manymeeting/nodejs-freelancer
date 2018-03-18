@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 // resources
 import '../css/nav.css';
 import logo from '../images/logo-565.png';
-import avatar from '../images/avatar-128.png';
+import defaultAvatar from '../images/avatar-128.png';
 
 // utils
 import ClientAuthService from '../utils/ClientAuthService';
@@ -44,7 +44,7 @@ class TopNav extends React.Component {
         </div>
 
         <div className="fl-top-user-info">
-          <span className="fl-top-user-avatar"><img  alt="avatar" src={this.props.userInfo.user_avatarurl ? this.props.userInfo.user_avatarurl : avatar} /></span>
+          <span className="fl-top-user-avatar"><img  alt="avatar" src={this.props.userInfo.user_avatarurl ? this.props.userInfo.user_avatarurl : defaultAvatar} /></span>
           <span className="fl-top-user-name"><Link to={`/user_profile/${this.props.userInfo.user_id}`}>{this.props.userInfo.user_name}</Link></span>
           <button id="signOutBtn" onClick={this.onSignOut}>Log out</button>
         </div>
