@@ -62,11 +62,14 @@ class ClientAuthService {
     }
 
 
-    fetch(url, options) {
+    fetch(url, options, isMultipart = false) {
         // performs api calls sending the required authentication headers
         const headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Accept': 'application/json'
+        }
+        if(!isMultipart)
+        {
+            headers['Content-Type'] = 'application/json';
         }
 
         // add to HTTP Authorization header
