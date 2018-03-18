@@ -16,7 +16,7 @@ class AllBiddedProjList extends React.Component {
 				<ul>
 					{
 						allBiddedProjects.map((project) =>
-							<li key={project.project_id}>
+							<li key={project.bid_date}>
 								<div className="project-info-container">
 									<div>
 										<h3 className="project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></h3>
