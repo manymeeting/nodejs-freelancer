@@ -2,6 +2,11 @@
 {
 	margin-left: 5px;
 }
+.fl-nopadding-ul
+{
+	padding: 0;
+}
+
 .fl-main-container
 {
 	padding: 0 2rem;
@@ -14,7 +19,8 @@
     border-top: 1px solid;
     color: #b5d8f5;
 }
-.fl-project-info-container
+.fl-project-info-container,
+.fl-bid-info-container
 {
 	display: block;
     overflow: hidden;

@@ -13,24 +13,34 @@ class ProjectBidList extends React.Component {
 	render()
 	{
 		var projectBidList = this.props.projectBidList;
+		if(projectBidList.length === 0)
+		{
+			return(<div> (no bids) </div>);
+		}
 		return(
 			<div>
-				<p>Project Bids</p>
-				<ul>
+				<ul className="fl-nopadding-ul">
 
 					{
 						projectBidList.map((bid) =>
 							<li key={bid.bid_id}>
-								<div className="bid-indo-container">
-									<div>
-										<h3 className="bid-bidder-name"><Link to={"/user_profile/" + bid.bidder_id} >{bid.user_name}</Link></h3>
-										<p className="bid-price"><label>Price: </label>{bid.bid_price}</p>
-										<p className="bid-period"><label>Period (In Days): </label>{bid.bid_period}</p>
+								<div className="fl-bid-info-container">
+									<div className="fl-list-row">
+										<span className="fl-list-label">Bidder: </span>
+										<span className="fl-bid-bidder"><Link to={"/user_profile/" + bid.bidder_id} >{bid.user_name}</Link></span>
 									</div>
-									<div>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Price (USD): </span>
+										<span className="fl-bid-price">{bid.bid_price}</span>
+									</div>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Period (Days): </span>
+										<span className="fl-bid-period">{bid.bid_period}</span> 
+									</div>
+									<div className="fl-list-row">
 										{
 											bid.employer_id === this.props.userInfo.user_id && this.props.projectBasic.status === "OPEN" &&
-											<button onClick={this.onHire} bid_id={bid.bid_id}>Hire</button>
+											<button className="btn btn-primary" onClick={this.onHire} bid_id={bid.bid_id}>Hire</button>
 										}
 									</div>
 

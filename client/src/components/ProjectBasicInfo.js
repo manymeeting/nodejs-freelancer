@@ -35,10 +35,6 @@ class ProjectBasicInfo extends React.Component {
 					<span className="fl-details-label">Employer: </span>
 					<span><Link to={"/user_profile/" + this.props.projectBasic.employer_id} >{this.props.projectBasic.user_name}</Link></span>
 				</div>
-
-				<p className="fl-sub-header">Bids On This Project</p>
-
-				<p>PJ Details: {JSON.stringify(this.props.projectBasic, null, 2)}</p>
 			</div>
 		)
 	}

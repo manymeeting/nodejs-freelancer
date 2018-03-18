@@ -28,7 +28,7 @@ class ProjBidListContainer extends React.Component {
 
 		return (
 			<div>
-				<p>Here is ProjBidListContainer</p>
+				<p className="fl-sub-header">Bids On This Project</p>
 				<ProjectBidList />		
 			</div>
 		);
