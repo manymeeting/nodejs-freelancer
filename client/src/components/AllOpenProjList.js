@@ -12,20 +12,29 @@ class AllOpenProjList extends React.Component {
 		var allOpenProjects = this.props.allOpenProjects;
 		return (
 			// list of projects
-			<div>
+			<div className="fl-all-open-proj-container">
 				<ul>
 					{
 						allOpenProjects.map((project) =>
 							<li key={project.project_id}>
-								<div className="project-info-container">
+								<div className="fl-project-info-container">
 									<div>
-										<h3 className="project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></h3>
-										<p className="project-desc">{project.project_description}</p>
-										<p className="project-skills">{project.project_skills}</p>
-									</div>
-									<div>
-										<p className="project-budget-range">{project.budget_range}</p>
-										<p className="project-employer-name">{project.user_name}</p>
+										<p className="fl-project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></p>
+										<div className="fl-list-row">
+											<span className="fl-list-label">Description: </span>
+											<span className="fl-project-desc">{project.project_description}</span>
+										</div>
+										<div className="fl-list-row">
+											<span className="fl-list-label">Required Skills: </span>
+											<span className="fl-project-skills">{project.project_skills}</span>
+										</div>
+										<div className="fl-list-row">
+											<span className="fl-list-label">Budget Range: </span>
+											<span className="fl-project-budget-range">{project.budget_range}</span>
+											<span className="fl-list-label">Published By: </span>
+											<span className="fl-project-employer-name"><Link to={"/user_profile/" + project.employer_id} >{project.user_name}</Link></span>
+										</div>
+
 									</div>
 
 								</div>

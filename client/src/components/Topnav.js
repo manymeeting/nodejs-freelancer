@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 // resources
 import '../css/nav.css';
-import logo from '../images/logo-565.png';
+import logo from '../images/logo.png';
 import defaultAvatar from '../images/avatar-128.png';
 
 // utils

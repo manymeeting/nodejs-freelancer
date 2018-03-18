@@ -25,10 +25,7 @@ class AllOpenProjListContainer extends React.Component {
 	render()
 	{
 		return (
-			<div>
-				<p>Here I am</p>
-				<AllOpenProjList />		
-			</div>
+			<AllOpenProjList />
 		);
 	}
 }

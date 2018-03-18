@@ -13,7 +13,7 @@
 .fl-top-nav-item a
 {
 	text-decoration: none;
-	color: teal;
+	color: #2474bb;
 	text-transform: uppercase;
 }
 .fl-top-user-avatar img
@@ -23,7 +23,7 @@
 }
 .fl-top-user-name a
 {
-	color: teal;
+	color: #2474bb;
 }
 
 .fl-top-user-name

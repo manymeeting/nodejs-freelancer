@@ -3,7 +3,8 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-
+// resources
+import './css/common.css';
 // views
 import TopNav from './components/Topnav';
 import Login from './pages/Login';
@@ -14,6 +15,7 @@ import UserProfile from './pages/UserProfile';
 import PostProject from './pages/PostProject';
 import ProjectDetails from './pages/ProjectDetails';
 import ClientAuthService from './utils/ClientAuthService';
+
 
 class App extends Component {
   render() {

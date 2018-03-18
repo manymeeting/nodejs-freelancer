@@ -1,0 +1,33 @@
+.fl-main-container
+{
+	padding: 0 2rem;
+}
+.fl-main-header
+{
+	font-size: 3rem;
+    color: deepskyblue;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    color: #b5d8f5;
+}
+.fl-project-info-container
+{
+	display: block;
+    overflow: hidden;
+    border-bottom: 1px dashed #b5d8f5;
+    padding: 10px 0;
+}
+.fl-all-open-proj-container ul
+{
+	padding: 0;
+}
+.fl-project-title
+{
+	margin: 0px;
+}
+.fl-list-label
+{
+	color: #7d7d7d;
+	font-size: 0.8rem;
+	margin-right: 5px;
+}
