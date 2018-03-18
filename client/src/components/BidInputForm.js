@@ -54,9 +54,15 @@ class BidInputForm extends React.Component {
 	{
 		return(
 			<form>
-				<span>Bid Period</span><input type="text" name="bidPeriod" id="inputBidPeriod" onChange={this.handleInputChange} /><br/>
-            	<span>Bid Price</span><input type="text" name="bidPrice" id="inputBidPrice" onChange={this.handleInputChange} /><br/>
-		        <button onClick={this.onSumbit}>Submit Bid</button>
+				<div className="form-group">
+		            <label>Bid Period (Days):</label>
+		            <input type="text" className="form-control" name="bidPeriod" id="inputBidPeriod" onChange={this.handleInputChange} />
+		        </div>
+		        <div className="form-group">
+		            <label>Bid Price (USD):</label>
+		            <input type="text" className="form-control" name="bidPrice" id="inputBidPrice" onChange={this.handleInputChange} />
+		        </div>
+		        <button id="bidSumbitBtn" onClick={this.onSumbit} className="btn btn-primary">Submit Bid</button>
 			</form>
 		)
 	}

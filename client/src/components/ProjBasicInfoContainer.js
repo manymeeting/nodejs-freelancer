@@ -28,7 +28,6 @@ class ProjBasicInfoContainer extends React.Component {
 
 		return (
 			<div>
-				<p>Here is ProjBasicInfoContainer</p>
 				<ProjectBasicInfo />		
 			</div>
 		);

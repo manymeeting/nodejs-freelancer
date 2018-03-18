@@ -20,8 +20,8 @@ class ProjectDetails extends React.Component {
 	{
 		console.log(JSON.stringify(this.props.match, null, 2));
 		return(
-			<div>
-			    <h1>Project Details</h1>
+			<div className="fl-main-container">
+			    <h1 className="fl-main-header">Project Details</h1>
 			    <Route path={`${this.props.match.path}/:id`} component={ProjBasicInfoContainer} />
 			    <Route path={`${this.props.match.path}/:id`} component={ProjBidListContainer} />
 			</div>
