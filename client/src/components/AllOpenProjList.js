@@ -30,11 +30,13 @@ class AllOpenProjList extends React.Component {
 										</div>
 										<div className="fl-list-row">
 											<span className="fl-list-label">Budget Range: </span>
-											<span className="fl-project-budget-range">{project.budget_range}</span>
-											<span className="fl-list-label">Published By: </span>
+											<span className="fl-project-budget-range">{project.budget_range}</span> 
+											<span className="fl-list-label fl-margin-l-5">Published By: </span>
 											<span className="fl-project-employer-name"><Link to={"/user_profile/" + project.employer_id} >{project.user_name}</Link></span>
 										</div>
-
+										<div className="fl-list-row">
+											<Link to={"/project_details/" + project.project_id} >Bid Now</Link>
+										</div>
 									</div>
 
 								</div>
