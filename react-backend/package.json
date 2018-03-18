@@ -3,20 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "mocha",
     "start": "node ./bin/www"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.18.2",
+    "chai": "^4.1.2",
     "config": "^1.30.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.2.0",
+    "mocha": "^5.0.4",
     "morgan": "~1.9.0",
     "multer": "^1.3.0",
     "mysql": "^2.15.0",
+    "node-fetch": "^2.1.1",
     "serve-favicon": "~2.4.5"
   }
 }
