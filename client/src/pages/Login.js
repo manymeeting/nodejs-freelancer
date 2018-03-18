@@ -34,18 +34,19 @@ class InputForm extends React.Component {
   render()
   {
     return (
-      <div id="loginForm">
-        <h3>Form</h3>
-        <div className="container">
-          <form>
-            <span>Email</span><input type="text" name="email" id="inputEmail" onChange={this.handleInputChange} /><br/>
-            <span>Password</span><input type="text" name="password" id="inputPassword" onChange={this.handleInputChange} /><br/>
-          </form>
-          
-          <button id="loginSubmitBtn" onClick={this.onSumbit}>
-            Login
-          </button>
-        </div>
+      <div className="container">
+        <form>
+          <div className="form-group">
+            <label>Email address:</label>
+            <input type="text" className="form-control" name="email" id="inputEmail" onChange={this.handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label>Password:</label>
+            <input type="password" className="form-control" name="password" id="inputPassword" onChange={this.handleInputChange} />
+          </div>
+          <button id="loginSubmitBtn" onClick={this.onSumbit} className="btn btn-primary">Login</button>
+        </form>
+        
       </div>
     );
   }
@@ -94,9 +95,10 @@ InputForm = connect(null, mapDispatchToProps)(InputForm)
 InputForm = withRouter(InputForm);
 
 const Login = () => (
-  <div>
-    <p>Login</p>
+  <div className="container">
+    <h1>Login</h1>
     <InputForm />
   </div>
+  
 )
 export default Login;

@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     var clientAuthService = new ClientAuthService(); 
     return (
-      <div>
+      <div className="container">
         {
           clientAuthService.isLoggedIn() && 
           <TopNav />
