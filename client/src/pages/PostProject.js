@@ -58,15 +58,30 @@ class PostProject extends React.Component {
 	render()
 	{
 		return(
-			<form id="postProjectForm">
-				<span>Project Name</span><input type="text" name="projectName" onChange={this.handleInputChange} required="required"/><br/>
-				<span>Project Description</span><textarea name="projectDescription" onChange={this.handleInputChange} required="required" form="postProjectForm"></textarea>
-				
-				<span>Skills Required</span><input type="text" name="projectSkills" onChange={this.handleInputChange} required="required" /><br/>
-				<span>Budget Range</span><input type="text" name="budgeRange" onChange={this.handleInputChange} required="required" /><br/>
+			<div className="fl-main-container">
+			    <h1 className="fl-main-header">Post Project</h1>
+			    <form id="postProjectForm">
+					<div className="form-group">
+			            <label>Project Name:</label>
+			            <input type="text" className="form-control" name="projectName" onChange={this.handleInputChange} required/>
+			        </div>
+			        <div className="form-group">
+			            <label>Project Description:</label>
+			            <input type="text" className="form-control" name="projectDescription" onChange={this.handleInputChange} required/>
+			        </div>
+			        <div className="form-group">
+			            <label>Required Skills:</label>
+			            <input type="text" className="form-control" name="projectSkills" onChange={this.handleInputChange} required/>
+			        </div>
+			        <div className="form-group">
+			            <label>Budget Range:</label>
+			            <input type="text" className="form-control" name="budgeRange" onChange={this.handleInputChange} required/>
+			        </div>
 
-		        <button onClick={this.onSumbit}>Post Project</button>
-			</form>
+			        <button className="btn btn-primary" onClick={this.onSumbit}>Post Project</button>
+				</form>
+			</div>
+			
 		)
 	}
 }
