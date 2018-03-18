@@ -1,7 +1,6 @@
 var dbUtil = require('../utils/dbutil');
 var authUtil = require('../utils/authUtil');
 
-
 const TABLE_USERS = ' ' + dbUtil.getDBName() + ".users" + ' ';
 
 module.exports.validateUser = function (req, res, next) {
@@ -142,4 +141,35 @@ module.exports.updateUser = function (req, res, next) {
 	});
 }
 
+module.exports.updateAvatar = function (req, res, next) {
+
+	if(!req.body.id)
+	{
+		res.send(JSON.stringify({error: "Missing User ID"}));
+		return;
+	}
+	if (req.file) {
+		console.dir(req.file);
+		var filePath = "/avatars/" + req.file.filename
+		
+	    var queryStr = 
+		' update' + TABLE_USERS + 'set user_avatarurl = ?' +
+		' where users.user_id = ?';
+		var connection = dbUtil.getDBConnection();
+		connection.query(queryStr ,[filePath, req.body.id] , 
+			function(err, rows, fields) {
+			  dbUtil.handleError(connection, err);
+			  res.type('json');
+			  result = {avatarPath: filePath};
+			  res.send(JSON.stringify({result}));
+			  connection.end();
+			  return;
+		});
+	}
+	else
+	{
+		res.send(JSON.stringify({error: "Missing File"}));
+	}
+	
+}
 
