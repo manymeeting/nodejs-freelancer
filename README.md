@@ -8,3 +8,6 @@
 
 ### Instructions for React server
  - Go to 'client' folder, and use `npm start` to start React server.
+
+### Database
+ - Run following sql to create tables: "./cmpefreelancer.sql"
