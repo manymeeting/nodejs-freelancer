@@ -54,8 +54,10 @@ class SignupForm extends React.Component {
   }
 
 
-  onSumbit()
+  onSumbit(e)
   {
+    e.preventDefault();
+
     var username = this.state.input.username;
     var email = this.state.input.email;
     var password = this.state.input.password;
@@ -70,6 +72,8 @@ class SignupForm extends React.Component {
         })
     }).then(data => {
         console.log("Signup Success!");
+        // log out current user
+        clientAuthService.logout();
         // redirect to login page
         this.props.history.push("/login");
     }).catch(error => {
