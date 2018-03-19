@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import withAuth from '../utils/withAuth';
 import update from 'react-addons-update';
+import { inputValidation } from '../utils/formUtils'
 // redux-actions
 import { fetchUserProfile, updateUserProfile, updateUserAvatar } from "../actions/UserProfileActions";
 import { fetchUserInfo } from "../actions/UserInfoActions";
@@ -21,10 +22,15 @@ class UserProfileForm extends React.Component {
 		       	userSkills: ""
 		      }
 		    };
+		
 		this.handleInputChange = this.handleInputChange.bind(this);
     	this.onSumbit = this.onSumbit.bind(this);
     	this.updateAvatar = this.updateAvatar.bind(this);
 
+    	this.requiredInput = {
+    		userName: "User Name",
+    		userEmail: "Email"
+    	};
 	}
 
 	componentDidMount()
@@ -64,11 +70,16 @@ class UserProfileForm extends React.Component {
 			});
 
 	}
-	
+
 	onSumbit(e)
 	{
 		e.preventDefault();
-		
+			
+		if(!inputValidation(this.requiredInput, this))
+		{
+			console.log("Input Validation Failed")
+			return;
+		}
 		// fill all hidden values
 		var newProfile = {
 			userName: this.state.input.userName,

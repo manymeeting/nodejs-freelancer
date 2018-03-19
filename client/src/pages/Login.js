@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import update from 'react-addons-update'; // ES6
 import ClientAuthService from '../utils/ClientAuthService';
 import { connect } from 'react-redux';
+import { inputValidation } from '../utils/formUtils'
 
 // redux-actions
 import { fetchUserInfo } from "../actions/UserInfoActions";
@@ -19,7 +20,10 @@ class InputForm extends React.Component {
         password: ""
       }
     };
-
+    this.requiredInput = {
+        email: "Email",
+        password: "Password"
+      };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSumbit = this.onSumbit.bind(this);
   }
@@ -56,6 +60,11 @@ class InputForm extends React.Component {
   onSumbit(e)
   {
     e.preventDefault();
+    if(!inputValidation(this.requiredInput, this))
+    {
+      console.log("Input Validation Failed")
+      return;
+    }
     var email = this.state.input.email;
     var password = this.state.input.password;
     var clientAuthService = new ClientAuthService();

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
+import { inputValidation } from '../utils/formUtils'
 // redux-actions
 import { addBidOnProject } from "../actions/BidOnProjectActions";
 import { fetchProjBidList } from "../actions/ProjectBidListActions";
@@ -22,7 +23,6 @@ class BidInputForm extends React.Component {
     		bidPrice: "Bid Price",
     		bidPeriod: "Bid Period"
     	};
-    	this.validateInput = this.validateInput.bind(this);
 
 	}
 
@@ -50,7 +50,7 @@ class BidInputForm extends React.Component {
 	onSumbit(e)
 	{
 		e.preventDefault();
-		if(!this.validateInput())
+		if(!inputValidation(this.requiredInput, this))
 		{
 			console.log("Input Validation Failed")
 			return;
