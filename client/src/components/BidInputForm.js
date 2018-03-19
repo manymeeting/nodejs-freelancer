@@ -36,7 +36,7 @@ class BidInputForm extends React.Component {
 		// fill all hidden values
 		var newBid = {
 			projectID: this.props.projectBasic.project_id,
-			bidderID: this.props.projectBasic.user_id,
+			bidderID: this.props.userInfo.user_id,
 			employerID: this.props.projectBasic.employer_id,
 			bidPeriod: this.state.input.bidPeriod,
 			bidPrice: this.state.input.bidPrice,
@@ -77,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = state => ({
-	projectBasic: state.projectDetails.basic
+	projectBasic: state.projectDetails.basic,
+	userInfo: state.userInfo
 });
 
 
