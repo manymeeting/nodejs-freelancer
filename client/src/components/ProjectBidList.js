@@ -19,7 +19,7 @@ class ProjectBidList extends React.Component {
 		}
 		return(
 			<div>
-				<ul className="fl-nopadding-ul">
+				<ul>
 
 					{
 						projectBidList.map((bid) =>

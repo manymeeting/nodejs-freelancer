@@ -14,7 +14,7 @@ class AllPublishedProjList extends React.Component {
 			// list of projects
 			<div>
 				<p className="fl-sub-header">All Published Projects</p>
-				<ul className="fl-nopadding-ul">
+				<ul>
 					{
 						allPublishedProjects.map((project) =>
 							<li key={project.project_id}>

@@ -14,7 +14,7 @@ class AllBiddedProjList extends React.Component {
 			// list of projects
 			<div>
 				<p className="fl-sub-header">All Bids</p>
-				<ul className="fl-nopadding-ul">
+				<ul>
 					{
 						allBiddedProjects.map((project) =>
 							<li key={project.bid_date}>
