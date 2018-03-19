@@ -18,6 +18,11 @@ class BidInputForm extends React.Component {
 		    };
 		this.handleInputChange = this.handleInputChange.bind(this);
     	this.onSumbit = this.onSumbit.bind(this);
+    	this.requiredInput = {
+    		bidPrice: "Bid Price",
+    		bidPeriod: "Bid Period"
+    	};
+    	this.validateInput = this.validateInput.bind(this);
 
 	}
 
@@ -29,10 +34,27 @@ class BidInputForm extends React.Component {
 		this.setState(update(this.state, newState));
 	}
 
+	validateInput()
+	{
+		for(let key in this.requiredInput)
+		{
+			if(this.state.input[key] === "")
+			{
+				alert("Please input value in " + this.requiredInput[key]);
+				return false;
+			}
+		}
+		return true;
+	}
+
 	onSumbit(e)
 	{
 		e.preventDefault();
-		
+		if(!this.validateInput())
+		{
+			console.log("Input Validation Failed")
+			return;
+		}
 		// fill all hidden values
 		var newBid = {
 			projectID: this.props.projectBasic.project_id,
