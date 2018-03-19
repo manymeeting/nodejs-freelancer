@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 // resources
 import '../css/nav.css';
 import logo from '../images/logo.png';
-import defaultAvatar from '../images/avatar-128.png';
+import defaultAvatar from '../images/avatar-default.png';
 
 // utils
 import ClientAuthService from '../utils/ClientAuthService';
