@@ -44,7 +44,7 @@ class PostProject extends React.Component {
 			projectDescription: this.state.input.projectDescription,
 			projectSkills: this.state.input.projectSkills,
 			budgeRange: this.state.input.budgeRange,
-			publishedData: Date()
+			publishedDate: Date()
 		};
 		
 		this.props.postProject(newProject)
