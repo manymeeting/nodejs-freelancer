@@ -30,6 +30,10 @@ class ProjectBidList extends React.Component {
 										<span className="fl-bid-bidder"><Link to={"/user_profile/" + bid.bidder_id} >{bid.user_name}</Link></span>
 									</div>
 									<div className="fl-list-row">
+										<span className="fl-list-label">Bid Date: </span>
+										<span className="fl-bid-price">{bid.bid_date}</span>
+									</div>
+									<div className="fl-list-row">
 										<span className="fl-list-label">Price (USD): </span>
 										<span className="fl-bid-price">{bid.bid_price}</span>
 									</div>

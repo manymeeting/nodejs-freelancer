@@ -32,6 +32,10 @@ class ProjectBasicInfo extends React.Component {
 					<span>{this.props.projectBasic.project_skills}</span>
 				</div>
 				<div className="fl-details-row">
+					<span className="fl-details-label">Published Date: </span>
+					<span>{this.props.projectBasic.published_date}</span>
+				</div>
+				<div className="fl-details-row">
 					<span className="fl-details-label">Employer: </span>
 					<span><Link to={"/user_profile/" + this.props.projectBasic.employer_id} >{this.props.projectBasic.user_name}</Link></span>
 				</div>
