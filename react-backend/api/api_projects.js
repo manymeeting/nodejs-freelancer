@@ -99,7 +99,7 @@ module.exports.postProject = function (req, res, next) {
 		employerID: "",
 		projectDescription: "",
 		projectSkills: "",
-		budgeRange: "",
+		budgetRange: "",
 		publishedDate: "",
 		status: project_codes.PROJECT_STATUS.OPEN
 	};
@@ -111,7 +111,7 @@ module.exports.postProject = function (req, res, next) {
 		'values(?,?,?,?,?,?,?)';
 	
 	console.log(queryStr);
-	dbUtil.query(queryStr,[params.projectName, params.employerID, params.projectDescription, params.projectSkills, params.budgeRange, params.publishedDate, params.status], function(err, results, fields) {
+	dbUtil.query(queryStr,[params.projectName, params.employerID, params.projectDescription, params.projectSkills, params.budgetRange, params.publishedDate, params.status], function(err, results, fields) {
 	  dbUtil.handleError(err);
 	  
 	  res.type('json');

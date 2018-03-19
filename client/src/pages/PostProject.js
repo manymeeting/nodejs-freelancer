@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import withAuth from '../utils/withAuth';
 import update from 'react-addons-update';
+import { inputValidation } from '../utils/formUtils'
 // redux-actions
 import { postProject } from "../actions/PostProjectActions";
 
@@ -16,9 +17,15 @@ class PostProject extends React.Component {
 		        projectName: "",
 		       	projectDescription: "",
 		       	projectSkills: "",
-		       	budgeRange: ""
+		       	budgetRange: ""
 		      }
 		    };
+		this.requiredInput = {
+    		projectName: "Project Name",
+    		projectDescription: "Project Description",
+    		projectSkills: "Required Skills",
+    		budgetRange: "Budget Range"
+    	};
 		this.handleInputChange = this.handleInputChange.bind(this);
     	this.onSumbit = this.onSumbit.bind(this);
 
@@ -35,7 +42,11 @@ class PostProject extends React.Component {
 	onSumbit(e)
 	{
 		e.preventDefault();
-		console.log(this.props);
+		if(!inputValidation(this.requiredInput, this))
+		{
+			console.log("Input Validation Failed")
+			return;
+		}
 		
 		// fill all hidden values
 		var newProject = {
@@ -43,7 +54,7 @@ class PostProject extends React.Component {
 			employerID: this.props.userInfo.user_id,
 			projectDescription: this.state.input.projectDescription,
 			projectSkills: this.state.input.projectSkills,
-			budgeRange: this.state.input.budgeRange,
+			budgetRange: this.state.input.budgetRange,
 			publishedDate: Date()
 		};
 		
@@ -75,7 +86,7 @@ class PostProject extends React.Component {
 			        </div>
 			        <div className="form-group">
 			            <label>Budget Range:</label>
-			            <input type="text" className="form-control" name="budgeRange" onChange={this.handleInputChange} required/>
+			            <input type="text" className="form-control" name="budgetRange" onChange={this.handleInputChange} required/>
 			        </div>
 
 			        <button className="btn btn-primary" onClick={this.onSumbit}>Post Project</button>

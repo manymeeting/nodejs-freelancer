@@ -28,7 +28,7 @@ export function postProject(params) {
 		employerID: params.employerID,
 		projectDescription: params.projectDescription,
 		projectSkills: params.projectSkills,
-		budgeRange: params.budgeRange,
+		budgetRange: params.budgetRange,
 		publishedDate: params.publishedDate
 	};
 	return dispatch => {
