@@ -93,19 +93,38 @@ class UserProfileForm extends React.Component {
 		{
 			// editable profile
 			return(
-				<div>
+				<div className="fl-main-container">
+					<h1 className="fl-main-header">User Profile</h1>
 					<form id="userAvatarForm" encType="multipart/form-data" onSubmit={this.updateAvatar}>
-						<input type="file" name="file" ref={(ref) => { this.newAvatar = ref; }}/>
-						<input type="submit" value="Upload"/>
+						<div className="form-group">
+				            <label>New Avatar:</label>
+				            <input type="file" className="form-control" name="file" ref={(ref) => { this.newAvatar = ref; }}/>
+				        </div>
+						<input type="submit" className="btn btn-primary" value="Upload"/>
 					</form>
 					<form id="userProfileForm">
-						<span>Name</span><input type="text" name="userName" value={this.state.input.userName} onChange={this.handleInputChange} required="required"/><br/>
-						<span>Email</span><input type="email" name="userEmail" value={this.state.input.userEmail} onChange={this.handleInputChange} required="required"/><br/>
-						<span>Phone</span><input type="text" name="userPhone" value={this.state.input.userPhone} onChange={this.handleInputChange} /><br/>
-						<span>About</span><input type="text" name="userAbout" value={this.state.input.userAbout} onChange={this.handleInputChange} /><br/>
-						<span>Skills</span><input type="text" name="userSkills" value={this.state.input.userSkills} onChange={this.handleInputChange} /><br/>
+						<div className="form-group">
+				            <label>User Name:</label>
+				            <input type="text" className="form-control" name="userName" value={this.state.input.userName} onChange={this.handleInputChange} required/>
+				        </div>
+				        <div className="form-group">
+				            <label>Email Address:</label>
+				            <input type="text" className="form-control" name="userEmail" value={this.state.input.userEmail} onChange={this.handleInputChange} required/>
+				        </div>
+				        <div className="form-group">
+				            <label>Phone:</label>
+				            <input type="text" className="form-control" name="userPhone" value={this.state.input.userPhone} onChange={this.handleInputChange} />
+				        </div>
+				        <div className="form-group">
+				            <label>About:</label>
+				            <input type="text" className="form-control" name="userAbout" value={this.state.input.userAbout} onChange={this.handleInputChange} />
+				        </div>
+				        <div className="form-group">
+				            <label>Skills:</label>
+				            <input type="text" className="form-control" name="userSkills" value={this.state.input.userSkills} onChange={this.handleInputChange} />
+				        </div>
 						
-				        <button onClick={this.onSumbit}>Update Profile</button>
+				        <button className="btn btn-primary" onClick={this.onSumbit}>Update Profile</button>
 					</form>
 
 				</div>
@@ -116,12 +135,28 @@ class UserProfileForm extends React.Component {
 		{
 			// read only profile
 			return(
-				<div>
-					<span>Name</span><span>{this.props.userProfile.user_name}</span><br/>
-					<span>Email</span><span>{this.props.userProfile.user_email}</span><br/>
-					<span>Phone</span><span>{this.props.userProfile.user_phone}</span><br/>
-					<span>About</span><span>{this.props.userProfile.user_about}</span><br/>
-					<span>Skills</span><span>{this.props.userProfile.user_skills}</span><br/>
+				<div className="fl-main-container">
+					<h1 className="fl-main-header">User Profile</h1>
+					<div className="fl-details-row">
+						<span className="fl-details-label">User Name: </span>
+						<span>{this.props.userProfile.user_name}</span>
+					</div>
+					<div className="fl-details-row">
+						<span className="fl-details-label">User Email: </span>
+						<span>{this.props.userProfile.user_email}</span>
+					</div>
+					<div className="fl-details-row">
+						<span className="fl-details-label">Phone: </span>
+						<span>{this.props.userProfile.user_phone}</span>
+					</div>
+					<div className="fl-details-row">
+						<span className="fl-details-label">About: </span>
+						<span>{this.props.userProfile.user_about}</span>
+					</div>
+					<div className="fl-details-row">
+						<span className="fl-details-label">Skills: </span>
+						<span>{this.props.userProfile.user_skills}</span>
+					</div>
 					
 				</div>
 			)
