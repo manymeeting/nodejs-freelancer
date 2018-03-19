@@ -10,6 +10,15 @@ class AllBiddedProjList extends React.Component {
 	render()
 	{
 		var allBiddedProjects = this.props.allBiddedProjects;
+		if(allBiddedProjects.length === 0)
+		{
+			return (
+				<div>
+					<p className="fl-sub-header">All Bids</p>
+					<p>(no bidded projects)</p>
+				</div>
+			)
+		}
 		return (
 			// list of projects
 			<div>

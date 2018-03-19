@@ -10,6 +10,14 @@ class AllOpenProjList extends React.Component {
 	render()
 	{
 		var allOpenProjects = this.props.allOpenProjects;
+		if(allOpenProjects.length === 0)
+		{
+			return (
+				<div className="fl-all-open-proj-container">
+					<p>(no open projects)</p>
+				</div>
+			)
+		}
 		return (
 			// list of projects
 			<div className="fl-all-open-proj-container">

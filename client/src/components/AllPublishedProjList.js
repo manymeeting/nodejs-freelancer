@@ -10,6 +10,15 @@ class AllPublishedProjList extends React.Component {
 	render()
 	{
 		var allPublishedProjects = this.props.allPublishedProjects;
+		if(allPublishedProjects.length === 0)
+		{
+			return (
+				<div>
+					<p className="fl-sub-header">All Published Projects</p>
+					<p>(no published projects)</p>
+				</div>
+			)
+		}
 		return (
 			// list of projects
 			<div>
