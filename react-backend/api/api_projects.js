@@ -145,3 +145,27 @@ module.exports.hireBid = function (req, res, next) {
 	  return;
 	});
 }
+
+
+module.exports.updateProjectAveBidPrice = function (req, res, next) {
+	
+	var projectID = req.body.id;
+	var result = {};
+	var queryStr = 
+		'update ' + TABLE_PROJCETS +
+		'set avg_bid_price = ' + 
+		' (select avg(bids.bid_price) from ' + TABLE_BIDS + 
+		' where bids.project_id = ?' +
+		' group by bids.project_id) ' +   T 
+		'where projects.project_id = ?';
+	
+	console.log(queryStr);
+	dbUtil.query(queryStr,[projectID, projectID], function(err, rows, fields) {
+	  dbUtil.handleError(err);
+	  result = rows;
+	  res.type('json');
+	  res.send(JSON.stringify(result));
+	  
+	  return;
+	});
+}
