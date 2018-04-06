@@ -5,23 +5,23 @@
 .idea/
 *.iml
 
-#backend
-react-backend/public/avatars/
+#backend services
+services/public/avatars/
 
-react-backend/config
-react-backend/node_modules/
-react-backend/build/
-react-backend/app/vendor/
-react-backend/coverage
-react-backend/.DS_Store
-react-backend/.env.local
-react-backend/.env.development.local
-react-backend/.env.test.local
-react-backend/.env.production.local
+services/config
+services/node_modules/
+services/build/
+services/app/vendor/
+services/coverage
+services/.DS_Store
+services/.env.local
+services/.env.development.local
+services/.env.test.local
+services/.env.production.local
 
-react-backend/npm-debug.log*
-react-backend/yarn-debug.log*
-react-backend/yarn-error.log*
+services/npm-debug.log*
+services/yarn-debug.log*
+services/yarn-error.log*
 
 #react
 client/config
