@@ -5,6 +5,46 @@
 .idea/
 *.iml
 
+#react
+client/config
+client/node_modules/
+client/build/
+client/app/vendor/
+client/coverage
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+#kafka client
+kafka-client/config
+kafka-client/node_modules/
+kafka-client/build/
+kafka-client/app/vendor/
+kafka-client/coverage
+kafka-client/.DS_Store
+kafka-client/.env.local
+kafka-client/.env.development.local
+kafka-client/.env.test.local
+kafka-client/.env.production.local
+
+#kafka backend
+kafka-backend/config
+kafka-backend/node_modules/
+kafka-backend/build/
+kafka-backend/app/vendor/
+kafka-backend/coverage
+kafka-backend/.DS_Store
+kafka-backend/.env.local
+kafka-backend/.env.development.local
+kafka-backend/.env.test.local
+kafka-backend/.env.production.local
+
 #backend services
 services/public/avatars/
 
@@ -22,19 +62,3 @@ services/.env.production.local
 services/npm-debug.log*
 services/yarn-debug.log*
 services/yarn-error.log*
-
-#react
-client/config
-client/node_modules/
-client/build/
-client/app/vendor/
-client/coverage
-client/.DS_Store
-client/.env.local
-client/.env.development.local
-client/.env.test.local
-client/.env.production.local
-
-client/npm-debug.log*
-client/yarn-debug.log*
-client/yarn-error.log*
