@@ -5,25 +5,21 @@ var connURL = config.connectionStr;
 // An MongoDB instance
 var _mongoDB = null;
 
-MongoClient.connect(connURL, function(err, db){
-	if(err)
+module.exports.getMongoConn = function(playWith){
+	if(_mongoDB !== null)
 	{
-		throw err;
+		playWith(_mongoDB);
+		return;
 	}
-	_mongoDB = db;
 
-});
-
-MongoPool = function(){
-	if(MongoPool.instance)
-	{
-		return MongoPool.instance;
-	}
-	MongoPool.instance = this;
+	MongoClient.connect(connURL, function(err, client){
+		if(err)
+		{
+			throw err;
+		}
+		_mongoDB = client.db("nodejs-freelancer");
+		playWith(_mongoDB, function(){
+			client.close();
+		});
+	});
 }
-
-MongoPool.getDB = function(){
-	return _mongoDB;
-}
-
-module.exports.MongoPool = new MongoPool();
