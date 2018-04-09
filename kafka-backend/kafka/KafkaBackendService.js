@@ -1,5 +1,7 @@
 var kafka = require('kafka-node');
-var config = require('config');
+var Producer = kafka.Producer;
+var Consumer = kafka.Consumer;
+// var config = require('config');
 
 // designed to be a singleton
 function KafkaBackendService()
@@ -18,9 +20,6 @@ KafkaBackendService._instance = null;
 
 KafkaBackendService.prototype.initialize = function()
 {
-	var Producer = kafka.Producer;
-	var Consumer = kafka.Consumer;
-
     this.client = new kafka.Client("138.68.20.94:2181"),
     this.consumerPool = {};
     this.producer = new Producer(this.client);
@@ -38,9 +37,15 @@ KafkaBackendService.prototype.initialize = function()
 
 KafkaBackendService.prototype.getConsumer = function(topic)
 {
-	var consumer = new Consumer(this.client, [{ topic: topic, partition: 0 }]);
+	// reuse existing consumer on this topic
+	if(this.consumerPool[topic])
+	{
+		return this.consumerPool[topic];
+	}
 
-	this.consumers.push(consumer);
+	var consumer = new Consumer(this.client, [{ topic: topic, partition: 0 }]);
+	// register this consumer to pool
+	this.consumerPool[topic] = consumer;
 	return consumer;
 }
 

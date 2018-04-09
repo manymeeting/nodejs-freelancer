@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var app = express();
 var receiverUser = require('./receivers/receiver_user');
-var kafkaBackendService = require('./kafka/KafkaBackendService');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -19,8 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-// initlize consumers
-var userConsumer = kafkaBackendService.getConsumer(receiverUser.getTopicName()); 
-receiverUser.init(userConsumer);
+// init receivers
+receiverUser.init();
 
 module.exports = app;

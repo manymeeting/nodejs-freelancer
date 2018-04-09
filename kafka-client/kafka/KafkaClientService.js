@@ -1,4 +1,7 @@
 var kafka = require('kafka-node');
+var Producer = kafka.Producer;
+var Consumer = kafka.Consumer;
+
 var config = require('config');
 
 // designed to be a singleton
@@ -18,8 +21,6 @@ KafkaClientService._instance = null;
 
 KafkaClientService.prototype.initialize = function()
 {
-	var Producer = kafka.Producer;
-
     this.client = new kafka.Client("138.68.20.94:2181"),
     this.producer = new Producer(this.client);
     this.bindProducerListeners();
