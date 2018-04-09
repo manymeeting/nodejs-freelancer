@@ -8,7 +8,8 @@ module.exports.msg_get_user = function (req, res, next) {
 	// var topic = TOPIC_PREFIX + "users";
 	var topic = "mytest";
 	var message = JSON.stringify({
-		req: "get_user",
+		method: "get",
+		serviceAPI: "api_get_user",
 		params: {
 			id: userID
 		}

@@ -43,7 +43,7 @@ KafkaBackendService.prototype.getConsumer = function(topic)
 		return this.consumerPool[topic];
 	}
 
-	var consumer = new Consumer(this.client, [{ topic: topic, partition: 0 }]);
+	var consumer = new Consumer(this.client, [{ topic: topic, partition: 0, time: Date.now() }]);
 	// register this consumer to pool
 	this.consumerPool[topic] = consumer;
 	return consumer;
