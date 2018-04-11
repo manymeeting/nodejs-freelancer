@@ -50,10 +50,10 @@ KafkaBackendService.prototype.getConsumer = function(topic)
 }
 
 
-KafkaBackendService.prototype.sendMessage = function(topic, message, partition, callback)
+KafkaBackendService.prototype.sendMessage = function(topic, content, partition)
 {
 	var payloads = [
-        { topic: topic, messages: message , partition: partition }
+        { topic: topic, content: content , partition: partition }
     ];
 
     this.producer.send(payloads, function (err, data) {
@@ -62,7 +62,6 @@ KafkaBackendService.prototype.sendMessage = function(topic, message, partition, 
     		console.log("Kafka Backend: Error sendMessage");
     		throw err;
     	}
-    	callback(err, data);
     });
 }
 

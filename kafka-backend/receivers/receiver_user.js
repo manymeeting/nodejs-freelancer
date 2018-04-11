@@ -8,13 +8,13 @@ var _initConsumer = function()
 
 	consumer.on('message', function (message) {
 	    console.log("Receiver User[MSG]: " + message.value);
-	    var _message = _parseMessage(message);
-	    switch(_message.method)
+	    var content = _parseMessage(message);
+	    switch(content.method)
 	    {
 	    	case "get": 
-	    		console.log(_message);
-	    		serviceProxy.get(_message.serviceAPI, _message.params, function(){
-
+	    		console.log(content);
+	    		serviceProxy.get(content.serviceAPI, content.params, function(result){
+	    			kafkaBackendService.sendMessage(content.topicRes, {data: result, reqID: content.reqID}, 0);
 	    		});
 	    		break;
 	    	case "post":
@@ -27,9 +27,6 @@ var _initConsumer = function()
 	    		serviceProxy.delete();
 	    		break;
 	    	default:
-	    		serviceProxy.get(_message.serviceAPI, _message.params, function(){
-
-	    		});
 	    		break;
 	    }
 

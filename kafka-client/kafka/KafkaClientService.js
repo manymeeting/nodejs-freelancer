@@ -43,19 +43,20 @@ KafkaClientService.prototype.bindProducerListeners = function()
 }
 
 
-KafkaClientService.prototype.sendMessage = function(topic, partition, message, callback)
+KafkaClientService.prototype.sendMessage = function(topic, partition, content, callback)
 {
 	var _kafkaClientService = this;
+	var reqID = crypto.randomBytes(16).toString('hex');
+
 	var payloads = [
         { 
         	topic: topic,
         	partition: partition,
-        	message: JSON.stringify(message)
+        	content: JSON.stringify(content)
         }
     ];
    
-    var reqID = crypto.randomBytes(16).toString('hex');
-
+    
     // setup timeout handler
     var timeout = setTimeOut(function(reqID){
     	callback(new Error("Kafka Client Service[TIMEOUT]: " + reqID));
@@ -66,7 +67,7 @@ KafkaClientService.prototype.sendMessage = function(topic, partition, message, c
     	callback: callback,
     	timeout: timeout
     };
-    this._setResponseConsumer(message.topicRes);
+    this._setResponseConsumer(content.topicRes);
 
     this.producer.send(payloads, function (err, data) {
     	if(err)
@@ -91,16 +92,14 @@ KafkaClientService.prototype._setResponseConsumer = function(topicRes)
 	this.consumerPool[topicRes] = consumer;
 	consumer.on('message', function (message) {
         var result = JSON.parse(message.value);
-        //get the reqID
+        // get the reqID
         var reqID = result.reqID;
-        //is it a response to a pending request
         if(reqID in self.requests){
             //retrieve the request entry
             var reqEntry = self.requests[reqID];
             clearTimeout(reqEntry.timeout);
             //delete the entry from request pool 
             delete self.requests[reqID];
-
             reqEntry.callback(null, result.data);
         }
     });
