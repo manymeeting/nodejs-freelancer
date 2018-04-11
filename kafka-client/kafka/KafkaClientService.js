@@ -43,11 +43,15 @@ KafkaClientService.prototype.bindProducerListeners = function()
 }
 
 
-KafkaClientService.prototype.sendMessage = function(topic, message, partition, callback)
+KafkaClientService.prototype.sendMessage = function(topic, partition, message, callback)
 {
 	var _kafkaClientService = this;
 	var payloads = [
-        { topic: topic, messages: message , partition: partition }
+        { 
+        	topic: topic,
+        	partition: partition,
+        	message: JSON.stringify(message)
+        }
     ];
    
     var reqID = crypto.randomBytes(16).toString('hex');
@@ -62,8 +66,8 @@ KafkaClientService.prototype.sendMessage = function(topic, message, partition, c
     	callback: callback,
     	timeout: timeout
     };
-    this._setResponseConsumer(topic);
-    
+    this._setResponseConsumer(message.topicRes);
+
     this.producer.send(payloads, function (err, data) {
     	if(err)
     	{
@@ -74,17 +78,17 @@ KafkaClientService.prototype.sendMessage = function(topic, message, partition, c
     });
 }
 
-KafkaClientService.prototype._setResponseConsumer = function(topic)
+KafkaClientService.prototype._setResponseConsumer = function(topicRes)
 {
 	// reuse existing consumer on this topic
-	if(this.consumerPool[topic])
+	if(this.consumerPool[topicRes])
 	{
-		return this.consumerPool[topic];
+		return this.consumerPool[topicRes];
 	}
 
-	var consumer = new Consumer(this.client, [{ topic: topic, partition: 0, time: Date.now() }]);
+	var consumer = new Consumer(this.client, [{ topic: topicRes, partition: 0, time: Date.now() }]);
 	// register this consumer to pool
-	this.consumerPool[topic] = consumer;
+	this.consumerPool[topicRes] = consumer;
 	consumer.on('message', function (message) {
         var result = JSON.parse(message.value);
         //get the reqID
@@ -92,12 +96,12 @@ KafkaClientService.prototype._setResponseConsumer = function(topic)
         //is it a response to a pending request
         if(reqID in self.requests){
             //retrieve the request entry
-            var entry = self.requests[reqID];
-            clearTimeout(entry.timeout);
+            var reqEntry = self.requests[reqID];
+            clearTimeout(reqEntry.timeout);
             //delete the entry from request pool 
             delete self.requests[reqID];
 
-            entry.callback(null, result.data);
+            reqEntry.callback(null, result.data);
         }
     });
 	return consumer;

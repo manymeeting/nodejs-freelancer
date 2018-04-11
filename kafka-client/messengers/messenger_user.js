@@ -7,14 +7,15 @@ module.exports.msg_get_user = function (req, res, next) {
 	
 	// var topic = TOPIC_PREFIX + "users";
 	var topic = "mytest";
-	var message = JSON.stringify({
+	var message = {
 		method: "get",
 		serviceAPI: "api_get_user",
+		topicRes: "mytest.response",
 		params: {
 			id: userID
 		}
-	})
-	kafkaClientService.sendMessage(topic, message, 0, function(sendErr, sendRes){
+	};
+	kafkaClientService.sendMessage(topic, 0, message, function(sendErr, sendRes){
 		if(sendErr)
 		{
 			throw sendErr;
