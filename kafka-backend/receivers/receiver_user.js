@@ -1,46 +1,64 @@
-var TOPIC_NAME = "mytest";
+var TOPIC_NAME = "queuing.users";
 var _consumer = null; 
 var kafkaBackendService = require('../kafka/KafkaBackendService');
 var serviceProxy = require('../utils/ServiceProxy');
+
+
 var _initConsumer = function()
 {
-	var consumer = kafkaBackendService.getConsumer(TOPIC_NAME);
+	
+	// currently only supprot fetching from the latest offsets
+	var offset = kafkaBackendService.getOffset();
+	var partition = 0;
+	offset.fetch([{ topic: TOPIC_NAME, partition: partition, time: -1 }], function (err, data) {
+		if(err)
+		{
+			throw err;
+		}
+		var latestOffset = data[TOPIC_NAME]['0'][0];
+		console.log("latestOffset: " + latestOffset);
 
-	consumer.on('message', function (message) {
-	    console.log("Receiver User[MSG]: " + message.value);
-	    var content = _parseMessage(message);
-	    switch(content.method)
-	    {
-	    	case "get": 
-	    		console.log(content);
-	    		serviceProxy.get(content.serviceAPI, content.params, function(result){
-	    			kafkaBackendService.sendMessage(content.topicRes, {data: result, reqID: content.reqID}, 0);
-	    		});
-	    		break;
-	    	case "post":
-	    		serviceProxy.post();
-	    		break;
-	    	case "put":
-	    		serviceProxy.put();
-	    		break;
-	    	case "delete":
-	    		serviceProxy.delete();
-	    		break;
-	    	default:
-	    		break;
-	    }
+		var consumer = kafkaBackendService.getConsumer(TOPIC_NAME, partition, latestOffset);
+		consumer.on('message', function (message) {
+		    console.log("Receiver User[MSG]: ");
+		    console.log(message);
+		    var content = _parseMessage(message);
+		    switch(content.method)
+		    {
+		    	case "get": 
+		    		console.log(content);
+		    		serviceProxy.get(content.serviceAPI, content.params, function(result){
+		    			kafkaBackendService.sendMessage(content.topicRes, 0, {data: result, reqID: content.reqID});
+		    		});
+		    		break;
+		    	case "post":
+		    		serviceProxy.post();
+		    		break;
+		    	case "put":
+		    		serviceProxy.put();
+		    		break;
+		    	case "delete":
+		    		serviceProxy.delete();
+		    		break;
+		    	default:
+		    		break;
+		    }
+
+		});
+
+		consumer.on('error', function (err) {
+		    console.log('Receiver User[Error]:',err);
+		});
+
+		consumer.on('offsetOutOfRange', function (err) {
+		    console.log('Receiver User[OffsetOutOfRange]:',err);
+		});
+
+		_consumer = consumer;
 
 	});
 
-	consumer.on('error', function (err) {
-	    console.log('Receiver User[Error]:',err);
-	});
 
-	consumer.on('offsetOutOfRange', function (err) {
-	    console.log('Receiver User[OffsetOutOfRange]:',err);
-	});
-
-	_consumer = consumer;
 }
 
 /**

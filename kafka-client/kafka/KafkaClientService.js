@@ -5,6 +5,7 @@ var Consumer = kafka.Consumer;
 var config = require('config');
 var crypto = require('crypto');
 
+const TIMEOUT = 7000;
 // designed to be a singleton
 function KafkaClientService()
 {
@@ -43,22 +44,42 @@ KafkaClientService.prototype.bindProducerListeners = function()
 }
 
 
+KafkaClientService.prototype.getOffset = function()
+{
+	return new kafka.Offset(new kafka.Client("138.68.20.94:2181"));;
+}
+
+KafkaClientService.prototype.getConsumer = function(topic, partition = 0, offset = 0)
+{
+	// reuse existing consumer on this topic
+	if(this.consumerPool[topic])
+	{
+		return this.consumerPool[topic];
+	}
+
+	var consumer = new Consumer(this.client, [{ topic: topic, partition: partition, offset: offset }], {fromOffset: true});
+	// register this consumer to pool
+	this.consumerPool[topic] = consumer;
+	return consumer;
+}
+
 KafkaClientService.prototype.sendMessage = function(topic, partition, content, callback)
 {
 	var _kafkaClientService = this;
 	var reqID = crypto.randomBytes(16).toString('hex');
+	content["reqID"] = reqID;
 
 	var payloads = [
         { 
         	topic: topic,
         	partition: partition,
-        	content: JSON.stringify(content)
+        	messages: JSON.stringify(content)
         }
     ];
    
     
     // setup timeout handler
-    var timeout = setTimeOut(function(reqID){
+    var timeout = setTimeout(function(reqID){
     	callback(new Error("Kafka Client Service[TIMEOUT]: " + reqID));
     	delete _kafkaClientService.requests[reqID];
     }, TIMEOUT, reqID);
@@ -67,15 +88,15 @@ KafkaClientService.prototype.sendMessage = function(topic, partition, content, c
     	callback: callback,
     	timeout: timeout
     };
-    this._setResponseConsumer(content.topicRes);
 
+    this._setResponseConsumer(content.topicRes);
+    
     this.producer.send(payloads, function (err, data) {
     	if(err)
     	{
     		console.log("Kafka Client: Error sendMessage");
     		throw err;
     	}
-    	callback(err, data);
     });
 }
 
@@ -84,26 +105,40 @@ KafkaClientService.prototype._setResponseConsumer = function(topicRes)
 	// reuse existing consumer on this topic
 	if(this.consumerPool[topicRes])
 	{
-		return this.consumerPool[topicRes];
+		return;
 	}
 
-	var consumer = new Consumer(this.client, [{ topic: topicRes, partition: 0, time: Date.now() }]);
-	// register this consumer to pool
-	this.consumerPool[topicRes] = consumer;
-	consumer.on('message', function (message) {
-        var result = JSON.parse(message.value);
-        // get the reqID
-        var reqID = result.reqID;
-        if(reqID in self.requests){
-            //retrieve the request entry
-            var reqEntry = self.requests[reqID];
-            clearTimeout(reqEntry.timeout);
-            //delete the entry from request pool 
-            delete self.requests[reqID];
-            reqEntry.callback(null, result.data);
-        }
-    });
-	return consumer;
+	// currently only supprot fetching from the latest offsets
+	var _kafkaClientService = this;
+	var offset = _kafkaClientService.getOffset();
+	var partition = 0;
+	offset.fetch([{ topic: topicRes, partition: partition, time: -1 }], function (err, data) {
+		if(err)
+		{
+			throw err;
+		}
+		var latestOffset = data[topicRes]['0'][0];
+		console.log("latestOffset: " + latestOffset);
+
+		var consumer = _kafkaClientService.getConsumer(topicRes, partition, latestOffset);
+
+		consumer.on('message', function (message) {
+		    console.log(message);
+	        var result = JSON.parse(message.value);
+	        // get the reqID
+	        var reqID = result.reqID;
+	        if(reqID in _kafkaClientService.requests){
+	            //retrieve the request entry
+	            var reqEntry = _kafkaClientService.requests[reqID];
+	            clearTimeout(reqEntry.timeout);
+	            reqEntry.callback(null, result.data);
+	            //delete the entry from request pool 
+	            delete _kafkaClientService.requests[reqID];
+	        }
+
+		});
+
+	});
 }
 
 

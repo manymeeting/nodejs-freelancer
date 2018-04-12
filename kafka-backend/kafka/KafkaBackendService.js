@@ -28,14 +28,19 @@ KafkaBackendService.prototype.initialize = function()
     	console.log('Kafka Backend: Producer is ready');
     });
 
-    this.producer.on("error", function() {
+    this.producer.on("error", function(err) {
     	console.log('Kafka Backend: Producer is in error state');
 	    console.log(err);
     });
     
 }
 
-KafkaBackendService.prototype.getConsumer = function(topic)
+KafkaBackendService.prototype.getOffset = function()
+{
+	return new kafka.Offset(new kafka.Client("138.68.20.94:2181"));;
+}
+
+KafkaBackendService.prototype.getConsumer = function(topic, partition = 0, offset = 0)
 {
 	// reuse existing consumer on this topic
 	if(this.consumerPool[topic])
@@ -43,17 +48,21 @@ KafkaBackendService.prototype.getConsumer = function(topic)
 		return this.consumerPool[topic];
 	}
 
-	var consumer = new Consumer(this.client, [{ topic: topic, partition: 0, time: Date.now() }]);
+	var consumer = new Consumer(this.client, [{ topic: topic, partition: partition, offset: offset }], {fromOffset: true});
 	// register this consumer to pool
 	this.consumerPool[topic] = consumer;
 	return consumer;
 }
 
 
-KafkaBackendService.prototype.sendMessage = function(topic, content, partition)
-{
+KafkaBackendService.prototype.sendMessage = function(topic, partition, content )
+{	
 	var payloads = [
-        { topic: topic, content: content , partition: partition }
+        { 
+        	topic: topic,
+        	partition: partition,
+        	messages: JSON.stringify(content)
+        }
     ];
 
     this.producer.send(payloads, function (err, data) {
