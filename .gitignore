@@ -22,6 +22,8 @@ client/yarn-debug.log*
 client/yarn-error.log*
 
 #kafka client
+kafka-client/public/avatars/
+
 kafka-client/config
 kafka-client/node_modules/
 kafka-client/build/
@@ -46,8 +48,6 @@ kafka-backend/.env.test.local
 kafka-backend/.env.production.local
 
 #backend services
-services/public/avatars/
-
 services/config
 services/node_modules/
 services/build/
