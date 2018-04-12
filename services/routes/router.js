@@ -35,5 +35,6 @@ router.get('/api_m_get_profile', api_m_users.getProfile);
 router.get('/api_m_get_all_open_proj', api_m_projects.getAllOpenProjects);
 router.get('/api_m_get_project_details', api_m_projects.getProjectDetails);
 
+router.get('/api_m_get_all_proj_bidded_by_user', api_m_projects.getAllProjBiddedByUser);
 
 module.exports = router;

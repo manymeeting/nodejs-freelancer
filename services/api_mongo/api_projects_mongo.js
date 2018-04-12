@@ -5,7 +5,7 @@ var project_codes = require('../codes/project_codes');
 module.exports.getAllOpenProjects = function (req, res, next) {
 	var projectsQuery = {
 		"project_status": project_codes.PROJECT_STATUS.OPEN
-	}
+	};
 
 	mongoUtil.getMongoConn(function(db) {
 		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
@@ -45,7 +45,7 @@ module.exports.getAllOpenProjects = function (req, res, next) {
 module.exports.getProjectDetails = function(req, res, next) {
 	var projectsQuery = {
 		"_id": ObjectId(req.query.id)
-	}
+	};
 
 	mongoUtil.getMongoConn(function(db) {
 		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
@@ -77,6 +77,24 @@ module.exports.getProjectDetails = function(req, res, next) {
 				res.send(JSON.stringify(projects));
 
 			});
+			
+		});
+	});
+}
+
+module.exports.getAllProjBiddedByUser = function(req, res, next) {
+	var projectsQuery = {
+		"bids": {$elemMatch: {"bidder_id": req.query.id}}
+	};
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
+			if(errProj)
+			{
+				throw errProj;
+			}
+			console.log(projects);
+			res.type('json');
+			res.send(JSON.stringify(projects));
 			
 		});
 	});
