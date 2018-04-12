@@ -18,8 +18,6 @@ module.exports.getMongoConn = function(playWith){
 			throw err;
 		}
 		_mongoDB = client.db("nodejs-freelancer");
-		playWith(_mongoDB, function(){
-			client.close();
-		});
+		playWith(_mongoDB);
 	});
 }

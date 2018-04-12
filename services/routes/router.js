@@ -29,5 +29,6 @@ router.put('/api_add_bid_on_proj', api_bids.addBidOnProject);
 
 
 router.get('/api_m_get_user', api_m_users.getUser);
+router.get('/api_m_get_profile', api_m_users.getProfile);
 
 module.exports = router;
