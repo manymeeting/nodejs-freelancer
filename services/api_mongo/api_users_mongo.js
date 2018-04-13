@@ -2,7 +2,7 @@ var mongoUtil = require("../utils/mongoDBUtil");
 var ObjectId = require('mongodb').ObjectId; 
 
 module.exports.getUser = function (req, res, next) {
-	var userID = req.query.id;
+	var userID = req.params.id;
 	console.log("user id: " + userID);
 
 	mongoUtil.getMongoConn(function(db) {
@@ -22,7 +22,7 @@ module.exports.getUser = function (req, res, next) {
 
 
 module.exports.getProfile = function (req, res, next) {
-	var userID = req.query.id;
+	var userID = req.params.id;
 	console.log("user id: " + userID);
 
 	mongoUtil.getMongoConn(function(db) {
