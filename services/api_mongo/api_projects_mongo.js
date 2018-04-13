@@ -1,6 +1,7 @@
 var mongoUtil = require("../utils/mongoDBUtil");
 var ObjectId = require('mongodb').ObjectId; 
 var project_codes = require('../codes/project_codes');
+var projects_utils = require('./api_projects_utils');
 
 module.exports.getAllProjectsOnStatus = function (req, res, next) {
 	var projectsQuery = {
@@ -19,19 +20,7 @@ module.exports.getAllProjectsOnStatus = function (req, res, next) {
 				{
 					throw errUsers;
 				}
-				for (let i = 0; i < projects.length; i++)
-				{
-					var project = projects[i];
-					for (let j = 0; j < users.length; j++)
-					{
-						var user = users[i];
-						if(project.employer_id === user._id.toString())
-						{
-							project.employer = user;
-							break;
-						}
-					}
-				}
+				projects_utils.bindEmployerData(projects, users);
 				console.log(projects);
 				res.type('json');
 				res.send(JSON.stringify(projects));
@@ -59,19 +48,7 @@ module.exports.getProjectDetails = function(req, res, next) {
 				{
 					throw errUsers;
 				}
-				for (let i = 0; i < projects.length; i++)
-				{
-					var project = projects[i];
-					for (let j = 0; j < users.length; j++)
-					{
-						var user = users[i];
-						if(project.employer_id === user._id.toString())
-						{
-							project.employer = user;
-							break;
-						}
-					}
-				}
+				projects_utils.bindEmployerData(projects, users);
 				console.log(projects);
 				res.type('json');
 				res.send(JSON.stringify(projects));
