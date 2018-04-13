@@ -2,6 +2,8 @@ var mongoUtil = require("../utils/mongoDBUtil");
 var ObjectId = require('mongodb').ObjectId; 
 
 module.exports.createTransaction = function (req, res, next) {
+	req.body.transAmount = parseFloat(req.body.transAmount);
+
 	var newTransaction = {
 		trans_from: req.body.transFrom,
 		trans_to: req.body.transTo,
@@ -11,12 +13,34 @@ module.exports.createTransaction = function (req, res, next) {
 	};
 
 	mongoUtil.getMongoConn(function(db) {
+		// insert transaction record first so that if errors happen on updating user balances, we have record to track.
 		db.collection('transactions').insertOne(newTransaction, function(err, result) {
 			if(err)
 			{	
 				throw err;
 			}
 			console.log(result.ops);
+
+			// update users balance (send response without waiting)
+			if(req.body.transFrom && req.body.transFrom.length > 0) // if withdraw from a real user
+			{
+				db.collection('users').updateOne({"_id": ObjectId(req.body.transFrom)}, {$inc: { "user_balance" : (0 - req.body.transAmount) }}, function(errUsers, users) {
+					if(errUsers)
+					{
+						throw errUsers;
+					}
+				});
+			}
+			if(req.body.transTo && req.body.transTo.length > 0) // if withdraw from a real user
+			{
+				db.collection('users').updateOne({"_id": ObjectId(req.body.transTo)}, {$inc: { "user_balance" : req.body.transAmount }}, function(errUsers, users) {
+					if(errUsers)
+					{
+						throw errUsers;
+					}
+				});
+			}
+			
 			res.type('json');
 			res.status(201).send(JSON.stringify(result.ops));
 			

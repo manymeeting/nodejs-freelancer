@@ -43,3 +43,5 @@ module.exports.getProfile = function (req, res, next) {
 	});
 }
 
+// TODO create user, set initial balacne to 0
+
