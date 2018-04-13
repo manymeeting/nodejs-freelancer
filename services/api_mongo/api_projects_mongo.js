@@ -145,3 +145,23 @@ module.exports.postProject = function(req, res, next) {
 	});
 }
 
+module.exports.hireBid = function(req, res, next) {
+	var projectsQuery = {
+		"_id": ObjectId(req.params.projectID),
+	};
+	var newBid = {
+		$set: { "hired_bid_id" : req.params.bidID }
+	}
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').updateOne(projectsQuery, newBid, function(err, result) {
+			if(err)
+			{
+				throw err;
+			}
+			console.log(result);
+			res.type('json');
+			res.send(JSON.stringify(result));
+		});
+	});
+}
+
