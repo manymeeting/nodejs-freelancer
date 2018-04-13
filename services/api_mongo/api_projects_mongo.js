@@ -44,7 +44,7 @@ module.exports.getAllProjectsOnStatus = function (req, res, next) {
 
 module.exports.getProjectDetails = function(req, res, next) {
 	var projectsQuery = {
-		"_id": ObjectId(req.query.id)
+		"_id": ObjectId(req.params.id)
 	};
 
 	mongoUtil.getMongoConn(function(db) {
@@ -84,17 +84,17 @@ module.exports.getProjectDetails = function(req, res, next) {
 
 module.exports.getAllProjBiddedByUser = function(req, res, next) {
 	var projectsQuery = {
-		"bids": {$elemMatch: {"bidder_id": req.query.id}}
+		"bids": {$elemMatch: {"bidder_id": req.params.id}}
 	};
 	mongoUtil.getMongoConn(function(db) {
-		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
-			if(errProj)
+		db.collection('projects').find(projectsQuery).toArray(function(err, result) {
+			if(err)
 			{
-				throw errProj;
+				throw err;
 			}
-			console.log(projects);
+			console.log(result);
 			res.type('json');
-			res.send(JSON.stringify(projects));
+			res.send(JSON.stringify(result));
 			
 		});
 	});
@@ -102,18 +102,46 @@ module.exports.getAllProjBiddedByUser = function(req, res, next) {
 
 module.exports.getAllProjPublishedByUser = function (req, res, next) {
 	var projectsQuery = {
-		"employer_id": req.query.id
+		"employer_id": req.params.id
 	};
 	mongoUtil.getMongoConn(function(db) {
-		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
-			if(errProj)
+		db.collection('projects').find(projectsQuery).toArray(function(err, result) {
+			if(err)
 			{
-				throw errProj;
+				throw err;
 			}
-			console.log(projects);
+			console.log(result);
 			res.type('json');
-			res.send(JSON.stringify(projects));
+			res.send(JSON.stringify(result));
 			
 		});
 	});
 }
+
+module.exports.postProject = function(req, res, next) {
+
+	var newProj = {
+		project_name: req.body.projectName,
+		employer_id: req.body.employerID,
+		project_description: req.body.projectDescription,
+		project_files: req.body.projectFiles,
+		project_skills: (req.body.projectSkills && req.body.projectSkills.length > 0) ? JSON.parse(req.body.projectSkills) : [],
+		project_budget_range: req.body.budgetRange,
+		project_published_date: req.body.publishedDate,
+		project_status: project_codes.PROJECT_STATUS.OPEN
+	};
+
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').insertOne(newProj, function(err, result) {
+			if(err)
+			{
+				throw err;
+			}
+			console.log(result.ops);
+			res.type('json');
+			res.status(201).send(JSON.stringify(result.ops));
+			
+		});
+	});
+}
+
