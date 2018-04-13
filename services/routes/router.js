@@ -33,7 +33,7 @@ router.put('/api_add_bid_on_proj', api_bids.addBidOnProject);
 // Services on MongoDB
 router.get('/users/:id', api_m_users.getUser);
 router.get('/users/:id/profile', api_m_users.getProfile);
-router.get('/api_m_get_all_open_proj', api_m_projects.getAllOpenProjects);
+router.get('/projects/status/:status', api_m_projects.getAllProjectsOnStatus);
 router.get('/api_m_get_project_details', api_m_projects.getProjectDetails);
 
 router.get('/api_m_get_all_proj_bidded_by_user', api_m_projects.getAllProjBiddedByUser);

@@ -2,9 +2,9 @@ var mongoUtil = require("../utils/mongoDBUtil");
 var ObjectId = require('mongodb').ObjectId; 
 var project_codes = require('../codes/project_codes');
 
-module.exports.getAllOpenProjects = function (req, res, next) {
+module.exports.getAllProjectsOnStatus = function (req, res, next) {
 	var projectsQuery = {
-		"project_status": project_codes.PROJECT_STATUS.OPEN
+		"project_status": req.params.status.toUpperCase()
 	};
 
 	mongoUtil.getMongoConn(function(db) {
@@ -85,6 +85,24 @@ module.exports.getProjectDetails = function(req, res, next) {
 module.exports.getAllProjBiddedByUser = function(req, res, next) {
 	var projectsQuery = {
 		"bids": {$elemMatch: {"bidder_id": req.query.id}}
+	};
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
+			if(errProj)
+			{
+				throw errProj;
+			}
+			console.log(projects);
+			res.type('json');
+			res.send(JSON.stringify(projects));
+			
+		});
+	});
+}
+
+module.exports.getAllProjPublishedByUser = function (req, res, next) {
+	var projectsQuery = {
+		"employer_id": req.query.id
 	};
 	mongoUtil.getMongoConn(function(db) {
 		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
