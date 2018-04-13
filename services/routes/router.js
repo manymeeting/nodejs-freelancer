@@ -7,6 +7,7 @@ var api_bids = require('../api/api_bids');
 
 var api_m_users = require('../api_mongo/api_users_mongo');
 var api_m_projects = require('../api_mongo/api_projects_mongo');
+var api_m_transactions = require('../api_mongo/api_transactions_mongo');
 
 var multer = require('multer');
 var upload = multer({ dest: path.join(__dirname, '../public/avatars/') })
@@ -41,4 +42,6 @@ router.get('/projects/publisher/:id', api_m_projects.getAllProjPublishedByUser);
 router.post('/projects', api_m_projects.postProject);
 router.put('/projects/:id/status/:status', api_m_projects.updateStatus);
 router.put('/projects/:projectID/hire/:bidID', api_m_projects.hireBid);
+
+router.post('/transactions', api_m_transactions.createTransaction);
 module.exports = router;
