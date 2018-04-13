@@ -39,5 +39,6 @@ router.get('/projects/status/:status', api_m_projects.getAllProjectsOnStatus);
 router.get('/projects/bidder/:id', api_m_projects.getAllProjBiddedByUser);
 router.get('/projects/publisher/:id', api_m_projects.getAllProjPublishedByUser);
 router.post('/projects', api_m_projects.postProject);
+router.put('/projects/:id/status/:status', api_m_projects.updateStatus);
 router.put('/projects/:projectID/hire/:bidID', api_m_projects.hireBid);
 module.exports = router;
