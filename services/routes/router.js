@@ -37,6 +37,7 @@ router.put('/api_add_bid_on_proj', api_bids.addBidOnProject);
 router.get('/users/:id', api_m_users.getUser);
 router.get('/users/:id/profile', api_m_users.getProfile);
 router.post('/users', api_m_users.createUser);
+router.post('/users/validation', api_m_users.validateUser);
 
 router.get('/projects', api_m_projects.searchProjects);
 router.get('/projects/:id', api_m_projects.getProjectDetails);

@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var router = require('./routes/router');
+require('./passport'); // initilize passport validation strategy
 
 var app = express();
 

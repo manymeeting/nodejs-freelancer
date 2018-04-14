@@ -2,7 +2,6 @@ var kafkaClientService = require('../kafka/KafkaClientService');
 var TOPIC = "queuing.users";
 module.exports.msg_get_user = function (req, res, next) {
 
-	var result = {};
 	var userID = req.query.id;
 	
 	var content = {
@@ -13,14 +12,14 @@ module.exports.msg_get_user = function (req, res, next) {
 			id: userID
 		}
 	};
-	kafkaClientService.sendMessage(TOPIC, 0, content, function(sendErr, sendRes){
+	kafkaClientService.sendMessage(TOPIC, 0, content, function(sendErr, serviceRes){
 		if(sendErr)
 		{
 			console.log(sendErr);
 			return;
 		}
-		console.log(sendRes);
-		res.send(sendRes);
+		console.log(serviceRes);
+		res.send(serviceRes);
 	});
 
 }

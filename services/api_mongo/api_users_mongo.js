@@ -1,6 +1,35 @@
 var mongoUtil = require("../utils/mongoDBUtil");
 var ObjectId = require('mongodb').ObjectId; 
+var passport = require('passport');
+var authUtil = require('../utils/authUtil');
 var bcrypt = require('bcryptjs');
+
+module.exports.validateUser = function (req, res, next) 
+{
+	
+
+	passport.authenticate('local', {session: false}, (err, user, info) => {
+        if (err || !user) {
+            return res.status(400).json({
+                message: 'Login Failed',
+                user   : user
+            });
+        }
+		req.login(user, {session: false}, (err) => {
+            if (err) {
+            	res.send(err);
+            }
+            // generate a signed son web token with the contents of user object and return it in the response
+            var token = authUtil.generateToken({
+			 	user: {
+			 		user_id: user._id.toString()
+			 	}
+			});
+            var result = {token: token};
+           return res.json(result);
+        });
+    })(req, res, next);
+}
 
 module.exports.getUser = function (req, res, next) {
 	var userID = req.params.id;
