@@ -8,6 +8,8 @@ var api_bids = require('../api/api_bids');
 var api_m_users = require('../api_mongo/api_users_mongo');
 var api_m_projects = require('../api_mongo/api_projects_mongo');
 var api_m_transactions = require('../api_mongo/api_transactions_mongo');
+var api_emails = require('../api_mongo/api_emails');
+
 
 var multer = require('multer');
 var upload = multer({ dest: path.join(__dirname, '../public/avatars/') })
@@ -35,12 +37,14 @@ router.put('/api_add_bid_on_proj', api_bids.addBidOnProject);
 router.get('/users/:id', api_m_users.getUser);
 router.get('/users/:id/profile', api_m_users.getProfile);
 
+
 router.get('/projects', api_m_projects.searchProjects);
 router.get('/projects/:id', api_m_projects.getProjectDetails);
 router.get('/projects/status/:status', api_m_projects.getAllProjectsOnStatus);
 router.get('/projects/bidder/:id', api_m_projects.getAllProjBiddedByUser);
 router.get('/projects/publisher/:id', api_m_projects.getAllProjPublishedByUser);
 router.post('/projects', api_m_projects.postProject);
+router.post('/projects/notification/hire', api_emails.sendBidHiredEmail);
 router.put('/projects/:id/status/:status', api_m_projects.updateStatus);
 router.put('/projects/:projectID/hire/:bidID', api_m_projects.hireBid);
 
