@@ -44,6 +44,8 @@ router.post('/projects', api_m_projects.postProject);
 router.put('/projects/:id/status/:status', api_m_projects.updateStatus);
 router.put('/projects/:projectID/hire/:bidID', api_m_projects.hireBid);
 
+router.get('/transactions/users/:id/income', api_m_transactions.getIncomeTransOnUser);
+router.get('/transactions/users/:id/expense', api_m_transactions.getExpenseTransOnUser);
 router.get('/transactions/users/:id', api_m_transactions.getTransactionsOnUser);
 router.post('/transactions', api_m_transactions.createTransaction);
 module.exports = router;

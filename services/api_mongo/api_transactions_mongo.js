@@ -1,6 +1,45 @@
 var mongoUtil = require("../utils/mongoDBUtil");
 var ObjectId = require('mongodb').ObjectId; 
 
+
+module.exports.getIncomeTransOnUser = function(req, res, next) {
+	var transactionsQuery = {
+		trans_to: req.params.id
+	};
+
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('transactions').find(transactionsQuery).toArray(function(err, transactions) {
+			if(err)
+			{
+				throw err;
+			}
+			console.log(transactions);
+			res.type('json');
+			res.send(JSON.stringify(transactions));
+			
+		});
+	});
+}
+
+module.exports.getExpenseTransOnUser = function(req, res, next) {
+	var transactionsQuery = {
+		trans_from: req.params.id
+	};
+
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('transactions').find(transactionsQuery).toArray(function(err, transactions) {
+			if(err)
+			{
+				throw err;
+			}
+			console.log(transactions);
+			res.type('json');
+			res.send(JSON.stringify(transactions));
+			
+		});
+	});
+}
+
 module.exports.getTransactionsOnUser = function(req, res, next) {
 	var transactionsQuery = {
 		$or: [ { trans_from: req.params.id }, { trans_to: req.params.id } ]
