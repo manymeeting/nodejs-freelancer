@@ -3,6 +3,32 @@ var ObjectId = require('mongodb').ObjectId;
 var project_codes = require('../codes/project_codes');
 var projects_utils = require('./api_projects_utils');
 
+module.exports.searchProjects = function (req, res, next) {
+	var projectsQuery = projects_utils.buildQueryObject(req.query);
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
+			if(errProj)
+			{
+				throw errProj;
+			}
+			// query for employer information
+			db.collection('users').find({}, {fields: {user_password: 0}}).toArray(function(errUsers, users) {
+				if(errUsers)
+				{
+					throw errUsers;
+				}
+				projects_utils.bindEmployerData(projects, users);
+				console.log(projects);
+				res.type('json');
+				res.send(JSON.stringify(projects));
+
+			});
+			
+		});
+	});
+}
+
+
 module.exports.getAllProjectsOnStatus = function (req, res, next) {
 	var projectsQuery = {
 		"project_status": req.params.status.toUpperCase()
