@@ -27,7 +27,7 @@ var _initConsumer = function()
 		    {
 		    	case "get": 
 		    		console.log(content);
-		    		serviceProxy.get(content.serviceAPI, content.params, function(result){
+		    		serviceProxy.get(content.apiURL, function(result){
 		    			kafkaBackendService.sendMessage(content.topicRes, 0, {data: result, reqID: content.reqID});
 		    		});
 		    		break;

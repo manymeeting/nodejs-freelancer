@@ -3,15 +3,9 @@ var config = require('config');
 
 var pathPrefix = config.services.url;
 
-module.exports.get = function(pathURL, params, callback)
+module.exports.get = function(pathURL, callback)
 {
-	var queryStr = "?";
-	var paramKeys = Object.keys(params);
-	paramKeys.forEach(function(key) {
-		queryStr += (key + "=" + params[key] + (key === paramKeys[paramKeys.length-1] ? "" : "&"));
-	});
-
-	fetch(pathPrefix + pathURL + queryStr, {
+	fetch(pathPrefix + pathURL, {
 			method: 'GET',
 			headers: { 'Content-Type': 'application/json' }
 		})
