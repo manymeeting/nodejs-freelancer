@@ -63,7 +63,7 @@ module.exports.getProjectDetails = function(req, res, next) {
 	};
 
 	mongoUtil.getMongoConn(function(db) {
-		db.collection('projects').find(projectsQuery).toArray(function(errProj, projects) {
+		db.collection('projects').findOne(projectsQuery, function(errProj, projects) {
 			if(errProj)
 			{
 				throw errProj;
@@ -78,6 +78,34 @@ module.exports.getProjectDetails = function(req, res, next) {
 				console.log(projects);
 				res.type('json');
 				res.send(JSON.stringify(projects));
+
+			});
+			
+		});
+	});
+}
+
+module.exports.getAllBidsOnProject = function(req, res, next) {
+	var projectsQuery = {
+		"_id": ObjectId(req.params.id)
+	};
+
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').findOne(projectsQuery, function(errProj, projects) {
+			if(errProj)
+			{
+				throw errProj;
+			}
+			// query for employer information
+			db.collection('users').find({}, {fields: {user_password: 0}}).toArray(function(errUsers, users) {
+				if(errUsers)
+				{
+					throw errUsers;
+				}
+				projects_utils.bindBidderData(projects.bids, users);
+				console.log(projects.bids);
+				res.type('json');
+				res.send(JSON.stringify(projects.bids));
 
 			});
 			

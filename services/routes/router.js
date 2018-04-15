@@ -41,6 +41,7 @@ router.post('/users/validation', api_m_users.validateUser);
 
 router.get('/projects', api_m_projects.searchProjects);
 router.get('/projects/:id', api_m_projects.getProjectDetails);
+router.get('/projects/:id/bids', api_m_projects.getAllBidsOnProject);
 router.get('/projects/status/:status', api_m_projects.getAllProjectsOnStatus);
 router.get('/projects/bidder/:id', api_m_projects.getAllProjBiddedByUser);
 router.get('/projects/publisher/:id', api_m_projects.getAllProjPublishedByUser);
