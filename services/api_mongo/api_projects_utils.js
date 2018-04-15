@@ -1,6 +1,8 @@
 // bind employer data to projects data
 module.exports.bindEmployerData = function(projects, users)
 {
+	if(!projects || !users) return;
+	
 	projects = Array.isArray(projects) ? projects : [projects];
 
 	for (let i = 0; i < projects.length; i++)
@@ -21,6 +23,8 @@ module.exports.bindEmployerData = function(projects, users)
 // bind bidder data to bids data
 module.exports.bindBidderData = function(bids, users)
 {
+	if(!bids || !users) return;
+
 	bids = Array.isArray(bids) ? bids : [bids];
 	
 	for (let i = 0; i < bids.length; i++)
