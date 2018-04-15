@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var messenger_user = require('../messengers/messenger_user');
+var getMessenger = require('../messengers/GETMessenger');
 
-router.get('/users/:id', messenger_user.msgGetUser);
-// router.get('/users/:id/profile', api_m_users.getProfile);
-// router.post('/users', api_m_users.createUser);
-// router.post('/users/validation', api_m_users.validateUser);
+router.get('/users/:id', getMessenger.sendGET);
+router.get('/users/:id/profile', getMessenger.sendGET);
+router.post('/users', getMessenger.sendGET);
+router.post('/users/validation', getMessenger.sendGET);
 
 // router.get('/projects', api_m_projects.searchProjects);
 // router.get('/projects/:id', api_m_projects.getProjectDetails);
