@@ -7,8 +7,8 @@ var putMessenger = require('../messengers/PUTMessenger');
 
 router.get('/users/:id', getMessenger.sendGET);
 router.get('/users/:id/profile', getMessenger.sendGET);
-router.post('/users', getMessenger.sendGET);
-router.post('/users/validation', getMessenger.sendGET);
+router.post('/users', postMessenger.sendPOST);
+router.post('/users/validation', postMessenger.sendPOST);
 
 router.get('/projects', getMessenger.sendGET);
 router.get('/projects/:id', getMessenger.sendGET);

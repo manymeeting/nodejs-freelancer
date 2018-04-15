@@ -64,7 +64,8 @@ KafkaBackendService.prototype.sendMessage = function(topic, partition, content )
         	messages: JSON.stringify(content)
         }
     ];
-
+    console.log("KafkaBackendService sending messages:");
+    console.log(payloads);
     this.producer.send(payloads, function (err, data) {
     	if(err)
     	{
