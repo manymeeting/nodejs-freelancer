@@ -1,4 +1,5 @@
 import ClientAuthService from '../utils/ClientAuthService';
+import crypto from 'crypto';
 
 export const ADD_BID_ON_PROJECT_BEGIN   = 'ADD_BID_ON_PROJECT_BEGIN';
 export const ADD_BID_ON_PROJECT_SUCCESS = 'ADD_BID_ON_PROJECT_SUCCESS';
@@ -22,7 +23,9 @@ export const addBidOnProjectError = error => ({
 export function addBidOnProject(params) {
 	
 	var clientAuthService = new ClientAuthService();
+	var bidID = crypto.randomBytes(16).toString('hex');
 	var newBid = {
+		bidID: bidID,
 		projectID: params.projectID,
 		bidderID: params.bidderID,
 		employerID: params.employerID,
@@ -38,8 +41,7 @@ export function addBidOnProject(params) {
 	    	})
 			.then(data => {
 		        dispatch(addBidOnProjectSuccess({
-		        	project_id: params.projectID,
-		        	bid_id: data.insertID
+		        	bid_id: bidID
 		        }));
 		        return true;
       		})
