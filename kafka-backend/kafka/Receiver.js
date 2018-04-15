@@ -1,4 +1,3 @@
-var _consumer = null; 
 var kafkaBackendService = require('../kafka/KafkaBackendService');
 var serviceProxy = require('../utils/ServiceProxy');
 
@@ -15,7 +14,7 @@ var _initConsumer = function(topicName)
 			throw err;
 		}
 		var latestOffset = data[topicName]['0'][0];
-		console.log("latestOffset: " + latestOffset);
+		console.log(topicName + " latestOffset: " + latestOffset);
 
 		var consumer = kafkaBackendService.getConsumer(topicName, partition, latestOffset);
 		consumer.on('message', function (message) {
@@ -25,7 +24,6 @@ var _initConsumer = function(topicName)
 		    switch(content.method)
 		    {
 		    	case "get": 
-		    		console.log(content);
 		    		serviceProxy.get(content.apiURL, function(result){
 		    			kafkaBackendService.sendMessage(content.topicRes, 0, {data: result, reqID: content.reqID});
 		    		});
@@ -59,8 +57,6 @@ var _initConsumer = function(topicName)
 		    console.log('Receiver [OffsetOutOfRange]:',err);
 		});
 
-		_consumer = consumer;
-
 	});
 
 
@@ -81,17 +77,4 @@ var _parseMessage = function(message)
 module.exports.init = function(topicName)
 {
 	_initConsumer(topicName);
-}
-
-
-
-module.exports.getConsumer = function()
-{
-	if(_consumer)
-	{
-		return _consumer;
-	}
-
-	_initConsumer();
-	return _consumer;
 }

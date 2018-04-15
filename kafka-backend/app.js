@@ -20,5 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // init receivers
 receiver.init("queuing.users");
+receiver.init("queuing.projects");
+receiver.init("queuing.transactions");
 
 module.exports = app;

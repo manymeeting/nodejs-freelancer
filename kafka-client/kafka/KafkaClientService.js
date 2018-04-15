@@ -19,16 +19,20 @@ function KafkaClientService()
 }
 
 KafkaClientService._instance = null;
-
+KafkaClientService.ADDR = config.kafka.addr;
 
 KafkaClientService.prototype.initialize = function()
 {
-    this.client = new kafka.Client("138.68.20.94:2181"),
-    this.producer = new Producer(this.client);
+    this.producer = new Producer(this.getClient());
     this.requests = {}; // requests waiting for response
     this.consumerPool = {};
     this.bindProducerListeners();
     
+}
+
+KafkaClientService.prototype.getClient = function()
+{
+	return new kafka.Client(KafkaClientService.ADDR);
 }
 
 KafkaClientService.prototype.bindProducerListeners = function()
@@ -46,7 +50,7 @@ KafkaClientService.prototype.bindProducerListeners = function()
 
 KafkaClientService.prototype.getOffset = function()
 {
-	return new kafka.Offset(new kafka.Client("138.68.20.94:2181"));;
+	return new kafka.Offset(this.getClient());
 }
 
 KafkaClientService.prototype.getConsumer = function(topic, partition = 0, offset = 0)
@@ -57,7 +61,7 @@ KafkaClientService.prototype.getConsumer = function(topic, partition = 0, offset
 		return this.consumerPool[topic];
 	}
 
-	var consumer = new Consumer(this.client, [{ topic: topic, partition: partition, offset: offset }], {fromOffset: true});
+	var consumer = new Consumer(this.getClient(), [{ topic: topic, partition: partition, offset: offset }], {fromOffset: true});
 	// register this consumer to pool
 	this.consumerPool[topic] = consumer;
 	return consumer;
@@ -76,8 +80,7 @@ KafkaClientService.prototype.sendMessage = function(topic, partition, content, c
         	messages: JSON.stringify(content)
         }
     ];
-   
-    
+
     // setup timeout handler
     var timeout = setTimeout(function(reqID){
     	callback(new Error("Kafka Client Service[TIMEOUT]: " + reqID));

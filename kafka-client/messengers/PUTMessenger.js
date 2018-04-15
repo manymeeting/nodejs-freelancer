@@ -13,6 +13,8 @@ module.exports.sendPUT = function (req, res, next) {
 		topicRes: topic + ".response",
 		params: req.body
 	};
+	console.log("kafkaClientService sending message:");
+	console.log(content);
 	kafkaClientService.sendMessage(topic, 0, content, function(sendErr, serviceRes){
 		if(sendErr)
 		{

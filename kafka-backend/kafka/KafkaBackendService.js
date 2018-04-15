@@ -1,6 +1,8 @@
 var kafka = require('kafka-node');
+var config = require('config');
 var Producer = kafka.Producer;
 var Consumer = kafka.Consumer;
+
 // var config = require('config');
 
 // designed to be a singleton
@@ -16,14 +18,14 @@ function KafkaBackendService()
 }
 
 KafkaBackendService._instance = null;
-
+KafkaBackendService.ADDR = config.kafka.addr;
 
 KafkaBackendService.prototype.initialize = function()
 {
-    this.client = new kafka.Client("138.68.20.94:2181"),
     this.consumerPool = {};
-    this.producer = new Producer(this.client);
 
+    // only keep a producer not a client since we need a new client instance for each consumer
+    this.producer = new Producer(this.getClient()); 
     this.producer.on("ready", function() {
     	console.log('Kafka Backend: Producer is ready');
     });
@@ -37,7 +39,7 @@ KafkaBackendService.prototype.initialize = function()
 
 KafkaBackendService.prototype.getOffset = function()
 {
-	return new kafka.Offset(new kafka.Client("138.68.20.94:2181"));;
+	return new kafka.Offset(this.getClient());;
 }
 
 KafkaBackendService.prototype.getConsumer = function(topic, partition = 0, offset = 0)
@@ -48,7 +50,7 @@ KafkaBackendService.prototype.getConsumer = function(topic, partition = 0, offse
 		return this.consumerPool[topic];
 	}
 
-	var consumer = new Consumer(this.client, [{ topic: topic, partition: partition, offset: offset }], {fromOffset: true});
+	var consumer = new Consumer(this.getClient(), [{ topic: topic, partition: partition, offset: offset }], {fromOffset: true});
 	// register this consumer to pool
 	this.consumerPool[topic] = consumer;
 	return consumer;
@@ -74,5 +76,11 @@ KafkaBackendService.prototype.sendMessage = function(topic, partition, content )
     	}
     });
 }
+
+KafkaBackendService.prototype.getClient = function()
+{
+    return new kafka.Client(KafkaBackendService.ADDR);
+}
+
 
 module.exports = new KafkaBackendService();
