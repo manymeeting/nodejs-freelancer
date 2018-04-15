@@ -23,6 +23,7 @@ client/yarn-error.log*
 
 #kafka client
 kafka-client/public/avatars/
+kafka-client/public/project_files
 
 kafka-client/config
 kafka-client/node_modules/
