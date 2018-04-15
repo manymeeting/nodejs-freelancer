@@ -176,6 +176,34 @@ module.exports.postProject = function(req, res, next) {
 	});
 }
 
+ module.exports.addBidOnProject = function(req, res, next) {
+ 	var projectsQuery = {
+		"_id": ObjectId(req.params.id),
+	};
+
+	var newBid = {
+		$push: {
+			"bids": {
+				bid_id: req.body.bidID,
+				bidder_id: req.body.bidderID,
+		 		bid_period: req.body.bidPeriod,
+		 		bid_date: req.body.bidDate,
+		 		bid_price: req.body.bidPrice
+			} 
+		}
+	}
+ 	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').updateOne(projectsQuery, newBid, function(err, result) {
+			if(err)
+			{
+				throw err;
+			}
+			res.type('json');
+			res.send(JSON.stringify(result));
+		});
+	});
+}
+
 module.exports.hireBid = function(req, res, next) {
 	var projectsQuery = {
 		"_id": ObjectId(req.params.projectID),
@@ -189,7 +217,6 @@ module.exports.hireBid = function(req, res, next) {
 			{
 				throw err;
 			}
-			console.log(result);
 			res.type('json');
 			res.send(JSON.stringify(result));
 		});

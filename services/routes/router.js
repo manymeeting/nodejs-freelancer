@@ -47,6 +47,7 @@ router.get('/projects/bidder/:id', api_m_projects.getAllProjBiddedByUser);
 router.get('/projects/publisher/:id', api_m_projects.getAllProjPublishedByUser);
 router.post('/projects', api_m_projects.postProject);
 router.post('/projects/notification/hire', api_emails.sendBidHiredEmail);
+router.put('/projects/:id/bids', api_m_projects.addBidOnProject);
 router.put('/projects/:id/status/:status', api_m_projects.updateStatus);
 router.put('/projects/:projectID/hire/:bidID', api_m_projects.hireBid);
 

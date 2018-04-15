@@ -18,6 +18,7 @@ router.get('/projects/publisher/:id', getMessenger.sendGET);
 router.get('/projects/:id/bids', getMessenger.sendGET);
 router.post('/projects', postMessenger.sendPOST);
 router.post('/projects/notification/hire', postMessenger.sendPOST);
+router.put('/projects/:id/bids', putMessenger.sendPUT);
 router.put('/projects/:id/status/:status', putMessenger.sendPUT);
 router.put('/projects/:projectID/hire/:bidID', putMessenger.sendPUT);
 
