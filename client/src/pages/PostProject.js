@@ -16,14 +16,14 @@ class PostProject extends React.Component {
 		      input: {
 		        projectName: "",
 		       	projectDescription: "",
-		       	projectSkills: "",
+		       	projectSkillsRaw: "",
 		       	budgetRange: ""
 		      }
 		    };
 		this.requiredInput = {
     		projectName: "Project Name",
     		projectDescription: "Project Description",
-    		projectSkills: "Required Skills",
+    		projectSkillsRaw: "Required Skills",
     		budgetRange: "Budget Range"
     	};
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -42,23 +42,18 @@ class PostProject extends React.Component {
 	onSumbit(e)
 	{
 		e.preventDefault();
+		
 		if(!inputValidation(this.requiredInput, this))
 		{
 			console.log("Input Validation Failed")
 			return;
 		}
+		var formData = new FormData(e.target);
+		formData.append('employerID', this.props.userInfo._id);
+		formData.append('publishedDate', Date());
+		formData.append('projectSkills', this.state.input.projectSkillsRaw.split(","));
 		
-		// fill all hidden values
-		var newProject = {
-			projectName: this.state.input.projectName,
-			employerID: this.props.userInfo._id,
-			projectDescription: this.state.input.projectDescription,
-			projectSkills: this.state.input.projectSkills,
-			budgetRange: this.state.input.budgetRange,
-			publishedDate: Date()
-		};
-		
-		this.props.postProject(newProject)
+		this.props.postProject(formData)
 			.then((id) => {
 				// jump to project details page
 				this.props.history.push('/project_details/' + id);
@@ -71,7 +66,7 @@ class PostProject extends React.Component {
 		return(
 			<div className="fl-main-container">
 			    <h1 className="fl-main-header">Post Project</h1>
-			    <form id="postProjectForm">
+			    <form id="postProjectForm" encType="multipart/form-data" onSubmit={this.onSumbit}>
 					<div className="form-group">
 			            <label>Project Name:</label>
 			            <input type="text" className="form-control" name="projectName" onChange={this.handleInputChange} required/>
@@ -82,14 +77,19 @@ class PostProject extends React.Component {
 			        </div>
 			        <div className="form-group">
 			            <label>Required Skills (use "," to split):</label>
-			            <input type="text" className="form-control" name="projectSkills" onChange={this.handleInputChange} required/>
+			            <input type="text" className="form-control" name="projectSkillsRaw" onChange={this.handleInputChange} required/>
 			        </div>
 			        <div className="form-group">
 			            <label>Budget Range:</label>
 			            <input type="text" className="form-control" name="budgetRange" onChange={this.handleInputChange} required/>
 			        </div>
-
-			        <button className="btn btn-primary" onClick={this.onSumbit}>Post Project</button>
+			        <div className="form-group">
+			            <label>Instruction Files:</label>
+			            <input type="file" className="form-control" name="file"/>
+			        </div>
+			        
+			        <input type="submit" className="btn btn-primary" value="Post Project"/>
+			        
 				</form>
 			</div>
 			
@@ -100,7 +100,7 @@ class PostProject extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postProject: (newProject) => dispatch(postProject(newProject)),
+    postProject: (formData) => dispatch(postProject(formData)),
   };
 }
 
