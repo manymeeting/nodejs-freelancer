@@ -21,7 +21,7 @@ module.exports.validateUser = function (req, res, next)
             // generate a signed son web token with the contents of user object and return it in the response
             var token = authUtil.generateToken({
 			 	user: {
-			 		user_id: user._id.toString()
+			 		_id: user._id.toString()
 			 	}
 			});
             var result = {token: token};

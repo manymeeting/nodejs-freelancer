@@ -25,7 +25,7 @@ export function fetchAllOpenProjects() {
 
 	return dispatch => {
 		dispatch(fetchAllOpenProjBegin());
-		return clientAuthService.fetch('/api_get_all_open_proj')
+		return clientAuthService.fetch('/projects/status/open')
 			.then(data => {
 		        dispatch(fetchAllOpenProjSuccess(data));
 		        return true;

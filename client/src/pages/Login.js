@@ -65,15 +65,15 @@ class InputForm extends React.Component {
       console.log("Input Validation Failed")
       return;
     }
-    var email = this.state.input.email;
-    var password = this.state.input.password;
+    var userEmail = this.state.input.email;
+    var userPassword = this.state.input.password;
     var clientAuthService = new ClientAuthService();
 
-    clientAuthService.fetch('/api_auth_user', {
+    clientAuthService.fetch('/users/validation', {
         method: 'POST',
         body: JSON.stringify({
-            email,
-            password
+            userEmail,
+            userPassword
         })
     }).then(data => {
         console.log("Validation Passed!");

@@ -26,7 +26,7 @@ export function fetchUserInfo(id) {
 
 	return dispatch => {
 		dispatch(fetchUserInfoBegin());
-		return clientAuthService.fetch('/api_get_user?id=' + id, {method: "GET"})
+		return clientAuthService.fetch('/users/' + id, {method: "GET"})
 			.then(data => {
 		        dispatch(fetchUserInfoSuccess(data));
 		        return true;

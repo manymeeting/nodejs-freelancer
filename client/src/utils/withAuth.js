@@ -21,9 +21,9 @@ export default function withAuth(AuthComponent) {
 		        try {
 		            const profile = Auth.getProfile()
 		            // check if user info disappeared (in case of forced page refresh)
-		            if(!this.props.userInfo.user_id)
+		            if(!this.props.userInfo._id)
 		            {
-		            	this.props.fetchUserInfo(profile.user.user_id);
+		            	this.props.fetchUserInfo(profile.user._id);
 		            }
 		        }
 		        catch(err){
@@ -34,7 +34,7 @@ export default function withAuth(AuthComponent) {
 		}
 
 		render() {
-		    if (this.props.userInfo.user_id) {
+		    if (this.props.userInfo._id) {
 		        return (
 		            <AuthComponent />
 		        );
