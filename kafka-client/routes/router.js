@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var getMessenger = require('../messengers/GETMessenger');
+var postMessenger = require('../messengers/POSTMessenger');
+var putMessenger = require('../messengers/PUTMessenger');
+
 
 router.get('/users/:id', getMessenger.sendGET);
 router.get('/users/:id/profile', getMessenger.sendGET);
@@ -12,14 +15,14 @@ router.get('/projects/:id', getMessenger.sendGET);
 router.get('/projects/status/:status', getMessenger.sendGET);
 router.get('/projects/bidder/:id', getMessenger.sendGET);
 router.get('/projects/publisher/:id', getMessenger.sendGET);
-// router.post('/projects', api_m_projects.postProject);
-// router.post('/projects/notification/hire', api_emails.sendBidHiredEmail);
-// router.put('/projects/:id/status/:status', api_m_projects.updateStatus);
-// router.put('/projects/:projectID/hire/:bidID', api_m_projects.hireBid);
+router.post('/projects', postMessenger.sendPOST);
+router.post('/projects/notification/hire', postMessenger.sendPOST);
+router.put('/projects/:id/status/:status', putMessenger.sendPUT);
+router.put('/projects/:projectID/hire/:bidID', putMessenger.sendPUT);
 
 router.get('/transactions/users/:id/income', getMessenger.sendGET);
 router.get('/transactions/users/:id/expense', getMessenger.sendGET);
 router.get('/transactions/users/:id', getMessenger.sendGET);
-// router.post('/transactions', api_m_transactions.createTransaction);
+router.post('/transactions', postMessenger.sendPOST);
 
 module.exports = router;

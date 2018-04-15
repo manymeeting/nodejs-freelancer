@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var app = express();
-var receiver = require('./receivers/Receiver');
+var receiver = require('./kafka/Receiver');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -19,6 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // init receivers
-receiver.init();
+receiver.init("queuing.users");
 
 module.exports = app;

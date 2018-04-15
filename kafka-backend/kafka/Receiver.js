@@ -1,24 +1,23 @@
-var TOPIC_NAME = "queuing.users";
 var _consumer = null; 
 var kafkaBackendService = require('../kafka/KafkaBackendService');
 var serviceProxy = require('../utils/ServiceProxy');
 
 
-var _initConsumer = function()
+var _initConsumer = function(topicName)
 {
 	
 	// currently only support fetching from the latest offsets
 	var offset = kafkaBackendService.getOffset();
 	var partition = 0;
-	offset.fetch([{ topic: TOPIC_NAME, partition: partition, time: -1 }], function (err, data) {
+	offset.fetch([{ topic: topicName, partition: partition, time: -1 }], function (err, data) {
 		if(err)
 		{
 			throw err;
 		}
-		var latestOffset = data[TOPIC_NAME]['0'][0];
+		var latestOffset = data[topicName]['0'][0];
 		console.log("latestOffset: " + latestOffset);
 
-		var consumer = kafkaBackendService.getConsumer(TOPIC_NAME, partition, latestOffset);
+		var consumer = kafkaBackendService.getConsumer(topicName, partition, latestOffset);
 		consumer.on('message', function (message) {
 		    console.log("Receiver [MSG]: ");
 		    console.log(message);
@@ -32,13 +31,19 @@ var _initConsumer = function()
 		    		});
 		    		break;
 		    	case "post":
-		    		serviceProxy.post();
+		    		serviceProxy.post(content.apiURL, content.params, function(result){
+		    			kafkaBackendService.sendMessage(content.topicRes, 0, {data: result, reqID: content.reqID});
+		    		});
 		    		break;
 		    	case "put":
-		    		serviceProxy.put();
+		    		serviceProxy.put(content.apiURL, content.params, function(result){
+		    			kafkaBackendService.sendMessage(content.topicRes, 0, {data: result, reqID: content.reqID});
+		    		});
 		    		break;
 		    	case "delete":
-		    		serviceProxy.delete();
+		    		serviceProxy.delete(content.apiURL, content.params, function(result){
+		    			kafkaBackendService.sendMessage(content.topicRes, 0, {data: result, reqID: content.reqID});
+		    		});
 		    		break;
 		    	default:
 		    		break;
@@ -73,9 +78,9 @@ var _parseMessage = function(message)
 
 }
 
-module.exports.init = function()
+module.exports.init = function(topicName)
 {
-	_initConsumer();
+	_initConsumer(topicName);
 }
 
 
