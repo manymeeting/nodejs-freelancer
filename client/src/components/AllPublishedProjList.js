@@ -26,7 +26,7 @@ class AllPublishedProjList extends React.Component {
 				<ul>
 					{
 						allPublishedProjects.map((project) =>
-							<li key={project.project_id}>
+							<li key={project._id}>
 								<div className="fl-project-info-container">
 									<p className="fl-project-title"><Link to={"/project_details/" + project._id} >{project.project_name}</Link></p>
 									<div className="fl-list-row">
