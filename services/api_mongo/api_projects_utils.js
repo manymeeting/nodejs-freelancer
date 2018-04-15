@@ -8,7 +8,7 @@ module.exports.bindEmployerData = function(projects, users)
 		var project = projects[i];
 		for (let j = 0; j < users.length; j++)
 		{
-			var user = users[i];
+			var user = users[j];
 			if(project.employer_id === user._id.toString())
 			{
 				project.employer = user;
@@ -28,7 +28,7 @@ module.exports.bindBidderData = function(bids, users)
 		var bid = bids[i];
 		for (let j = 0; j < users.length; j++)
 		{
-			var user = users[i];
+			var user = users[j];
 			if(bid.bidder_id === user._id.toString())
 			{
 				bid.bidder = user;

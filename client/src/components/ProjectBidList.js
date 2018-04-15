@@ -23,33 +23,40 @@ class ProjectBidList extends React.Component {
 
 					{
 						projectBidList.map((bid) =>
-							<li key={bid.bid_id}>
-								<div className="fl-bid-info-container">
-									<div className="fl-list-row">
-										<span className="fl-list-label">Bidder: </span>
-										<span className="fl-bid-bidder"><Link to={"/user_profile/" + bid.bidder_id} >{bid.user_name}</Link></span>
-									</div>
-									<div className="fl-list-row">
-										<span className="fl-list-label">Bid Date: </span>
-										<span className="fl-bid-price">{bid.bid_date}</span>
-									</div>
-									<div className="fl-list-row">
-										<span className="fl-list-label">Price (USD): </span>
-										<span className="fl-bid-price">{bid.bid_price}</span>
-									</div>
-									<div className="fl-list-row">
-										<span className="fl-list-label">Period (Days): </span>
-										<span className="fl-bid-period">{bid.bid_period}</span> 
-									</div>
-									<div className="fl-list-row">
-										{
-											bid.employer_id === this.props.userInfo.user_id && this.props.projectBasic.status === "OPEN" &&
-											<button className="btn btn-primary" onClick={this.onHire} bid_id={bid.bid_id}>Hire</button>
-										}
-									</div>
+							{
+								var bidder = bid.bidder ? bid.bidder : {};
+								return(
+									<li key={bid.bid_id}>
+										<div className="fl-bid-info-container">
+											<div className="fl-list-row">
+												<span className="fl-list-label">Bidder: </span>
+												<span className="fl-bid-bidder"><Link to={"/user_profile/" + bidder._id} >{bidder.user_name}</Link></span>
+											</div>
+											<div className="fl-list-row">
+												<span className="fl-list-label">Bid Date: </span>
+												<span className="fl-bid-price">{bid.bid_date}</span>
+											</div>
+											<div className="fl-list-row">
+												<span className="fl-list-label">Price (USD): </span>
+												<span className="fl-bid-price">{bid.bid_price}</span>
+											</div>
+											<div className="fl-list-row">
+												<span className="fl-list-label">Period (Days): </span>
+												<span className="fl-bid-period">{bid.bid_period}</span> 
+											</div>
+											<div className="fl-list-row">
+												{
+													bid.employer_id === this.props.userInfo.user_id && this.props.projectBasic.status === "OPEN" &&
+													<button className="btn btn-primary" onClick={this.onHire} bid_id={bid.bid_id}>Hire</button>
+												}
+											</div>
 
-								</div>
-							</li>
+										</div>
+									</li>
+								)	
+							}
+							
+							
 						)
 					}
 					
