@@ -13,20 +13,26 @@ passport.use(new LocalStrategy({
         mongoUtil.getMongoConn(function(db) {
           var coll = db.collection('users');
           coll.findOne({"user_email": email}, function(err, result) {
-          if(err)
-          {
-            throw err;
-          }
-          console.log(result);
-          var user = result;
+            if(err)
+            {
+              throw err;
+            }
+            console.log(result);
 
-          // compare hash value
-          if(!bcrypt.compareSync(password, user.user_password))
-          {
-            return cb(null, false, {message: 'Incorrect email or password.'});
-          }
+            if(result === null)
+            {
+              return cb(null, false, {message: 'User does not exist.'}); 
+            }
+            
+            var user = result;
 
-          return cb(null, user, {message: 'Logged In Successfully'});
+            // compare hash value
+            if(!bcrypt.compareSync(password, user.user_password))
+            {
+              return cb(null, false, {message: 'Incorrect password.'});
+            }
+
+            return cb(null, user, {message: 'Logged In Successfully'});
           });
 
         });
