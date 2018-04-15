@@ -72,13 +72,13 @@ class ProjectBidList extends React.Component {
 		var bidID = e.target.getAttribute("bid_id");
 		var params = {
 			bidID: bidID,
-			projectID: this.props.projectBasic.project_id
+			projectID: this.props.projectBasic._id
 		};
 
 		this.props
 			.hireBid(params)
 			.then(() => {
-				this.props.fetchProjBasicInfo(this.props.projectBasic.project_id);
+				this.props.fetchProjBasicInfo(this.props.projectBasic._id);
 			});
 	}
 }

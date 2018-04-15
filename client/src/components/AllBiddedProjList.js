@@ -28,7 +28,7 @@ class AllBiddedProjList extends React.Component {
 						allBiddedProjects.map((project) =>
 							<li key={project.bid_date}>
 								<div className="fl-project-info-container">
-									<p className="fl-project-title"><Link to={"/project_details/" + project.project_id} >{project.project_name}</Link></p>
+									<p className="fl-project-title"><Link to={"/project_details/" + project._id} >{project.project_name}</Link></p>
 									<div className="fl-list-row">
 										<span className="fl-list-label">Description: </span>
 										<span className="fl-project-desc">{project.project_description}</span>

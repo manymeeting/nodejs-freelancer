@@ -57,7 +57,7 @@ class BidInputForm extends React.Component {
 		}
 		// fill all hidden values
 		var newBid = {
-			projectID: this.props.projectBasic.project_id,
+			projectID: this.props.projectBasic._id,
 			bidderID: this.props.userInfo._id,
 			employerID: this.props.projectBasic.employer._id,
 			bidPeriod: this.state.input.bidPeriod,
@@ -67,7 +67,7 @@ class BidInputForm extends React.Component {
 		
 		this.props.addBidOnProject(newBid)
 			.then(() => {
-					this.props.fetchProjBidList(this.props.projectBasic.project_id)
+					this.props.fetchProjBidList(this.props.projectBasic._id)
 				});
 	}
 

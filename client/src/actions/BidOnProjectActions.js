@@ -32,7 +32,7 @@ export function addBidOnProject(params) {
 	};
 	return dispatch => {
 		dispatch(addBidOnProjectBegin());
-		return clientAuthService.fetch('/api_add_bid_on_proj', {
+		return clientAuthService.fetch('/projects/' + params.projectID + '/bids', {
 		        method: 'PUT',
 		        body: JSON.stringify(newBid)
 	    	})
