@@ -25,7 +25,7 @@ export function fetchProjBasicInfo(id) {
 
 	return dispatch => {
 		dispatch(fetchProjBasicInfoBegin());
-		return clientAuthService.fetch('/api_get_project_details?id=' + id, {method: "GET"})
+		return clientAuthService.fetch('/projects/' + id, {method: "GET"})
 			.then(data => {
 		        dispatch(fetchProjBasicInfoSuccess(data));
 		        return true;

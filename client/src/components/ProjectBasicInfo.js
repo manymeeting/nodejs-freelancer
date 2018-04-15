@@ -11,6 +11,8 @@ class ProjectBasicInfo extends React.Component {
 	}
 	render()
 	{
+		// initialize employer with empty object to avoid undefined.key err on the initial state 
+		var employer = this.props.projectBasic.employer ? this.props.projectBasic.employer : {};
 		return(
 			<div>
 				<BidInputForm />
@@ -25,7 +27,7 @@ class ProjectBasicInfo extends React.Component {
 				</div>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Budget Range: </span>
-					<span>{this.props.projectBasic.budget_range}</span>
+					<span>{this.props.projectBasic.project_budget_range}</span>
 				</div>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Skills: </span>
@@ -33,11 +35,11 @@ class ProjectBasicInfo extends React.Component {
 				</div>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Published Date: </span>
-					<span>{this.props.projectBasic.published_date}</span>
+					<span>{this.props.projectBasic.project_published_date}</span>
 				</div>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Employer: </span>
-					<span><Link to={"/user_profile/" + this.props.projectBasic.employer_id} >{this.props.projectBasic.user_name}</Link></span>
+					<span><Link to={"/user_profile/" + employer._id} >{employer.user_name}</Link></span>
 				</div>
 			</div>
 		)
