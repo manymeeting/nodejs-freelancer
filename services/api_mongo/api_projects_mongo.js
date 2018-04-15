@@ -18,6 +18,9 @@ module.exports.searchProjects = function (req, res, next) {
 					throw errUsers;
 				}
 				projects_utils.bindEmployerData(projects, users);
+				projects.forEach(function(project){
+					projects_utils.bindBidderData(project.bids, users);
+				});
 				console.log(projects);
 				res.type('json');
 				res.send(JSON.stringify(projects));
@@ -47,6 +50,9 @@ module.exports.getAllProjectsOnStatus = function (req, res, next) {
 					throw errUsers;
 				}
 				projects_utils.bindEmployerData(projects, users);
+				projects.forEach(function(project){
+					projects_utils.bindBidderData(project.bids, users);
+				});
 				console.log(projects);
 				res.type('json');
 				res.send(JSON.stringify(projects));
@@ -75,6 +81,7 @@ module.exports.getProjectDetails = function(req, res, next) {
 					throw errUsers;
 				}
 				projects_utils.bindEmployerData(projects, users);
+				projects_utils.bindBidderData(projects.bids, users);
 				console.log(projects);
 				res.type('json');
 				res.send(JSON.stringify(projects));
