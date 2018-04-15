@@ -17,6 +17,7 @@ module.exports.sendPOST = function (req, res, next) {
 		if(sendErr)
 		{
 			console.log(sendErr);
+			res.status(404).send();
 			return;
 		}
 		console.log(serviceRes);
