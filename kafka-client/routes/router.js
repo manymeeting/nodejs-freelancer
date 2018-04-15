@@ -18,6 +18,12 @@ var projectFileStorage = multer.diskStorage({
 })
 var projectFileUpload = multer({ storage: projectFileStorage })
 
+
+router.get('/downloads:filePath', function(req, res){
+	var file = __dirname + req.params.filePath;
+	res.download(file);
+});
+
 router.get('/users/:id', getMessenger.sendGET);
 router.get('/users/:id/profile', getMessenger.sendGET);
 router.post('/users', postMessenger.sendPOST);

@@ -41,6 +41,12 @@ class ProjectBasicInfo extends React.Component {
 					<span className="fl-details-label">Employer: </span>
 					<span><Link to={"/user_profile/" + employer._id} >{employer.user_name}</Link></span>
 				</div>
+				{this.props.projectBasic.project_files &&
+					<div className="fl-details-row">
+						<span className="fl-details-label">Instrunction Files: </span>
+						<span><Link to={"/downloads" + this.props.projectBasic.project_files} >Instructions</Link></span>
+					</div>
+				}
 			</div>
 		)
 	}
