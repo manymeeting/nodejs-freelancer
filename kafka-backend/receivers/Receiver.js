@@ -7,7 +7,7 @@ var serviceProxy = require('../utils/ServiceProxy');
 var _initConsumer = function()
 {
 	
-	// currently only supprot fetching from the latest offsets
+	// currently only support fetching from the latest offsets
 	var offset = kafkaBackendService.getOffset();
 	var partition = 0;
 	offset.fetch([{ topic: TOPIC_NAME, partition: partition, time: -1 }], function (err, data) {
@@ -20,7 +20,7 @@ var _initConsumer = function()
 
 		var consumer = kafkaBackendService.getConsumer(TOPIC_NAME, partition, latestOffset);
 		consumer.on('message', function (message) {
-		    console.log("Receiver User[MSG]: ");
+		    console.log("Receiver [MSG]: ");
 		    console.log(message);
 		    var content = _parseMessage(message);
 		    switch(content.method)
@@ -47,11 +47,11 @@ var _initConsumer = function()
 		});
 
 		consumer.on('error', function (err) {
-		    console.log('Receiver User[Error]:',err);
+		    console.log('Receiver [Error]:',err);
 		});
 
 		consumer.on('offsetOutOfRange', function (err) {
-		    console.log('Receiver User[OffsetOutOfRange]:',err);
+		    console.log('Receiver [OffsetOutOfRange]:',err);
 		});
 
 		_consumer = consumer;
