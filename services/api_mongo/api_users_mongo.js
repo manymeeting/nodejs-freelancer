@@ -97,3 +97,28 @@ module.exports.createUser = function(req, res, next) {
 		});
 	});
 }
+
+module.exports.updateUser = function(req, res, next) {
+	var userQuery = {
+		"_id": ObjectId(req.params.id),
+	};
+	var modifiedUser = {
+		$set: { 
+			"user_name": req.body.userName,
+			"user_email": req.body.userEmail,
+			"user_phone": req.body.userPhone,
+			"user_about": req.body.userAbout,
+			"user_skills": req.body.userSkills
+		}
+	}
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('users').updateOne(userQuery, modifiedUser, function(err, result) {
+			if(err)
+			{
+				throw err;
+			}
+			res.type('json');
+			res.send(JSON.stringify(result));
+		});
+	});
+}

@@ -95,8 +95,8 @@ export function updateUserProfile(id, params) {
   return dispatch => {
     dispatch(updateUserProfileBegin());
     return clientAuthService
-          .fetch('/api_update_user?id=' + id, {
-              method: "POST",
+          .fetch('/users/' + id, {
+              method: "PUT",
               body: JSON.stringify(newProfile)})
           .then(data => {
             dispatch(updateUserProfileSuccess(data));

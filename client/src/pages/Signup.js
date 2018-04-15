@@ -67,17 +67,17 @@ class SignupForm extends React.Component {
       console.log("Input Validation Failed")
       return;
     }
-    var username = this.state.input.username;
-    var email = this.state.input.email;
-    var password = this.state.input.password;
+    var userName = this.state.input.username;
+    var userEmail = this.state.input.email;
+    var userPassword = this.state.input.password;
     var clientAuthService = new ClientAuthService();
 
-    clientAuthService.fetch('/api_add_user', {
-        method: 'PUT',
+    clientAuthService.fetch('/users', {
+        method: 'POST',
         body: JSON.stringify({
-            username,
-            email,
-            password
+            userName,
+            userEmail,
+            userPassword
         })
     }).then(data => {
         console.log("Signup Success!");

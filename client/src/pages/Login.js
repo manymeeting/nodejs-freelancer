@@ -83,7 +83,7 @@ class InputForm extends React.Component {
         return clientAuthService.getProfile();
     }).then((decodedData) => {
         // fetch user info
-        var userID = decodedData.user.user_id;
+        var userID = decodedData.user._id;
         this.props.fetchUserInfo(userID);
     }).then(() => {
         // redirect to home page

@@ -29,8 +29,8 @@ export function hireBid(params) {
 
   return dispatch => {
     dispatch(hireBidBegin());
-    return clientAuthService.fetch('/api_hire_bid', {
-            method: 'POST',
+    return clientAuthService.fetch('/projects/' + params.projectID + 'hire/' + params.bidID, {
+            method: 'PUT',
             body: JSON.stringify(params)
         })
       .then(data => {
