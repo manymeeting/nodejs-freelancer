@@ -24,7 +24,7 @@ export function fetchAllBiddedProject(id) {
 
 	return dispatch => {
 		dispatch(fetchAllBiddedProjectBegin());
-		return clientAuthService.fetch('/api_get_all_proj_bidded_by_user?id=' + id, {method: "GET"})
+		return clientAuthService.fetch('/projects/bidder/' + id, {method: "GET"})
 			.then(data => {
 		        dispatch(fetchAllBiddedProjectSuccess(data));
 		        return true;

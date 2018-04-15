@@ -69,7 +69,7 @@ export function fetchUserProfile(id) {
 
 	return dispatch => {
 		dispatch(fetchUserProfileBegin());
-		return clientAuthService.fetch('/api_get_profile?id=' + id, {method: "GET"})
+		return clientAuthService.fetch('/users/' + id + '/profile', {method: "GET"})
 			.then(data => {
 		        dispatch(fetchUserProfileSuccess(data));
 		        return true;

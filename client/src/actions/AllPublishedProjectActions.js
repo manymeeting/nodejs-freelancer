@@ -24,7 +24,7 @@ export function fetchAllPublishedProject(id) {
 
 	return dispatch => {
 		dispatch(fetchAllPublishedProjectBegin());
-		return clientAuthService.fetch('/api_get_all_proj_published_by_user?id=' + id, {method: "GET"})
+		return clientAuthService.fetch('/projects/publisher/' + id, {method: "GET"})
 			.then(data => {
 		        dispatch(fetchAllPublishedProjectSuccess(data));
 		        return true;

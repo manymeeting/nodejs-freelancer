@@ -45,7 +45,7 @@ class TopNav extends React.Component {
 
         <div className="fl-top-user-info">
           <span className="fl-top-user-avatar"><img alt="avatar" src={this.props.userInfo.user_avatarurl ? this.props.userInfo.user_avatarurl : defaultAvatar} /></span>
-          <span className="fl-top-user-name"><Link to={`/user_profile/${this.props.userInfo.user_id}`}>{this.props.userInfo.user_name}</Link></span>
+          <span className="fl-top-user-name"><Link to={`/user_profile/${this.props.userInfo._id}`}>{this.props.userInfo.user_name}</Link></span>
           <button className="btn btn-danger" id="signOutBtn" onClick={this.onSignOut}>Log out</button>
         </div>
       </nav>

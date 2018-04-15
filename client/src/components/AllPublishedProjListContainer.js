@@ -19,7 +19,7 @@ class AllPublishedProjListContainer extends React.Component {
 
 	componentDidMount()
 	{
-		this.props.fetchAllPublishedProject(this.props.userInfo.user_id);
+		this.props.fetchAllPublishedProject(this.props.userInfo._id);
 	}
 
 	render()

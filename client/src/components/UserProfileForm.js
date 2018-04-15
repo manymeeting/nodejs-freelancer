@@ -61,12 +61,12 @@ class UserProfileForm extends React.Component {
 	{
 		e.preventDefault();
 		var formData = new FormData(e.target);
-		formData.append('id', this.props.userInfo.user_id);
+		formData.append('id', this.props.userInfo._id);
 		
 		this.props.updateUserAvatar(formData)
 			.then(() => {
 				// update user info
-				this.props.fetchUserInfo(this.props.userInfo.user_id);
+				this.props.fetchUserInfo(this.props.userInfo._id);
 			});
 
 	}
@@ -90,17 +90,17 @@ class UserProfileForm extends React.Component {
 		};
 
 
-		this.props.updateUserProfile(this.props.userInfo.user_id, newProfile)
+		this.props.updateUserProfile(this.props.userInfo._id, newProfile)
 			.then(() => {
 				// update user info
-				this.props.fetchUserInfo(this.props.userInfo.user_id);
+				this.props.fetchUserInfo(this.props.userInfo._id);
 			});
 	}
 
 
 	render()
 	{
-		if(this.props.match.params.id == this.props.userInfo.user_id)
+		if(this.props.match.params.id == this.props.userInfo._id)
 		{
 			// editable profile
 			return(

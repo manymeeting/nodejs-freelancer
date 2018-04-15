@@ -42,7 +42,7 @@ class AllOpenProjList extends React.Component {
 										<span className="fl-project-employer-name"><Link to={"/users/" + project.employer_id + '/profile'} >{project.user_name}</Link></span>
 									</div>
 									<div className="fl-list-row">
-										<Link to={"/projects/" + project._id} >Bid Now</Link>
+										<Link to={"/project_details/" + project._id} >Bid Now</Link>
 									</div>
 
 								</div>

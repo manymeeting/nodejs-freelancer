@@ -58,8 +58,8 @@ class BidInputForm extends React.Component {
 		// fill all hidden values
 		var newBid = {
 			projectID: this.props.projectBasic.project_id,
-			bidderID: this.props.userInfo.user_id,
-			employerID: this.props.projectBasic.employer_id,
+			bidderID: this.props.userInfo._id,
+			employerID: this.props.projectBasic.employer._id,
 			bidPeriod: this.state.input.bidPeriod,
 			bidPrice: this.state.input.bidPrice,
 			bidDate: Date(),

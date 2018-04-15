@@ -19,7 +19,7 @@ class AllBiddedProjListContainer extends React.Component {
 
 	componentDidMount()
 	{
-		this.props.fetchAllBiddedProject(this.props.userInfo.user_id);
+		this.props.fetchAllBiddedProject(this.props.userInfo._id);
 	}
 
 	render()

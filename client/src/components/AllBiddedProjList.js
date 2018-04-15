@@ -47,7 +47,7 @@ class AllBiddedProjList extends React.Component {
 									</div>
 									<div className="fl-list-row">
 										<span className="fl-list-label">Status: </span>
-										<span className="fl-project-budget-range">{project.status}</span> 
+										<span className="fl-project-budget-range">{project.project_status}</span> 
 									</div>
 
 								</div>
