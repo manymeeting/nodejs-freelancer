@@ -1,6 +1,8 @@
 // bind employer data to projects data
 module.exports.bindEmployerData = function(projects, users)
 {
+	projects = Array.isArray(projects) ? projects : [projects];
+
 	for (let i = 0; i < projects.length; i++)
 	{
 		var project = projects[i];
@@ -15,6 +17,27 @@ module.exports.bindEmployerData = function(projects, users)
 		}
 	}
 }
+
+// bind bidder data to bids data
+module.exports.bindBidderData = function(bids, users)
+{
+	bids = Array.isArray(bids) ? bids : [bids];
+	
+	for (let i = 0; i < bids.length; i++)
+	{
+		var bid = bids[i];
+		for (let j = 0; j < users.length; j++)
+		{
+			var user = users[i];
+			if(bid.bidder_id === user._id.toString())
+			{
+				bid.bidder = user;
+				break;
+			}
+		}
+	}
+}
+
 
 // build mongodb query object from request query string
 // currently assume no array in query 
