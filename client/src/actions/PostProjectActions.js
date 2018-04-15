@@ -22,26 +22,25 @@ export const postProjectError = error => ({
 export function postProject(params) {
 	
 	var clientAuthService = new ClientAuthService();
-
+	var projectSkills = params.projectSkills.split(",");
+	console.log(projectSkills);
 	var newProject = {
 		projectName: params.projectName,
 		employerID: params.employerID,
 		projectDescription: params.projectDescription,
-		projectSkills: params.projectSkills,
+		projectSkills: projectSkills,
 		budgetRange: params.budgetRange,
 		publishedDate: params.publishedDate
 	};
 	return dispatch => {
 		dispatch(postProjectBegin());
-		return clientAuthService.fetch('/api_add_project', {
-		        method: 'PUT',
+		return clientAuthService.fetch('/projects', {
+		        method: 'POST',
 		        body: JSON.stringify(newProject)
 	    	})
 			.then(data => {
-		        dispatch(postProjectSuccess({
-		        	project_id: data.insertID
-		        }));
-		        return data.insertID;
+		        dispatch(postProjectSuccess(data));
+		        return data._id;
       		})
       		.catch(error => {
       			dispatch(postProjectError(error));

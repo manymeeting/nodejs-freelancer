@@ -111,8 +111,10 @@ module.exports.getAllBidsOnProject = function(req, res, next) {
 				}
 				projects_utils.bindBidderData(projects.bids, users);
 				console.log(projects.bids);
+				
+				var result = projects.bids ? projects.bids : [];
 				res.type('json');
-				res.send(JSON.stringify(projects.bids));
+				res.send(JSON.stringify(result));
 
 			});
 			
@@ -163,7 +165,7 @@ module.exports.postProject = function(req, res, next) {
 		employer_id: req.body.employerID,
 		project_description: req.body.projectDescription,
 		project_files: req.body.projectFiles,
-		project_skills: (req.body.projectSkills && req.body.projectSkills.length > 0) ? JSON.parse(req.body.projectSkills) : [],
+		project_skills: req.body.projectSkills ? req.body.projectSkills : [],
 		project_budget_range: req.body.budgetRange,
 		project_published_date: req.body.publishedDate,
 		project_status: project_codes.PROJECT_STATUS.OPEN
@@ -177,7 +179,7 @@ module.exports.postProject = function(req, res, next) {
 			}
 			console.log(result.ops);
 			res.type('json');
-			res.status(201).send(JSON.stringify(result.ops));
+			res.status(201).send(JSON.stringify(result.ops[0]));
 			
 		});
 	});

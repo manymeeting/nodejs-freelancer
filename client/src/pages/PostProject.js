@@ -51,7 +51,7 @@ class PostProject extends React.Component {
 		// fill all hidden values
 		var newProject = {
 			projectName: this.state.input.projectName,
-			employerID: this.props.userInfo.user_id,
+			employerID: this.props.userInfo._id,
 			projectDescription: this.state.input.projectDescription,
 			projectSkills: this.state.input.projectSkills,
 			budgetRange: this.state.input.budgetRange,
@@ -81,7 +81,7 @@ class PostProject extends React.Component {
 			            <input type="text" className="form-control" name="projectDescription" onChange={this.handleInputChange} required/>
 			        </div>
 			        <div className="form-group">
-			            <label>Required Skills:</label>
+			            <label>Required Skills (use "," to split):</label>
 			            <input type="text" className="form-control" name="projectSkills" onChange={this.handleInputChange} required/>
 			        </div>
 			        <div className="form-group">
