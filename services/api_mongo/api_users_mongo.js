@@ -122,3 +122,24 @@ module.exports.updateUser = function(req, res, next) {
 		});
 	});
 }
+
+module.exports.updateAvatar = function(req, res, next) {
+	var userQuery = {
+		"_id": ObjectId(req.params.id),
+	};
+	var modifiedUser = {
+		$set: { 
+			"user_avatarurl": req.body.userAvatarURL
+		}
+	}
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('users').updateOne(userQuery, modifiedUser, function(err, result) {
+			if(err)
+			{
+				throw err;
+			}
+			res.type('json');
+			res.send(JSON.stringify(result));
+		});
+	});
+}

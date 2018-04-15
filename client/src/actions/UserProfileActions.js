@@ -110,14 +110,14 @@ export function updateUserProfile(id, params) {
 }
 
 
-export function updateUserAvatar(formData) {
+export function updateUserAvatar(id, formData) {
   var clientAuthService = new ClientAuthService();
   
   return dispatch => {
     dispatch(updateUserAvatarBegin());
     return clientAuthService
-          .fetch('/api_update_avatar', {
-              method: "POST",
+          .fetch('/users/' + id +'/avatar', {
+              method: "PUT",
               body: formData}, true)
           .then(data => {
             dispatch(updateUserAvatarSuccess(data));

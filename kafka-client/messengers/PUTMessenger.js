@@ -1,8 +1,8 @@
 var kafkaClientService = require('../kafka/KafkaClientService');
 var TOPIC_PREFIX = "queuing.";
 
-module.exports.sendPUT = function (req, res, next) {
-
+function _send(req, res, next, additionalData)
+{
 	// e.g. "/users/profile/:id" -> users
 	var serviceClass = req.path.substring(1).split("/")[0];
 	var topic = TOPIC_PREFIX + serviceClass;
@@ -11,7 +11,7 @@ module.exports.sendPUT = function (req, res, next) {
 		method: "put",
 		apiURL: req.originalUrl,
 		topicRes: topic + ".response",
-		params: req.body
+		params: Object.assign({}, req.body, additionalData)
 	};
 	console.log("kafkaClientService sending message:");
 	console.log(content);
@@ -25,5 +25,15 @@ module.exports.sendPUT = function (req, res, next) {
 		console.log(serviceRes);
 		res.send(serviceRes);
 	});
+}
 
+module.exports.sendPUT = function (req, res, next) {
+	_send(req, res, next);
+}
+
+module.exports.sendPUTWithFiles = function(fileParser) {
+	return function(req, res, next){
+		var files = fileParser(req);
+		_send(req, res, next, files);
+	};
 }

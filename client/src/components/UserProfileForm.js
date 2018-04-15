@@ -63,7 +63,7 @@ class UserProfileForm extends React.Component {
 		var formData = new FormData(e.target);
 		formData.append('id', this.props.userInfo._id);
 		
-		this.props.updateUserAvatar(formData)
+		this.props.updateUserAvatar(this.props.userInfo._id, formData)
 			.then(() => {
 				// update user info
 				this.props.fetchUserInfo(this.props.userInfo._id);
@@ -182,7 +182,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchUserProfile: (id) => dispatch(fetchUserProfile(id)),
     fetchUserInfo: (id) => dispatch(fetchUserInfo(id)),
     updateUserProfile: (id, params) => dispatch(updateUserProfile(id, params)),
-    updateUserAvatar: (formData) => dispatch(updateUserAvatar(formData))
+    updateUserAvatar: (id, formData) => dispatch(updateUserAvatar(id, formData))
   };
 }
 
