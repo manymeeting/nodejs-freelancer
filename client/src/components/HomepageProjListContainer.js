@@ -26,10 +26,6 @@ class HomepageProjListContainer extends React.Component {
 		{
 			this.props.fetchAllOpenProjects();
 		}
-		else if(this.props.type === "relevant")
-		{
-			this.props.fetchRelevantProjects();
-		}
 		else if(this.props.type === "search")
 		{
 			this.props.fetchSearchedProjects(this.props.searchStr);
@@ -46,7 +42,7 @@ class HomepageProjListContainer extends React.Component {
 		}
 		else if(this.props.type === "relevant")
 		{
-			projects = this.props.relevantProjects;
+			projects = this.getRelevantProjects(this.props.allOpenProjects, this.props.userInfo.user_skills);
 		}
 		else if(this.props.type === "search")
 		{
@@ -56,6 +52,28 @@ class HomepageProjListContainer extends React.Component {
 		return (
 			<HomepageProjList projects={projects}/>
 		);
+	}
+
+	getRelevantProjects(allProjects, userSkills)
+	{
+		var relevantProjects = [];
+		relevantProjects = allProjects.map(project => {
+			if(!project.project_skills || project.project_skills.length === 0) return null;
+			var skillCount = 0
+			for(var i = 0; i < project.project_skills.length; i++)
+			{
+				if(userSkills.indexOf(project.project_skills[i]) >= 0)
+				{
+					skillCount++;
+				}
+				if(skillCount >= 3) break;
+			}
+			return skillCount >= 3 ? project : null;
+		})
+		.filter(project => {
+			return project === null ? false : true;
+		});
+		return relevantProjects;
 	}
 }
 
@@ -69,9 +87,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = state => ({
-  allOpenProjects: state.allOpenProjects.items,
-  // relevantProjects: state.relevantProjects.items,
-  // searchedProjects: state.searchedProjects.items
+	userInfo: state.userInfo,
+	allOpenProjects: state.allOpenProjects.items,
+	// relevantProjects: state.relevantProjects.items,
+	// searchedProjects: state.searchedProjects.items
 });
 
 

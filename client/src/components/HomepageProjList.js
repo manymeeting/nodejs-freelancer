@@ -14,7 +14,7 @@ class HomepageProjList extends React.Component {
 		{
 			return (
 				<div className="fl-all-open-proj-container">
-					<p>(no open projects)</p>
+					<p>(no projects)</p>
 				</div>
 			)
 		}
