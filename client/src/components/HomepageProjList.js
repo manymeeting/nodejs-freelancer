@@ -50,9 +50,7 @@ class HomepageProjList extends React.Component {
 									</div>
 								</li>
 							)
-						}
-							
-						)
+						})
 					}
 					
 				</ul>
