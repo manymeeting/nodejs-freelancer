@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import {withRouter} from 'react-router';
 // redux-actions
 import { fetchAllOpenProjects } from "../actions/AllOpenProjectActions";
 // import { fetchRelevantProjects } from "../actions/RelevantProjectActions";
@@ -26,9 +26,15 @@ class HomepageProjListContainer extends React.Component {
 		{
 			this.props.fetchAllOpenProjects();
 		}
+		else if(this.props.type === "relevant")
+		{
+			// TODO: maybe add a service api
+			this.props.fetchAllOpenProjects();	
+		}
 		else if(this.props.type === "search")
 		{
-			this.props.fetchSearchedProjects(this.props.searchStr);
+			// TODO: use specific service api
+			this.props.fetchAllOpenProjects();
 		}
 		
 	}
@@ -46,7 +52,7 @@ class HomepageProjListContainer extends React.Component {
 		}
 		else if(this.props.type === "search")
 		{
-			projects = this.props.searchedProjects;
+			projects = this.getSearchProjects(this.props.allOpenProjects, this.props.match.params.searchStr);
 		}
 
 		return (
@@ -75,6 +81,19 @@ class HomepageProjListContainer extends React.Component {
 		});
 		return relevantProjects;
 	}
+
+	getSearchProjects(allProjects, searchStr)
+	{
+		var searchedProjects = [];
+		searchedProjects = allProjects.map(project => {
+			if(!project.project_skills || project.project_skills.length === 0) return null;
+			return (project.project_name === searchStr || project.project_skills.indexOf(searchStr) >= 0) ? project : null;
+		})
+		.filter(project => {
+			return project === null ? false : true;
+		});
+		return searchedProjects;
+	}
 }
 
 
@@ -93,5 +112,6 @@ const mapStateToProps = state => ({
 	// searchedProjects: state.searchedProjects.items
 });
 
+HomepageProjListContainer = connect(mapStateToProps, mapDispatchToProps)(HomepageProjListContainer);
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomepageProjListContainer);
+export default withRouter(HomepageProjListContainer);

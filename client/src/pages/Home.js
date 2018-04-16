@@ -35,7 +35,7 @@ class Home extends React.Component {
 	onSearch(e)
 	{
 		e.preventDefault();
-
+		this.props.history.push("/home/search" + this.state.input.projectSearchStr);
 	}
 
 	render()
@@ -60,7 +60,7 @@ class Home extends React.Component {
 			    </div>
 			    <Route exact path={`${this.props.match.path}`} render={() =>  <HomepageProjListContainer type={"all"}/> }/>
 				<Route exact path={`${this.props.match.path}/relevant`} render={ () => <HomepageProjListContainer type={"relevant"}/> }/>
-			    <Route exact path={`${this.props.match.path}/search`} render={ () => <HomepageProjListContainer type={"search"} searchStr={this.state.searchStr}/> }/>
+			    <Route exact path={`${this.props.match.path}/search:searchStr`} render={ () => <HomepageProjListContainer type={"search"}/> }/>
 			</div>
 		)
 	}
