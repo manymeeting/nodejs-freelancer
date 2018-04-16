@@ -46,7 +46,7 @@ class ProjectBidList extends React.Component {
 											</div>
 											<div className="fl-list-row">
 												{
-													bid.employer_id === this.props.userInfo._id && this.props.projectBasic.status === "OPEN" &&
+													this.props.projectBasic.employer_id === this.props.userInfo._id && this.props.projectBasic.project_status === "OPEN" &&
 													<button className="btn btn-primary" onClick={this.onHire} bid_id={bid.bid_id}>Hire</button>
 												}
 											</div>
