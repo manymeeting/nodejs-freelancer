@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-class AllOpenProjList extends React.Component {
+class HomepageProjList extends React.Component {
 	constructor(props)
 	{
 		super(props);
 	}
 	render()
 	{
-		var allOpenProjects = this.props.allOpenProjects;
-		if(allOpenProjects.length === 0)
+		var projects = this.props.projects;
+		if(projects.length === 0)
 		{
 			return (
 				<div className="fl-all-open-proj-container">
@@ -23,7 +23,7 @@ class AllOpenProjList extends React.Component {
 			<div className="fl-all-open-proj-container">
 				<ul>
 					{
-						allOpenProjects.map((project) => {
+						projects.map((project) => {
 							var employer = project.employer ? project.employer : {};
 							return(
 								<li key={project._id}>
@@ -66,4 +66,4 @@ const mapStateToProps = state => ({
   error: state.allOpenProjects.error
 });
 
-export default connect(mapStateToProps)(AllOpenProjList);
+export default connect(mapStateToProps)(HomepageProjList);
