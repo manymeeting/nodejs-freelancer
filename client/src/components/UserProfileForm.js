@@ -43,7 +43,7 @@ class UserProfileForm extends React.Component {
 				       	userEmail: this.props.userProfile.user_email ? this.props.userProfile.user_email : "",
 				       	userPhone: this.props.userProfile.user_phone ? this.props.userProfile.user_phone : "",
 				       	userAbout: this.props.userProfile.user_about ? this.props.userProfile.user_about : "",
-				       	userSkills: this.props.userProfile.user_skills ? this.props.userProfile.user_skills : ""
+				       	userSkills: this.props.userProfile.user_skills ? this.props.userProfile.user_skills.join(",") : ""
 					}
 				})
 			});
