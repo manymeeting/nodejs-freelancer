@@ -15,7 +15,7 @@ import UserProfile from './pages/UserProfile';
 import PostProject from './pages/PostProject';
 import ProjectDetails from './pages/ProjectDetails';
 import ClientAuthService from './utils/ClientAuthService';
-
+import Transactions from './pages/Transactions';
 
 class App extends Component {
   render() {
@@ -35,6 +35,7 @@ class App extends Component {
           <Route path='/post_project' component={PostProject}/>
           <Route path='/project_details' component={ProjectDetails}/>
           <Route path='/user_profile' component={UserProfile}/>
+          <Route path='/transactions' component={Transactions}/>
         </Switch>
       </div>
     );

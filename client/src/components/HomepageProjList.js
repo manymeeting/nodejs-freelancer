@@ -21,6 +21,7 @@ class HomepageProjList extends React.Component {
 		return (
 			// list of projects
 			<div className="fl-all-open-proj-container">
+				<p className="fl-sub-header">Projects</p>
 				<ul>
 					{
 						projects.map((project) => {

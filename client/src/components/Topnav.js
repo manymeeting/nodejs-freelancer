@@ -40,6 +40,7 @@ class TopNav extends React.Component {
             <li className="nav-item fl-top-nav-item"><Link to='/dashboard/published'>Dashboard</Link></li>
             <li className="nav-item fl-top-nav-item"><Link to='/post_project'>Post Project</Link></li>
             <li className="nav-item fl-top-nav-item"><Link to='/signup'>New Account</Link></li>
+            <li className="nav-item fl-top-nav-item"><Link to='/transactions/income'>Transactions</Link></li>
           </ul>
         </div>
 
