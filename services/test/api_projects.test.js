@@ -2,17 +2,16 @@ var fetch = require('node-fetch');
 var chai = require('chai');
 
 var project_codes = require('../codes/project_codes');
-var api_projects = require('../api/api_projects');
 
 describe('Test Get All Projects', function () {
   	it('should return all OPEN projects', function () {
-	  	fetch('http://localhost:3001/api_get_all_open_proj')
+	  	fetch('http://localhost:3003/projects/status/open')
 	  	.then(res => res.text())
 	    .then(body => {
 	    	var projects = JSON.parse(body);
 	    	for(let i = 0; i < projects.length; i++)
 	    	{
-	    		chai.expect(projects[i].status).to.equal(project_codes.PROJECT_STATUS.OPEN);
+	    		chai.expect(projects[i].project_status).to.equal(project_codes.PROJECT_STATUS.OPEN);
 	    	}
 	    })
 	    .catch(err => {
@@ -23,9 +22,9 @@ describe('Test Get All Projects', function () {
 });
 
 describe('Test Get All Projects Published By User', function () {
-	var userID = 1;
+	var userID = "5acf043ef36d285dd8f31679";
   	it('should return all projects published by user', function () {
-	  	fetch('http://localhost:3001/api_get_all_proj_published_by_user?id=' + userID)
+	  	fetch('http://localhost:3003/projects/publisher/' + userID)
 	  	.then(res => res.text())
 	    .then(body => {
 	    	var projects = JSON.parse(body);
@@ -44,9 +43,9 @@ describe('Test Get All Projects Published By User', function () {
 
 
 describe('Test Get All Projects Bidded By User', function () {
-	var userID = 1;
+	var userID = "5acf043ef36d285dd8f31679";
   	it('should return all projects bidded by user', function () {
-	  	fetch('http://localhost:3001/api_get_all_proj_bidded_by_user?id=' + userID)
+	  	fetch('http://localhost:3003/projects/bidder/' + userID)
 	  	.then(res => res.text())
 	    .then(body => {
 	    	var data = JSON.parse(body);
