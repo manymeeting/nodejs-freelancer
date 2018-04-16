@@ -86,7 +86,7 @@ class UserProfileForm extends React.Component {
 			userEmail: this.state.input.userEmail,
 			userPhone: this.state.input.userPhone,
 			userAbout: this.state.input.userAbout,
-			userSkills: this.state.input.userSkills
+			userSkills: this.state.input.userSkills.split(",")
 		};
 
 
