@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // views
 import BidInputForm from './BidInputForm'
+import clientConfig from '../config/clientConfig'
 
 class ProjectBasicInfo extends React.Component {
 	constructor(props)
@@ -44,7 +45,7 @@ class ProjectBasicInfo extends React.Component {
 				{this.props.projectBasic.project_files &&
 					<div className="fl-details-row">
 						<span className="fl-details-label">Instrunction Files: </span>
-						<span><a target="_blank" href={"http://localhost:3001/downloads" + this.props.projectBasic.project_files} >Download</a></span>
+						<span><a target="_blank" href={clientConfig.servers.fileDownload + this.props.projectBasic.project_files} >Download</a></span>
 					</div>
 				}
 			</div>
