@@ -19,8 +19,9 @@ var projectFileStorage = multer.diskStorage({
 var projectFileUpload = multer({ storage: projectFileStorage })
 
 
-router.get('/downloads:filePath', function(req, res){
-	var file = __dirname + req.params.filePath;
+router.get('/downloads/:fileDir*?', function(req, res){
+	var filePath = req.params.fileDir + req.params[0];
+	var file = path.join(__dirname, '../public/' + filePath);
 	res.download(file);
 });
 
