@@ -11,6 +11,7 @@ client/node_modules/
 client/build/
 client/app/vendor/
 client/coverage
+client/src/config
 client/.DS_Store
 client/.env.local
 client/.env.development.local
