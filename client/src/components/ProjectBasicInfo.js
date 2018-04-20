@@ -44,7 +44,7 @@ class ProjectBasicInfo extends React.Component {
 				{this.props.projectBasic.project_files &&
 					<div className="fl-details-row">
 						<span className="fl-details-label">Instrunction Files: </span>
-						<span><Link to={"/downloads" + this.props.projectBasic.project_files} >Instructions</Link></span>
+						<span><a target="_blank" href={"http://localhost:3001/downloads" + this.props.projectBasic.project_files} >Download</a></span>
 					</div>
 				}
 			</div>
