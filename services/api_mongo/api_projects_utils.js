@@ -42,6 +42,51 @@ module.exports.bindBidderData = function(bids, users)
 	}
 }
 
+// calc ave bid price
+module.exports.bindAveBidPrice = function(projects)
+{
+	if(!projects) return;
+	
+	projects = Array.isArray(projects) ? projects : [projects];
+
+	for (let i = 0; i < projects.length; i++)
+	{
+		var project = projects[i];
+		var bidPriceSum = 0;
+		var validBidsCount = 0;
+		project.bids.forEach(function(bid){
+			if(bid.bid_price && bid.bid_price.length > 0)
+			{
+				bidPriceSum += parseFloat(bid.bid_price);
+				validBidsCount++; 
+			}
+		});
+		project.ave_bid_price = validBidsCount > 0 ? (bidPriceSum / validBidsCount) : 0;
+	}
+}
+
+// find "your" bid index
+module.exports.bindYourBidIndex = function(projects, userID)
+{
+	if(!projects) return;
+	
+	projects = Array.isArray(projects) ? projects : [projects];
+
+	for (let i = 0; i < projects.length; i++)
+	{
+		var project = projects[i];
+		for(let i = 0; i < project.bids.length; i++)
+		{
+			let currBid = project.bids[i];
+			if(currBid.bidder_id === userID)
+			{
+				project.your_bid_index = i;
+				break;
+			}
+		}
+	}
+}
+
 
 // build mongodb query object from request query string
 // currently assume no array in query 

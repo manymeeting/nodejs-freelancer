@@ -7,6 +7,7 @@ class AllBiddedProjList extends React.Component {
 	{
 		super(props);
 	}
+
 	render()
 	{
 		var allBiddedProjects = this.props.allBiddedProjects;
@@ -19,6 +20,7 @@ class AllBiddedProjList extends React.Component {
 				</div>
 			)
 		}
+
 		return (
 			// list of projects
 			<div>
@@ -26,7 +28,7 @@ class AllBiddedProjList extends React.Component {
 				<ul>
 					{
 						allBiddedProjects.map((project) =>
-							<li key={project.bid_date}>
+							<li key={project._id}>
 								<div className="fl-project-info-container">
 									<p className="fl-project-title"><Link to={"/project_details/" + project._id} >{project.project_name}</Link></p>
 									<div className="fl-list-row">
@@ -43,7 +45,11 @@ class AllBiddedProjList extends React.Component {
 									</div>
 									<div className="fl-list-row">
 										<span className="fl-list-label">Your Bid Price (USD): </span>
-										<span className="fl-project-budget-range">{project.bid_price}</span> 
+										<span className="fl-project-budget-range">{project.bids[project.your_bid_index].bid_price}</span> 
+									</div>
+									<div className="fl-list-row">
+										<span className="fl-list-label">Ave Bid Price (USD): </span>
+										<span className="fl-project-budget-range">{project.ave_bid_price}</span> 
 									</div>
 									<div className="fl-list-row">
 										<span className="fl-list-label">Status: </span>
@@ -63,6 +69,7 @@ class AllBiddedProjList extends React.Component {
 
 const mapStateToProps = state => ({
   allBiddedProjects: state.allBiddedProjects.items,
+  userInfo: state.userInfo,
   error: state.allBiddedProjects.error
 });
 

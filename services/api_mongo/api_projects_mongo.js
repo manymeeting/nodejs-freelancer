@@ -127,14 +127,17 @@ module.exports.getAllProjBiddedByUser = function(req, res, next) {
 		"bids": {$elemMatch: {"bidder_id": req.params.id}}
 	};
 	mongoUtil.getMongoConn(function(db) {
-		db.collection('projects').find(projectsQuery).toArray(function(err, result) {
+		db.collection('projects').find(projectsQuery).toArray(function(err, projects) {
 			if(err)
 			{
 				throw err;
 			}
-			console.log(result);
+			projects_utils.bindAveBidPrice(projects);
+			projects_utils.bindYourBidIndex(projects, req.params.id);
+			
+			console.log(projects);
 			res.type('json');
-			res.send(JSON.stringify(result));
+			res.send(JSON.stringify(projects));
 			
 		});
 	});
