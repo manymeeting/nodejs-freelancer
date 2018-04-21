@@ -5,7 +5,9 @@ import {
 } from 'react-router-dom';
 import withAuth from '../utils/withAuth';
 import {withRouter} from 'react-router';
-
+import { connect } from 'react-redux';
+// redux-actions
+import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions"
 // views
 import ProjBasicInfoContainer from "../components/ProjBasicInfoContainer";
 import ProjBidListContainer from "../components/ProjBidListContainer";
@@ -17,19 +19,35 @@ class ProjectDetails extends React.Component {
 		super(props);
 	}
 
+	componentDidMount()
+	{
+		this.props.fetchProjBasicInfo(this.props.match.params.id);
+	}
+
 	render()
 	{
-		console.log(JSON.stringify(this.props.match, null, 2));
 		return(
 			<div className="fl-main-container">
 			    <h1 className="fl-main-header">Project Details</h1>
-			    <Route path={`${this.props.match.path}/:id`} component={ProjBasicInfoContainer} />
-			    <Route path={`${this.props.match.path}/:id`} component={ProjSubmissionPanelContainer} />
-			    <Route path={`${this.props.match.path}/:id`} component={ProjBidListContainer} />
+			    <ProjBasicInfoContainer />
+			    <ProjSubmissionPanelContainer />
+			    <ProjBidListContainer />
 			</div>
 		) 
 	}
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id)) 
+  };
+}
+const mapStateToProps = state => ({
+	projectBasic: state.projectDetails.basic,
+	userInfo: state.userInfo
+});
+
+ProjectDetails = connect(mapStateToProps, mapDispatchToProps)(ProjectDetails)
 
 // project details page is open to registered users only
 export default withAuth(withRouter(ProjectDetails));

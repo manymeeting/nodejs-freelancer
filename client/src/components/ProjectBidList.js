@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // redux-actions
 import { hireBid } from "../actions/HireBidActions";
-import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions"
+import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
 class ProjectBidList extends React.Component {
 	constructor(props)
 	{
@@ -12,7 +12,9 @@ class ProjectBidList extends React.Component {
 	}
 	render()
 	{
-		var projectBidList = this.props.projectBidList;
+
+		var projectBasic = this.props.projectBasic ? this.props.projectBasic : {};
+		var projectBidList = projectBasic.bids ? projectBasic.bids : [];
 		if(projectBidList.length === 0)
 		{
 			return(<div> (no bids) </div>);
@@ -91,7 +93,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 const mapStateToProps = state => ({
 	projectBasic: state.projectDetails.basic,
-	projectBidList: state.projectDetails.bids,
 	userInfo: state.userInfo
 });
 

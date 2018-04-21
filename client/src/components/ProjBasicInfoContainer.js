@@ -18,11 +18,6 @@ class ProjBasicInfoContainer extends React.Component {
 		super(props);
 	}
 
-	componentDidMount()
-	{
-		this.props.fetchProjBasicInfo(this.props.match.params.id);
-	}
-
 	render()
 	{
 
@@ -35,17 +30,6 @@ class ProjBasicInfoContainer extends React.Component {
 }
 
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id))
-  };
-}
-
-const mapStateToProps = state => ({
-  projectBasic: state.projectDetails.basic
-});
-
-
 ProjBasicInfoContainer = withRouter(ProjBasicInfoContainer);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjBasicInfoContainer);
+export default ProjBasicInfoContainer;

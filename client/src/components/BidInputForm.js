@@ -5,7 +5,7 @@ import update from 'react-addons-update';
 import { inputValidation } from '../utils/formUtils'
 // redux-actions
 import { addBidOnProject } from "../actions/BidOnProjectActions";
-import { fetchProjBidList } from "../actions/ProjectBidListActions";
+import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
 
 class BidInputForm extends React.Component {
 	constructor(props)
@@ -67,7 +67,7 @@ class BidInputForm extends React.Component {
 		
 		this.props.addBidOnProject(newBid)
 			.then(() => {
-					this.props.fetchProjBidList(this.props.projectBasic._id)
+					this.props.fetchProjBasicInfo(this.props.projectBasic._id) // reload project details
 				});
 	}
 
@@ -94,7 +94,7 @@ class BidInputForm extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     addBidOnProject: (bid) => dispatch(addBidOnProject(bid)),
-    fetchProjBidList: (id) => dispatch(fetchProjBidList(id))
+    fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id))
   };
 }
 

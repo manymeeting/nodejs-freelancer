@@ -33,7 +33,7 @@ class App extends Component {
           <Route path='/home' component={Home}/>
           <Route path='/dashboard' component={Dashboard}/>
           <Route path='/post_project' component={PostProject}/>
-          <Route path='/project_details' component={ProjectDetails}/>
+          <Route path='/project_details/:id' component={ProjectDetails}/>
           <Route path='/user_profile' component={UserProfile}/>
           <Route path='/transactions' component={Transactions}/>
         </Switch>
