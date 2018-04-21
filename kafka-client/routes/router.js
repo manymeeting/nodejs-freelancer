@@ -57,6 +57,16 @@ router.post('/projects',
 		}
 		return fileData;
 	}));
+router.post('/projects/submission', 
+	projectFileUpload.single('file'),
+	postMessenger.sendPOSTWithFiles(function(req){
+		var fileData = {};
+		if (req.file) {
+			console.dir(req.file);
+			fileData.submissionFiles = "/project_files/" + req.file.filename;
+		}
+		return fileData;
+	}));
 router.post('/projects/notification/hire', postMessenger.sendPOST);
 router.put('/projects/:id/bids', putMessenger.sendPUT);
 router.put('/projects/:id/status/:status', putMessenger.sendPUT);

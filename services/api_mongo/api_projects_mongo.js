@@ -253,3 +253,29 @@ module.exports.updateStatus = function(req, res, next) {
 		});
 	});
 }
+
+module.exports.postSubmission = function(req, res, next) {
+	var projectsQuery = {
+		"_id": ObjectId(req.params.id),
+	};
+	var newSubmission = {
+		$set: { 
+			"project_submission" : {
+				submission_files: req.body.submissionFiles,
+				submission_date: req.body.submissionDate,
+				submission_comment: req.body.submissionComment
+			}
+		}
+	};
+	mongoUtil.getMongoConn(function(db) {
+		db.collection('projects').updateOne(projectsQuery, newSubmission, function(err, result) {
+			if(err)
+			{
+				throw err;
+			}
+			res.type('json');
+			res.send(JSON.stringify(result));
+		});
+	});
+
+}
