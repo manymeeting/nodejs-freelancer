@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // redux-actions
 import { hireBid } from "../actions/HireBidActions";
+import { sendNotification } from "../actions/HireBidActions";
 import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
+import { projectDataUtils } from "../utils/clientDataUtils";
+
 class ProjectBidList extends React.Component {
 	constructor(props)
 	{
@@ -49,7 +52,7 @@ class ProjectBidList extends React.Component {
 											<div className="fl-list-row">
 												{
 													this.props.projectBasic.employer_id === this.props.userInfo._id && this.props.projectBasic.project_status === "OPEN" &&
-													<button className="btn btn-primary" onClick={this.onHire} bid_id={bid.bid_id}>Hire</button>
+													<button className="btn btn-primary" onClick={this.onHire} bid_id={bid.bid_id} bidder_id={bid.bidder_id} >Hire</button>
 												}
 											</div>
 
@@ -72,6 +75,8 @@ class ProjectBidList extends React.Component {
 		e.preventDefault();
 
 		var bidID = e.target.getAttribute("bid_id");
+		var bidderID = e.target.getAttribute("bidder_id");
+
 		var params = {
 			bidID: bidID,
 			projectID: this.props.projectBasic._id
@@ -80,7 +85,12 @@ class ProjectBidList extends React.Component {
 		this.props
 			.hireBid(params)
 			.then(() => {
-				this.props.fetchProjBasicInfo(this.props.projectBasic._id);
+				this.props.fetchProjBasicInfo(this.props.projectBasic._id); // refresh page content
+			})
+			.then(() => {
+				this.props.sendNotification({
+					bidderID: bidderID
+				})
 			});
 	}
 }
@@ -88,7 +98,8 @@ class ProjectBidList extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     hireBid: (params) => dispatch(hireBid(params)),
-    fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id)) 
+    fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id)),
+    sendNotification: (params) => dispatch(sendNotification(params))
   };
 }
 const mapStateToProps = state => ({
