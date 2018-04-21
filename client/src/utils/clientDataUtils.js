@@ -12,5 +12,19 @@ export var projectDataUtils = {
 			}
 		}
 		return null;
+	},
+
+	findBidOnUser: function(project, userID) {
+		if(!project || !userID || !project.bids) return null;
+		var bids = project.bids;
+		for(var i = 0; i < bids.length; i++)
+		{
+			var bid = bids[i];
+			if(bid.bidder_id === userID)
+			{
+				return bid;
+			}
+		}
+		return null;
 	}
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // views
 import BidInputForm from './BidInputForm'
 import clientConfig from '../config/clientConfig'
+import { projectDataUtils } from "../utils/clientDataUtils";
 
 class ProjectBasicInfo extends React.Component {
 	constructor(props)
@@ -12,11 +13,12 @@ class ProjectBasicInfo extends React.Component {
 	}
 	render()
 	{
+		var isBidded = projectDataUtils.findBidOnUser(this.props.projectBasic,this.props.userInfo._id);
 		// initialize employer with empty object to avoid undefined.key err on the initial state 
 		var employer = this.props.projectBasic.employer ? this.props.projectBasic.employer : {};
 		return(
 			<div>
-				{ this.props.projectBasic.employer_id !== this.props.userInfo._id &&
+				{ this.props.projectBasic.employer_id !== this.props.userInfo._id && !isBidded &&
 					<BidInputForm />
 				}
 				
