@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // redux-actions
 import { hireBid } from "../actions/HireBidActions";
 import { sendNotification } from "../actions/HireBidActions";
+import { updateProjStatus } from "../actions/HireBidActions";
 import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
 import { projectDataUtils } from "../utils/clientDataUtils";
 
@@ -85,9 +86,13 @@ class ProjectBidList extends React.Component {
 		this.props
 			.hireBid(params)
 			.then(() => {
+				this.props.updateProjStatus(this.props.projectBasic._id, "STARTED"); // update project status to STARTED
+			})
+			.then(() => {
 				this.props.fetchProjBasicInfo(this.props.projectBasic._id); // refresh page content
 			})
 			.then(() => {
+				// send notification via email
 				this.props.sendNotification({
 					bidderID: bidderID
 				})
@@ -99,7 +104,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hireBid: (params) => dispatch(hireBid(params)),
     fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id)),
-    sendNotification: (params) => dispatch(sendNotification(params))
+    sendNotification: (params) => dispatch(sendNotification(params)),
+    updateProjStatus: (id, status) => dispatch(updateProjStatus(id, status))
   };
 }
 const mapStateToProps = state => ({
