@@ -73,18 +73,17 @@ class ProjSubmissionPanel extends React.Component {
 						<span className="fl-details-label">Submission Files: </span>
 						<span><a target="_blank" href={clientConfig.servers.fileDownload + projectSubmission.submission_files} >Download</a></span>
 					</div>
+					<button>Make Payment</button>
 				</div>
 				
 			) : (
-				<p>(no submisson yet)</p>
+				<p>(no submissons yet)</p>
 			);
 
 			return(
 				<div>
 					<p className="fl-sub-header">Project Submission</p>
 					{submissionContainer}
-
-					<button>Make Payment</button>
 				</div>
 			)
 			
