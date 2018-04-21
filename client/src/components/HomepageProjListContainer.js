@@ -21,7 +21,6 @@ class HomepageProjListContainer extends React.Component {
 
 	componentDidMount()
 	{
-		console.log(this.props.type);
 		if(this.props.type === "all")
 		{
 			this.props.fetchAllOpenProjects();

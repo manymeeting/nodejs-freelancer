@@ -22,7 +22,6 @@ function _send(req, res, next, additionalData)
 			res.status(404).send();
 			return;
 		}
-		console.log(serviceRes);
 		res.send(serviceRes);
 	});
 }

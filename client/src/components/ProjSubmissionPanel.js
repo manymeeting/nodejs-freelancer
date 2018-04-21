@@ -55,7 +55,6 @@ class ProjSubmissionPanel extends React.Component {
 	render()
 	{
 		var projectSubmission = this.props.projectBasic.project_submission;
-		console.log(projectSubmission);
 		if(this.props.projectBasic.employer_id == this.props.userInfo._id)
 		{
 			// project submission view for employer

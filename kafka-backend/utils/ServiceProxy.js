@@ -11,7 +11,6 @@ module.exports.get = function(pathURL, callback)
 		})
 		.then(res => res.json())
 	    .then(body => {
-	    	console.log(body);
 	    	callback(body);	
 	    })
 	    .catch(err => {
@@ -29,7 +28,6 @@ module.exports.post = function(pathURL, params, callback)
 		})
 		.then(res => res.json())
 		.then(body => {
-	    	console.log(body);
 	    	callback(body);	
 	    })
 	    .catch(err => {
@@ -47,7 +45,6 @@ module.exports.put = function(pathURL, params, callback)
 		})
 		.then(res => res.json())
 		.then(body => {
-	    	console.log(body);
 	    	callback(body);	
 	    })
 	    .catch(err => {
@@ -64,7 +61,6 @@ module.exports.delete = function(pathURL, params, callback)
 		})
 		.then(res => res.json())
 		.then(body => {
-	    	console.log(body);
 	    	callback(body);	
 	    })
 	    .catch(err => {

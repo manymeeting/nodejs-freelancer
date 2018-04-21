@@ -126,7 +126,6 @@ KafkaClientService.prototype._setResponseConsumer = function(topicRes)
 		var consumer = _kafkaClientService.getConsumer(topicRes, partition, latestOffset);
 
 		consumer.on('message', function (message) {
-		    console.log(message);
 	        var result = JSON.parse(message.value);
 	        // get the reqID
 	        var reqID = result.reqID;
