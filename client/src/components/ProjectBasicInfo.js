@@ -16,7 +16,10 @@ class ProjectBasicInfo extends React.Component {
 		var employer = this.props.projectBasic.employer ? this.props.projectBasic.employer : {};
 		return(
 			<div>
-				<BidInputForm />
+				{ this.props.projectBasic.employer_id !== this.props.userInfo._id &&
+					<BidInputForm />
+				}
+				
 				<p className="fl-sub-header">Project Basic Info</p>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Project Name: </span>
@@ -54,7 +57,8 @@ class ProjectBasicInfo extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  projectBasic: state.projectDetails.basic
+  projectBasic: state.projectDetails.basic,
+  userInfo: state.userInfo
 });
 
 export default connect(mapStateToProps)(ProjectBasicInfo);
