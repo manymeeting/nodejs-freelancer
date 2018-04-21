@@ -51,7 +51,7 @@ class PostProject extends React.Component {
 		var formData = new FormData(e.target);
 		formData.append('employerID', this.props.userInfo._id);
 		formData.append('publishedDate', Date());
-		formData.append('projectSkills', this.state.input.projectSkillsRaw.split(","));
+		formData.append('projectSkills', JSON.stringify(this.state.input.projectSkillsRaw.split(",")));
 		
 		this.props.postProject(formData)
 			.then((id) => {

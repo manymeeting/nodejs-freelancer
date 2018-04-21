@@ -35,7 +35,6 @@ router.put('/users/:id/avatar',
 	putMessenger.sendPUTWithFiles(function(req){
 		var fileData = {};
 		if (req.file) {
-			console.dir(req.file);
 			fileData.userAvatarURL = "/avatars/" + req.file.filename;
 		}
 		return fileData;
@@ -52,7 +51,6 @@ router.post('/projects',
 	postMessenger.sendPOSTWithFiles(function(req){
 		var fileData = {};
 		if (req.file) {
-			console.dir(req.file);
 			fileData.projectFiles = "/project_files/" + req.file.filename;
 		}
 		return fileData;
@@ -62,7 +60,6 @@ router.post('/projects/submission',
 	postMessenger.sendPOSTWithFiles(function(req){
 		var fileData = {};
 		if (req.file) {
-			console.dir(req.file);
 			fileData.submissionFiles = "/project_files/" + req.file.filename;
 		}
 		return fileData;

@@ -168,7 +168,7 @@ module.exports.postProject = function(req, res, next) {
 		employer_id: req.body.employerID,
 		project_description: req.body.projectDescription,
 		project_files: req.body.projectFiles,
-		project_skills: req.body.projectSkills ? req.body.projectSkills : [],
+		project_skills: req.body.projectSkills ? JSON.parse(req.body.projectSkills) : [],
 		project_budget_range: req.body.budgetRange,
 		project_published_date: req.body.publishedDate,
 		project_status: project_codes.PROJECT_STATUS.OPEN
