@@ -14,6 +14,7 @@ class ProjectBasicInfo extends React.Component {
 	render()
 	{
 		var isBidded = projectDataUtils.findBidOnUser(this.props.projectBasic,this.props.userInfo._id);
+		var projectSkills = this.props.projectBasic.project_skills ? this.props.projectBasic.project_skills : [];
 		// initialize employer with empty object to avoid undefined.key err on the initial state 
 		var employer = this.props.projectBasic.employer ? this.props.projectBasic.employer : {};
 		return(
@@ -37,7 +38,14 @@ class ProjectBasicInfo extends React.Component {
 				</div>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Skills: </span>
-					<span>{this.props.projectBasic.project_skills}</span>
+					{
+						projectSkills.map((skill) => {
+							return(
+								<span key={skill}> { skill + " " } </span>
+							)
+						})
+					}
+					
 				</div>
 				<div className="fl-details-row">
 					<span className="fl-details-label">Published Date: </span>
