@@ -9,6 +9,7 @@ import {withRouter} from 'react-router';
 // views
 import TransIncomeListContainer from "../components/TransIncomeListContainer";
 import TransExpenseListContainer from "../components/TransExpenseListContainer";
+import BalanceBoard from "../components/BalanceBoard";
 
 class Transactions extends React.Component {
 	constructor(props)
@@ -23,10 +24,12 @@ class Transactions extends React.Component {
 			    <h1 className="fl-main-header">Transactions</h1>
 			    <div>
 			    	<ul className="fl-nopadding-ul">
+			            <li className="fl-nav-item"><Link to={`${this.props.match.path}/balance`}>My Balance</Link></li>
 			            <li className="fl-nav-item"><Link to={`${this.props.match.path}/income`}>Income</Link></li>
 			            <li className="fl-nav-item"><Link to={`${this.props.match.path}/expense`}>Expense</Link></li>
 			        </ul>
 			    </div>
+			    <Route path={`${this.props.match.path}/balance`} component={BalanceBoard} />
 			    <Route path={`${this.props.match.path}/income`} component={TransIncomeListContainer} />
 			    <Route path={`${this.props.match.path}/expense`} component={TransExpenseListContainer} />
 			</div>

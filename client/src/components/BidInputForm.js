@@ -34,25 +34,17 @@ class BidInputForm extends React.Component {
 		this.setState(update(this.state, newState));
 	}
 
-	validateInput()
-	{
-		for(let key in this.requiredInput)
-		{
-			if(this.state.input[key] === "")
-			{
-				alert("Please input value in " + this.requiredInput[key]);
-				return false;
-			}
-		}
-		return true;
-	}
-
 	onSumbit(e)
 	{
 		e.preventDefault();
 		if(!inputValidation(this.requiredInput, this))
 		{
 			console.log("Input Validation Failed")
+			return;
+		}
+		if(isNaN(this.state.input.bidPrice))
+		{
+			alert("Bid Price must be a number")
 			return;
 		}
 		// fill all hidden values
