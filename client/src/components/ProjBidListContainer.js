@@ -3,7 +3,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import {withRouter} from 'react-router';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 // views
 import ProjectBidList from "./ProjectBidList";
@@ -19,13 +20,17 @@ class ProjBidListContainer extends React.Component {
 
 		return (
 			<div>
-				<p className="fl-sub-header">Bids On This Project</p>
-				<ProjectBidList />		
+				{ this.props.projectBasic.project_status === "OPEN" &&
+					<ProjectBidList />	
+				}	
 			</div>
 		);
 	}
 }
 
-ProjBidListContainer = withRouter(ProjBidListContainer);
+const mapStateToProps = state => ({
+	projectBasic: state.projectDetails.basic
+});
 
-export default ProjBidListContainer;
+
+export default withRouter(connect(mapStateToProps)(ProjBidListContainer));;

@@ -21,10 +21,16 @@ class ProjectBidList extends React.Component {
 		var projectBidList = projectBasic.bids ? projectBasic.bids : [];
 		if(projectBidList.length === 0)
 		{
-			return(<div> (no bids) </div>);
+			return(
+				<div>
+					<p className="fl-sub-header">Bids On This Project</p>
+					<p> (no bids) </p>
+				</div>	
+			);
 		}
 		return(
 			<div>
+				<p className="fl-sub-header">Bids On This Project</p>
 				<ul>
 
 					{
