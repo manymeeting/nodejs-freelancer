@@ -55,7 +55,7 @@ router.post('/projects',
 		}
 		return fileData;
 	}));
-router.post('/projects/submission', 
+router.post('/projects/:id/submission', 
 	projectFileUpload.single('file'),
 	postMessenger.sendPOSTWithFiles(function(req){
 		var fileData = {};

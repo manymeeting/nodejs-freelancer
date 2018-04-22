@@ -19,11 +19,11 @@ export const postSubmissionError = error => ({
 });
 
 // return inserted project id on success
-export function postSubmission(formData) {
+export function postSubmission(id, formData) {
 	var clientAuthService = new ClientAuthService();
 	return dispatch => {
 		dispatch(postSubmissionBegin());
-		return clientAuthService.fetch('/projects/submission', {
+		return clientAuthService.fetch('/projects/' + id + '/submission', {
 		        method: 'POST',
 		        body: formData
 	    	}, true)
