@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 import clientConfig from '../config/clientConfig'
 // redux-actions
 import { postSubmission } from "../actions/PostSubmissionActions";
-import { makePayment } from "../actions/ProjectPaymentActions";
+import { makeTransaction } from "../actions/TransactionActions";
 import { updateProjStatus } from "../actions/UpdateProjectActions";
 import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
 // utils
@@ -65,7 +65,7 @@ class ProjSubmissionPanel extends React.Component {
 		
 		var hiredBid = projectDataUtils.getHiredBid(this.props.projectBasic);
 
-		this.props.makePayment({
+		this.props.makeTransaction({
 			transFrom: this.props.projectBasic.employer_id,
 		    transTo: hiredBid.bidder_id,
 		    transAmount: parseFloat(hiredBid.bid_price),
@@ -168,7 +168,7 @@ class ProjSubmissionPanel extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     postSubmission: (id, formData) => dispatch(postSubmission(id, formData)),
-    makePayment: (params) => dispatch(makePayment(params)),
+    makeTransaction: (params) => dispatch(makeTransaction(params)),
     updateProjStatus: (id, status) => dispatch(updateProjStatus(id, status)),
     fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id))
   };

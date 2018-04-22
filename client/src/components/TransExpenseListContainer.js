@@ -6,7 +6,7 @@ import {
 import { connect } from 'react-redux';
 
 // redux-actions
-import { fetchExpenseTransactions } from "../actions/ExpenseTransactionActions";
+import { fetchExpenseTransactions } from "../actions/TransactionActions";
 
 // views
 import TransExpenseList from "./TransExpenseList";

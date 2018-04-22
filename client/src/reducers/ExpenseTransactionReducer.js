@@ -2,7 +2,7 @@ import {
   FETCH_EXPENSE_TRANSACTION_BEGIN,
   FETCH_EXPENSE_TRANSACTION_SUCCESS,
   FETCH_EXPENSE_TRANSACTION_FAILURE
-} from '../actions/ExpenseTransactionActions';
+} from '../actions/TransactionActions';
 
 
 const initialState = {

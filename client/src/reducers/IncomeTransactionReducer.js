@@ -2,7 +2,7 @@ import {
   FETCH_INCOME_TRANSACTION_BEGIN,
   FETCH_INCOME_TRANSACTION_SUCCESS,
   FETCH_INCOME_TRANSACTION_FAILURE
-} from '../actions/IncomeTransactionActions';
+} from '../actions/TransactionActions';
 
 
 const initialState = {
