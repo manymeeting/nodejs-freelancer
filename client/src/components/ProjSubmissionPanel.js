@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import update from 'react-addons-update';
-import { inputValidation } from '../utils/formUtils'
+import { inputValidation } from '../utils/formUtils';
+import { withRouter } from 'react-router';
 // views
 import clientConfig from '../config/clientConfig'
 // redux-actions
 import { postSubmission } from "../actions/PostSubmissionActions";
+import { makePayment } from "../actions/ProjectPaymentActions";
+import { updateProjStatus } from "../actions/UpdateProjectActions";
+import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
+// utils
+import { projectDataUtils } from "../utils/clientDataUtils";
 
 class ProjSubmissionPanel extends React.Component {
 	constructor(props)
@@ -19,8 +25,10 @@ class ProjSubmissionPanel extends React.Component {
 		    };
 
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.makePayment = this.makePayment.bind(this);
+		this.onSumbit = this.onSumbit.bind(this);
 		this.requiredInput = {
-    		submissionComment: "Submission Input"
+    		submissionComment: "Submission Comment"
     	};
 	}
 
@@ -45,11 +53,31 @@ class ProjSubmissionPanel extends React.Component {
 		var formData = new FormData(e.target);
 		formData.append('submissionDate', Date());
 
-		this.props.postSubmission(formData)
+		this.props.postSubmission(this.props.projectBasic._id, formData)
 			.then(() => {
-				// reload project details page
-				this.props.history.push('/project_details/' + this.props.projectBasic._id);
-			});
+				this.props.fetchProjBasicInfo(this.props.projectBasic._id); // refresh page content
+			})
+	}
+
+	makePayment(e)
+	{
+		e.preventDefault();
+		
+		var hiredBid = projectDataUtils.getHiredBid(this.props.projectBasic);
+
+		this.props.makePayment({
+			transFrom: this.props.projectBasic.employer_id,
+		    transTo: hiredBid.bidder_id,
+		    transAmount: parseFloat(hiredBid.bid_price),
+		    transForProject: this.props.projectBasic._id,
+		    transDate: Date()
+		})
+		.then(() => {
+			this.props.updateProjStatus(this.props.projectBasic._id, "FINISHED");
+		})
+		.then(() => {
+			this.props.fetchProjBasicInfo(this.props.projectBasic._id); // refresh page content
+		})
 	}
 
 	render()
@@ -72,7 +100,11 @@ class ProjSubmissionPanel extends React.Component {
 						<span className="fl-details-label">Submission Files: </span>
 						<span><a target="_blank" href={clientConfig.servers.fileDownload + projectSubmission.submission_files} >Download</a></span>
 					</div>
-					<button>Make Payment</button>
+					{
+						this.props.projectBasic.project_status === "STARTED" && 
+						<button onClick={this.makePayment}>Make Payment</button>	
+					}
+					
 				</div>
 				
 			) : (
@@ -135,7 +167,10 @@ class ProjSubmissionPanel extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    postSubmission: (formData) => dispatch(postSubmission(formData)),
+    postSubmission: (id, formData) => dispatch(postSubmission(id, formData)),
+    makePayment: (params) => dispatch(makePayment(params)),
+    updateProjStatus: (id, status) => dispatch(updateProjStatus(id, status)),
+    fetchProjBasicInfo: (id) => dispatch(fetchProjBasicInfo(id))
   };
 }
 const mapStateToProps = state => ({
@@ -143,4 +178,4 @@ const mapStateToProps = state => ({
   userInfo: state.userInfo
 });
 
-export default connect(mapStateToProps)(ProjSubmissionPanel);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjSubmissionPanel));
