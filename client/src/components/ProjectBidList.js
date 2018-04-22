@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 // redux-actions
 import { hireBid } from "../actions/HireBidActions";
 import { sendNotification } from "../actions/HireBidActions";
-import { updateProjStatus } from "../actions/HireBidActions";
+import { updateProjStatus } from "../actions/UpdateProjectActions";
 import { fetchProjBasicInfo } from "../actions/ProjectBasicInfoActions";
 import { projectDataUtils } from "../utils/clientDataUtils";
 
