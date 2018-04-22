@@ -29,6 +29,10 @@ class ProjectBasicInfo extends React.Component {
 					<span>{this.props.projectBasic.project_name}</span>
 				</div>
 				<div className="fl-details-row">
+					<span className="fl-details-label">Project Status: </span>
+					<span>{this.props.projectBasic.project_status}</span>
+				</div>
+				<div className="fl-details-row">
 					<span className="fl-details-label">Description: </span>
 					<span>{this.props.projectBasic.project_description}</span>
 				</div>
